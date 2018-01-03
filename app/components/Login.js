@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import {
     Platform,
-    StyleSheet,
     Text,
     View,
     TextInput,
@@ -15,7 +14,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import Navigator from "../config/Navigator";
+import Styles from "../config/Styles";
 
 export default class Login extends Component<{}> {
 
@@ -27,7 +27,7 @@ export default class Login extends Component<{}> {
         }
     }
 
-    isUserPreLogged(){
+    componentWillMount(){
         this._loadInitialState().done();
     }
 
@@ -63,67 +63,58 @@ export default class Login extends Component<{}> {
         .done();
     }
 
+    goToRegistration = () => {
+        this.props.navigation.navigate('Registration');
+    }
+
     render() {
         return (
-            <KeyboardAvoidingView behavior='padding' style={styles.wrapper}>
-                <View style={styles.container}>
+            <KeyboardAvoidingView id='login' behavior='padding' style={Styles.wrapper}>
+                <View style={Styles.container}>
 
-                    <Text style={styles.header}>LOGIN</Text>
+                    <Text style={Styles.header}>LOGIN</Text>
 
                     <TextInput
-                        style={styles.textInput}
+                        style={Styles.textInput}
                         placeholder='Username'
                         onChangeText={ (username) => this.setState( {username }) }
                         underlineColorAndroid='transparent'
                     />
 
                     <TextInput
-                        style={styles.textInput}
+                        style={Styles.textInput}
                         placeholder='Password'
                         onChangeText={ (password) => this.setState( {password }) }
                         underlineColorAndroid='transparent'
+                        secureTextEntry={true}
                     />
 
                     <TouchableOpacity
-                        style={styles.btn}
+                        style={Styles.button}
                         onPress={this.login}>
                         <Text>Log in </Text>
                     </TouchableOpacity>
+
+                    <Text style={Styles.bottomtext}>
+                        <Text>Forgot your password? </Text>
+                        <Text
+                            style={Styles.register}
+                            onPress={this.goToRegistration}>
+                            Reset my password!
+                        </Text>
+                    </Text>
+
+                    <Text style={Styles.bottomtext}>
+                        <Text>Not registered yet? </Text>
+                        <Text
+                            style={Styles.register}
+                            onPress={this.goToRegistration}>
+                                Register now!
+                        </Text>
+                    </Text>
 
                 </View>
             </KeyboardAvoidingView>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-    wrapper:{
-      flex: 1,
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    header: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-        fontWeight: 'bold',
-    },
-    textInput: {
-        alignSelf: 'stretch',
-        padding: 16,
-        marginBottom: 20,
-        color: '#333333',
-    },
-    btn: {
-        alignSelf: 'stretch',
-        backgroundColor: 'darkgreen',
-        padding: 20,
-        alignItems: 'center',
-    },
-
-});

@@ -6,13 +6,13 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    StatusBar,
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import Login  from './app/components/Login';
+import Navigator from "./app/config/Navigator";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -21,52 +21,11 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-const NavigationApp = StackNavigator({
-    Home: {screen: Login},
-    }, {
-      navigationOptions: {
-        header: false,
-      }
-    }
-);
-
 export default class App extends Component<{}> {
   render() {
     return (
-/*      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Merry Christmas!
-        </Text>
-        <Text style={styles.instructions}>
-
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>*/
-      <NavigationApp/>
+      <Navigator/>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-
-});
-
 
