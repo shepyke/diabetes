@@ -41,35 +41,40 @@ export default class Login extends Component<{}> {
     }
 
     _loadInitialState = async() => {
-        var value = await AsyncStorage.getItem('user');
+        //let value = await AsyncStorage.removeItem(() =>AsyncStorage.getItem('user')(() => AsyncStorage.getItem('user')));
+        let value = await AsyncStorage.getItem('user');
         if (value !== null){
             this.props.navigation.navigate('Profile');
         }
     }
 
     login = () => {
-        fetch('http://192.168.25.223:3000/users/login',{
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: this.state.user.username,
-                password: this.state.user.password,
+        try{
+            fetch('http://172.20.10.12:3000/users/login',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: this.state.user.username,
+                    password: this.state.user.password,
+                })
             })
-        })
 
-        .then((response) => response.json())
-        .then ((res) => {
-            if(res.success === true){
-                AsyncStorage.setItem('user', JSON.stringify(res.user));
-                this.props.navigation.navigate('Profile');
-            }else{
-                alert(res.message);
-            }
-        })
-        .done();
+            .then((response) => response.json())
+            .then ((res) => {
+                if(res.success === true){
+                    AsyncStorage.setItem('user', JSON.stringify(res.user));
+                    this.props.navigation.navigate('Profile');
+                }else{
+                    alert(res.message);
+                }
+            })
+            .done();
+        }catch(err){
+            console.log(err);
+        }
     }
 
     goToRegistration = () => {
@@ -80,8 +85,7 @@ export default class Login extends Component<{}> {
         return (
             <View style={Styles.wrapper}>
 
-                <KeyboardAvoidingView id='login' behavior='padding'>
-                </KeyboardAvoidingView>
+                <KeyboardAvoidingView id='login' behavior='padding'/>
 
                     <View style={Styles.container}>
 
