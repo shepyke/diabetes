@@ -52,14 +52,14 @@ export default class Profile extends Component<{}> {
                     {
                         username: value['username'],
                         email: value['email'],
-                        firstName: value['first_name'],
-                        lastName: value['last_name'],
-                        birthDate: value['birthdate'],
+                        firstName: value['firstName'],
+                        lastName: value['lastName'],
+                        birthDay: value['birthDay'],
                         profileImage: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A',
                         //value['profile_image'],
                         gender: value['gender'],
                         type: value['type'],
-                        bloodSugarAVG: value['bloodSugarAVG'],
+                        bloodSugarAVG: value['sugarAVG'],
                     }
                 }
             );
@@ -115,10 +115,10 @@ export default class Profile extends Component<{}> {
                     <Text style={Styles.text}>Last name: {this.state.user.lastName}</Text>
                     <Text style={Styles.text}>Username: {this.state.user.username}</Text>
                     <Text style={Styles.text}>Email: {this.state.user.email}</Text>
-                    <Text style={Styles.text}>Date of birth: {this.state.user.birthDate}</Text>
+                    <Text style={Styles.text}>Date of birth: {this.state.user.birthDay}</Text>
                     <Text style={Styles.text}>Gender: {this.state.user.gender}</Text>
                     <Text style={Styles.text}>Diabetes type: {this.state.user.type}</Text>
-                    <Text style={Styles.text}>Average bloodsugar: {this.state.user.bloodSugarAVG}</Text>
+                    <Text style={Styles.text}>Average blood sugar: {this.state.user.sugarAVG}</Text>
                 </View>
 
                 <View style={Styles.footer}>

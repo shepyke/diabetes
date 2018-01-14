@@ -24,8 +24,8 @@ import RadioForm,
     } from 'react-native-simple-radio-button';
 
 var gender_props = [
-    {label: 'Female    ', value: 'F' },
-    {label: 'Male', value: 'M' }
+    {label: 'Female    ', value: 'FEMALE' },
+    {label: 'Male', value: 'MALE' }
 ];
 
 export default class RegistrationForm extends Component<{}> {
@@ -40,11 +40,11 @@ export default class RegistrationForm extends Component<{}> {
                 firstName: '',
                 lastName: '',
                 email: '',
-                profileImage: '',
-                birthDate: '',
+                image: '',
+                birthDay: '',
                 gender: '',
                 type: '',
-                bloodSugarAVG: '',
+                sugarAVG: '',
             }
         }
     }
@@ -63,7 +63,7 @@ export default class RegistrationForm extends Component<{}> {
                         lastName: this.state.user.lastName,
                         username: this.state.user.username,
                         email: this.state.user.email,
-                        birthDate: this.state.user.birthDate,
+                        birthDay: this.state.user.birthDay,
                         //profileImage: this.state.user.profileImage,
                         gender: this.state.user.gender,
                         type: this.state.user.type,
@@ -174,8 +174,8 @@ export default class RegistrationForm extends Component<{}> {
                     />
 
                     <DatePicker
-                        style={Styles.birthDate}
-                        date={this.state.user.birthDate}
+                        style={Styles.birthDay}
+                        date={this.state.user.birthDay}
                         mode="date"
                         placeholder="Select your birthday"
                         format="YYYY-MM-DD"
@@ -198,9 +198,9 @@ export default class RegistrationForm extends Component<{}> {
                                 color: '#718792',
                             },
                         }}
-                        onDateChange={(birthDate) => {
+                        onDateChange={(birthDay) => {
                             const user = Object.assign({},
-                                this.state.user, { birthDate: birthDate });
+                                this.state.user, { birthDay: birthDay });
                             this.setState({ user: user });
                         }}
                     />
