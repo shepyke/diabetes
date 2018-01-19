@@ -35,18 +35,20 @@ export const Tabs = TabNavigator({
             screen: Diagram,
             navigationOptions: {
                 tabBarLabel: 'Diagram',
-                tabBarIcon: ({ tintColor }) => <Icon name="graph" size={30} color={tintColor} />,
+                tabBarIcon: ({ tintColor }) => <Icon name="show-chart" size={30} color={tintColor} />,
             },
         },
     },
     {
         tabBarPosition: 'bottom',
         animationEnabled: true,
+        swipeEnabled: true,
         activeTintColor: '#718792',
         tabBarOptions: {
             style: {
                 backgroundColor: '#718792',
             },
+            showIcon:true
         },
     }
 );
