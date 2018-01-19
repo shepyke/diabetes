@@ -44,7 +44,7 @@ export default class Login extends Component<{}> {
         //let value = await AsyncStorage.removeItem(() =>AsyncStorage.getItem('user')(() => AsyncStorage.getItem('user')));
         let value = await AsyncStorage.getItem('user');
         if (value !== null){
-            this.props.navigation.navigate('Profile');
+            this.props.navigation.navigate('Tabs');
         }
     }
 
@@ -66,7 +66,7 @@ export default class Login extends Component<{}> {
             .then ((res) => {
                 if(res.success === true){
                     AsyncStorage.setItem('user', JSON.stringify(res.user));
-                    this.props.navigation.navigate('Profile');
+                    this.props.navigation.navigate('Tabs');
                 }else{
                     alert(res.message);
                 }
