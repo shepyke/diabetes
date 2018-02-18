@@ -96,6 +96,11 @@ const Styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
     },
+    preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
 });
 
 export default Styles;
