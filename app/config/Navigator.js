@@ -15,6 +15,7 @@ import Profile  from '../components/Profile';
 import RegistrationForm  from '../components/RegistrationForm';
 import Intake from '../components/Intake';
 import Diagram from '../components/Diagram';
+import BarcodeScanner from '../components/BarcodeScanner';
 
 export const Tabs = TabNavigator({
         Profile: {
@@ -38,6 +39,13 @@ export const Tabs = TabNavigator({
                 tabBarIcon: ({ tintColor }) => <Icon name="show-chart" size={30} color={tintColor} />,
             },
         },
+        BarcodeScanner: {
+            screen: BarcodeScanner,
+            navigationOptions: {
+                tabBarLabel: 'Barcode',
+                tabBarIcon: ({ tintColor }) => <Icon type="material-community" name="barcode-scan" size={30} color={tintColor} />,
+            },
+        }
     },
     {
         tabBarPosition: 'bottom',

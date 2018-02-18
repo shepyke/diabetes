@@ -24,6 +24,7 @@ export default class Profile extends Component<{}> {
         super(props);
         this.state = {
             user: {
+                userId: '',
                 username: '',
                 password: '',
                 firstName: '',
@@ -50,6 +51,7 @@ export default class Profile extends Component<{}> {
             this.setState(
                 {user:
                     {
+                        userId: value['userId'],
                         username: value['username'],
                         email: value['email'],
                         firstName: value['firstName'],

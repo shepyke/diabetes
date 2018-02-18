@@ -21,7 +21,7 @@ export default class Diagram extends Component<{}> {
     render() {
         return (
             <View style={Styles.wrapper}>
-                <Text>Diagram</Text>
+                <Text style={Styles.header}>DIAGRAM</Text>
             </View>
         );
     }

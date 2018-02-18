@@ -22,6 +22,7 @@ export default class Login extends Component<{}> {
         super(props);
         this.state = {
             user: {
+                userId: '',
                 username: '',
                 password: '',
                 firstName: '',
@@ -41,7 +42,6 @@ export default class Login extends Component<{}> {
     }
 
     _loadInitialState = async() => {
-        //let value = await AsyncStorage.removeItem(() =>AsyncStorage.getItem('user')(() => AsyncStorage.getItem('user')));
         let value = await AsyncStorage.getItem('user');
         if (value !== null){
             this.props.navigation.navigate('Tabs');
@@ -50,7 +50,7 @@ export default class Login extends Component<{}> {
 
     login = () => {
         try{
-            fetch('http://172.20.10.12:3000/users/login',{
+            fetch('http://172.20.10.4:3000/users/login',{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

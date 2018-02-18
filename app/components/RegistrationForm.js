@@ -51,7 +51,7 @@ export default class RegistrationForm extends Component<{}> {
 
     submit = async() => {
        try {
-            fetch('http://172.20.10.12:3000/users/registration', {
+            fetch('http://172.20.10.4:3000/users/registration', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
