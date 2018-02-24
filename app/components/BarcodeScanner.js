@@ -7,7 +7,7 @@ import {
     TouchableHighlight,
     View
 } from 'react-native';
-import Camera from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 import Styles from "../config/Styles";
 import { Icon } from 'react-native-elements';
 
@@ -19,10 +19,8 @@ export default class BarcodeScanner extends Component {
 
         this.state = {
             camera: {
-                aspect: Camera.constants.Aspect.fill,
-                type: Camera.constants.Type.back,
-                orientation: Camera.constants.Orientation.auto,
-                flashMode: Camera.constants.FlashMode.auto,
+                type: RNCamera.Constants.Type.back,
+                flashMode: RNCamera.Constants.FlashMode.auto,
             },
             showCamera: true,
         };
@@ -30,7 +28,7 @@ export default class BarcodeScanner extends Component {
 
     switchType = () => {
         let newType;
-        const { back, front } = Camera.constants.Type;
+        const { back, front } = RNCamera.Constants.Type;
 
         if (this.state.camera.type === back) {
             newType = front;
@@ -48,7 +46,7 @@ export default class BarcodeScanner extends Component {
 
     switchFlash = () => {
         let newFlashMode;
-        const { auto, on, off } = Camera.constants.FlashMode;
+        const { auto, on, off } = RNCamera.Constants.FlashMode;
 
         if (this.state.camera.flashMode === auto) {
             newFlashMode = on;
@@ -68,7 +66,7 @@ export default class BarcodeScanner extends Component {
 
     get flashIcon() {
         let icon;
-        const { auto, on, off } = Camera.constants.FlashMode;
+        const { auto, on, off } = RNCamera.Constants.FlashMode;
 
         if (this.state.camera.flashMode === auto) {
             icon =  <Icon name="flash-auto" size={10} color={"white"} />;
@@ -95,19 +93,17 @@ export default class BarcodeScanner extends Component {
         //if(this.state.showCamera) {
             return (
                 <View style={Styles.container}>
-                    <Camera
+                    <RNCamera
                         ref={(cam) => {
                             this.camera = cam;
                         }}
                         onBarCodeRead={this.onBarCodeRead.bind(this)}
                         style={Styles.preview}
-                        aspect={Camera.constants.Aspect.fill}
                         type={this.state.camera.type}
                         torchMode={this.state.camera.flashMode}
                         defaultTouchToFocus
                         mirrorImage={false}
-                    >
-                    </Camera>
+                    />
                 </View>
             );
        /* }else{
