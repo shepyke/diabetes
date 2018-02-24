@@ -15,8 +15,6 @@ export default class BarcodeScanner extends Component {
     constructor(props) {
         super(props);
 
-        this.camera = null;
-
         this.state = {
             camera: {
                 type: RNCamera.Constants.Type.back,
