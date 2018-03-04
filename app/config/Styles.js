@@ -101,6 +101,9 @@ const Styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
+    drowdown: {
+        color: '#fff',
+    },
 });
 
 export default Styles;
