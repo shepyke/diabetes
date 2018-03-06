@@ -46,7 +46,7 @@ export default class Diary extends Component<{}> {
             }
         );
         try {
-            fetch('http://172.20.10.4:3000/measurements')
+            fetch('http://172.20.10.4:3000/diary/getMeasurements')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.diary = res.measurements;
