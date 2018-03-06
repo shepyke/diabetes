@@ -38,18 +38,31 @@ export default class Diary extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
+        let date = new Date();
         this.setState(
             {diary:
                     {
                         userId: value['userId'],
+                        time: date,
                     }
             }
         );
-        try {
-            fetch('http://172.20.10.4:3000/diary/getMeasurements')
+        try{
+            fetch('http://172.20.10.4:3000/diary/getDiary',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: this.state.diary.userId,
+                    time: this.state.diary.time,
+                })
+            })
                 .then((response) => response.json())
                 .then((res) => {
-                    this.state.diary = res.measurements;
+                    console.log("res.diary: " + res.diary);
+                    this.state.diary = res.diary;
                     console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
                     this.setState({
                         isLoading: false
@@ -123,7 +136,7 @@ export default class Diary extends Component<{}> {
 
                 <DatePicker
                     style={Styles.birthDay}
-                    date={this.state.intake.time}
+                    date={this.state.diary.time}
                     mode="datetime"
                     placeholder="When?"
                     format="YYYY-MM-DD HH:MM"
