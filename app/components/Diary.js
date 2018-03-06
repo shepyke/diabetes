@@ -25,6 +25,7 @@ export default class Diary extends Component<{}> {
             diary: {
                 userId: '',
                 insulin: '',
+                sugar: '',
                 time: '',
             },
             isLoading: true,
@@ -88,6 +89,7 @@ export default class Diary extends Component<{}> {
                     diary:{
                         userId: this.state.diary.userId,
                         insulin: this.state.diary.insulin,
+                        sugar: this.state.diary.sugar,
                         time: this.state.diary.time,
                     }
                 })
@@ -126,9 +128,23 @@ export default class Diary extends Component<{}> {
                     keyboardType = 'numeric'
                     maxLength={6}
                     onChangeText={
-                        (amount) => {
+                        (insulin) => {
                             const diary = Object.assign({},
-                                this.state.diary, { amount: amount });
+                                this.state.diary, { insulin: insulin });
+                            this.setState({ diary: diary });
+                        }}
+                    underlineColorAndroid='transparent'
+                />
+
+                <TextInput
+                    style={Styles.textInput}
+                    placeholder='Sugar'
+                    keyboardType = 'numeric'
+                    maxLength={6}
+                    onChangeText={
+                        (sugar) => {
+                            const diary = Object.assign({},
+                                this.state.diary, { sugar: sugar });
                             this.setState({ diary: diary });
                         }}
                     underlineColorAndroid='transparent'
