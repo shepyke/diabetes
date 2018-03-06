@@ -14,6 +14,7 @@ import Login  from '../components/Login';
 import Profile  from '../components/Profile';
 import RegistrationForm  from '../components/RegistrationForm';
 import Intake from '../components/Intake';
+import Diary from '../components/Diary';
 import Diagram from '../components/Diagram';
 import BarcodeScanner from '../components/BarcodeScanner';
 
@@ -22,28 +23,35 @@ export const Tabs = TabNavigator({
             screen: Profile,
             navigationOptions: {
                 tabBarLabel: 'Profile',
-                tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={30} color={tintColor} />
+                tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={26} color={tintColor} />
             },
         },
         Intake: {
             screen: Intake,
             navigationOptions: {
                 tabBarLabel: 'Intake',
-                tabBarIcon: ({ tintColor }) => <Icon name="list" size={30} color={tintColor} />,
+                tabBarIcon: ({ tintColor }) => <Icon name="list" size={26} color={tintColor} />,
+            },
+        },
+        Diary: {
+            screen: Diary,
+            navigationOptions: {
+                tabBarLabel: 'Diary',
+                tabBarIcon: ({ tintColor }) => <Icon type="entypo" name="open-book" size={25} color={tintColor} />,
             },
         },
         Diagram: {
             screen: Diagram,
             navigationOptions: {
-                tabBarLabel: 'Diagram',
-                tabBarIcon: ({ tintColor }) => <Icon name="show-chart" size={30} color={tintColor} />,
+                tabBarLabel: 'Chart',
+                tabBarIcon: ({ tintColor }) => <Icon name="show-chart" size={26} color={tintColor} />,
             },
         },
         BarcodeScanner: {
             screen: BarcodeScanner,
             navigationOptions: {
-                tabBarLabel: 'Barcode',
-                tabBarIcon: ({ tintColor }) => <Icon type="material-community" name="barcode-scan" size={30} color={tintColor} />,
+                tabBarLabel: 'Scan',
+                tabBarIcon: ({ tintColor }) => <Icon type="material-community" name="barcode-scan" size={25} color={tintColor} />,
             },
         }
     },
@@ -55,6 +63,9 @@ export const Tabs = TabNavigator({
         tabBarOptions: {
             style: {
                 backgroundColor: '#718792',
+            },
+            labelStyle: {
+                fontSize: 10,
             },
             showIcon:true
         },
