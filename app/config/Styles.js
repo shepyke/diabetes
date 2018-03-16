@@ -50,7 +50,8 @@ const Styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
         padding: 10,
-        borderBottomColor: 'black',
+        borderBottomColor: '#fff',
+        backgroundColor: '#718792',
         borderBottomWidth: 2,
     },
     profileImage: {
@@ -103,6 +104,32 @@ const Styles = StyleSheet.create({
     },
     drowdown: {
         color: '#fff',
+    },
+    column1: {
+        flex: 0.3,
+    },
+    column2: {
+        flex: 0.3,
+    },
+    column3: {
+        flex: 1,
+    },
+    row: {
+        alignItems: 'center',
+    },
+    breakfast: {
+        backgroundColor: '#ff02FF',
+    },
+    lunch: {
+        backgroundColor: '#00FF00',
+    },
+    dinner: {
+        backgroundColor: '#0000FF',
+    },
+    tableHeader: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 12,
     },
 });
 
