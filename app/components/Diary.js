@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 export default class Diary extends Component<{}> {
     constructor(props){
@@ -41,13 +42,18 @@ export default class Diary extends Component<{}> {
         let value = JSON.parse(val);
         let date = new Date();
         this.setState(
-            {diary:
+            {
+                diary:
                     {
                         userId: value['userId'],
                         time: date,
                     }
             }
         );
+        this.getMeasurements();
+    }
+
+    getMeasurements = async() => {
         try{
             fetch('http://172.20.10.4:3000/diary/getDiary',{
                 method: 'POST',
@@ -62,9 +68,13 @@ export default class Diary extends Component<{}> {
             })
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log("res.diary: " + res.diary);
-                    this.state.diary = res.diary;
-                    console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
+                    if(res.success === true){
+                        console.log("res.diary: " + JSON.stringify(res.diary));
+                        this.state.diary = res.diary;
+                        console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
+                    }else{
+                        alert(res.message);
+                    }
                     this.setState({
                         isLoading: false
                     });
@@ -121,73 +131,109 @@ export default class Diary extends Component<{}> {
         return (
             <View style={Styles.wrapper}>
                 <Text style={Styles.header}>DIARY</Text>
-
-                <TextInput
-                    style={Styles.textInput}
-                    placeholder='Insulin'
-                    keyboardType = 'numeric'
-                    maxLength={6}
-                    onChangeText={
-                        (insulin) => {
-                            const diary = Object.assign({},
-                                this.state.diary, { insulin: insulin });
-                            this.setState({ diary: diary });
-                        }}
-                    underlineColorAndroid='transparent'
-                />
-
-                <TextInput
-                    style={Styles.textInput}
-                    placeholder='Sugar'
-                    keyboardType = 'numeric'
-                    maxLength={6}
-                    onChangeText={
-                        (sugar) => {
-                            const diary = Object.assign({},
-                                this.state.diary, { sugar: sugar });
-                            this.setState({ diary: diary });
-                        }}
-                    underlineColorAndroid='transparent'
-                />
-
-                <DatePicker
-                    style={Styles.birthDay}
-                    date={this.state.diary.time}
-                    mode="datetime"
-                    placeholder="When?"
-                    format="YYYY-MM-DD HH:MM"
-                    minDate="1900-01-01 00:00"
-                    maxDate={new Date()}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    showIcon={false}
-                    customStyles={{
-                        dateInput: {
-                            borderWidth: 0,
-                            position: 'absolute',
-                            marginLeft: 0,
-                            left: 0,
-                        },
-                        dateText: {
-                            color: '#fff',
-                        },
-                        placeholderText: {
-                            color: '#718792',
-                        },
-                    }}
-                    onDateChange={(time) => {
-                        const diary = Object.assign({},
-                            this.state.diary, { time: time });
-                        this.setState({ diary: diary});
-                    }}
-                />
-
-                <TouchableOpacity
-                    style={Styles.button}
-                    onPress={this.submit}>
-                    <Text>Submit</Text>
-                </TouchableOpacity>
+                <Grid>
+                    <Row style={{flex: 0.05}}>
+                        <Col>
+                            <DatePicker
+                                style={Styles.birthDay}
+                                date={this.state.diary.time}
+                                mode="date"
+                                placeholder="Date"
+                                format="YYYY-MM-DD"
+                                minDate="1900-01-01"
+                                maxDate={new Date()}
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                showIcon={true}
+                                customStyles={{
+                                    dateInput: {
+                                        borderWidth: 0,
+                                        marginBottom: 22,
+                                    },
+                                    dateText: {
+                                        color: '#fff',
+                                        fontWeight: 'bold',
+                                        fontSize: 12,
+                                    },
+                                    dateIcon:{
+                                        marginBottom: 22,
+                                        width: 20,
+                                        height: 20,
+                                    },
+                                }}
+                                onDateChange={(time) => {
+                                    const diary = Object.assign({},
+                                        this.state.diary, { time: time });
+                                    this.setState({ diary: diary});
+                                    console.log("this.state.diary:before: " + JSON.stringify(this.state.diary,null,4));
+                                    this.getMeasurements();
+                                    console.log("this.state.diary:after: " + JSON.stringify(this.state.diary,null,4));
+                                }}
+                            />
+                        </Col>
+                        <Col>
+                            <Text style={[Styles.tableHeader,{textAlign: 'center'}]}>
+                                Measurements
+                            </Text>
+                        </Col>
+                    </Row>
+                    <Row style={Styles.row}>
+                        <Col style={Styles.column1}>
+                            <Row style={[Styles.row, Styles.breakfast]}>
+                                <Text style={Styles.tableHeader}>Breakfast</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.lunch]}>
+                                <Text style={Styles.tableHeader}>Lunch</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.dinner]}>
+                                <Text style={Styles.tableHeader}>Dinner</Text>
+                            </Row>
+                        </Col>
+                        <Col style={Styles.column2}>
+                            <Row style={[Styles.row, Styles.breakfast]}>
+                                <Text style={Styles.tableHeader}>Before</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.breakfast]}>
+                                <Text style={Styles.tableHeader}>After</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.lunch]}>
+                                <Text style={Styles.tableHeader}>Before</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.lunch]}>
+                                <Text style={Styles.tableHeader}>After</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.dinner]}>
+                                <Text style={Styles.tableHeader}>Before</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.dinner]}>
+                                <Text style={Styles.tableHeader}>After</Text>
+                            </Row>
+                        </Col>
+                        <Col style={Styles.column3}>
+                            <Row style={[Styles.row, Styles.breakfast]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.breakfast]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.lunch]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.lunch]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.dinner]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                            <Row style={[Styles.row, Styles.dinner]}>
+                                <Text style={Styles.text}>2313123131238921</Text>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row style={{flex: 0.05}}/>
+                </Grid>
             </View>
+
         );
     }
 }
