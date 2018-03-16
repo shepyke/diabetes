@@ -97,16 +97,13 @@ export default class Profile extends Component<{}> {
         return (
             <View style={Styles.wrapper}>
 
-                <ImageBackground
-                     style={Styles.backgroundImage}
-
-                     source={{uri: 'https://iphonekozosseg.hu/wp-content/uploads/2014/11/abstract-fly-white-line-pattern-9-ipad-wallpaper.jpg'}}>
+                <View style={Styles.backgroundImage}>
                     <Image
                         style={Styles.profileImage}
                         /*source={{uri: this.state.user.profileImage}}*/
                         source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
                     />
-                </ImageBackground>
+                </View>
 
                 <View style={[Styles.container, {flex: .2}]}>
                     <Text style={Styles.welcome}>Welcome {this.state.user.username}</Text>
