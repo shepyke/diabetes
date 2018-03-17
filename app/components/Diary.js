@@ -23,11 +23,14 @@ export default class Diary extends Component<{}> {
     constructor(props){
         super(props);
         this.state = {
+            userId: '',
+            time: '',
             diary: {
                 userId: '',
                 insulin: '',
                 sugar: '',
                 time: '',
+                type: '',
             },
             isLoading: true,
         }
@@ -43,11 +46,13 @@ export default class Diary extends Component<{}> {
         let date = new Date();
         this.setState(
             {
+                userId: value['userId'],
+                time: date,
                 diary:
                     {
+                        ...this.state.diary,
                         userId: value['userId'],
-                        time: date,
-                    }
+                    },
             }
         );
         this.getMeasurements();
@@ -62,8 +67,8 @@ export default class Diary extends Component<{}> {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: this.state.diary.userId,
-                    time: this.state.diary.time,
+                    userId: this.state.userId,
+                    time: this.state.time,
                 })
             })
                 .then((response) => response.json())
@@ -101,6 +106,7 @@ export default class Diary extends Component<{}> {
                         insulin: this.state.diary.insulin,
                         sugar: this.state.diary.sugar,
                         time: this.state.diary.time,
+                        type: this.state.diary.type,
                     }
                 })
             })
@@ -136,7 +142,7 @@ export default class Diary extends Component<{}> {
                         <Col>
                             <DatePicker
                                 style={Styles.birthDay}
-                                date={this.state.diary.time}
+                                date={this.state.time}
                                 mode="date"
                                 placeholder="Date"
                                 format="YYYY-MM-DD"
@@ -162,12 +168,10 @@ export default class Diary extends Component<{}> {
                                     },
                                 }}
                                 onDateChange={(time) => {
-                                    const diary = Object.assign({},
-                                        this.state.diary, { time: time });
-                                    this.setState({ diary: diary});
-                                    console.log("this.state.diary:before: " + JSON.stringify(this.state.diary,null,4));
+                                    this.setState({
+                                        time: time,
+                                    });
                                     this.getMeasurements();
-                                    console.log("this.state.diary:after: " + JSON.stringify(this.state.diary,null,4));
                                 }}
                             />
                         </Col>
