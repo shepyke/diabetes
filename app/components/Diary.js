@@ -43,7 +43,7 @@ export default class Diary extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = new Date();
+        let date = new Date().toLocaleString();
         this.setState(
             {
                 userId: value['userId'],
@@ -74,11 +74,10 @@ export default class Diary extends Component<{}> {
                 .then((response) => response.json())
                 .then((res) => {
                     if(res.success === true){
-                        console.log("res.diary: " + JSON.stringify(res.diary));
                         this.state.diary = res.diary;
-                        console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
                     }else{
                         alert(res.message);
+                        this.state.diary= {};
                     }
                     this.setState({
                         isLoading: false
@@ -215,7 +214,12 @@ export default class Diary extends Component<{}> {
                         </Col>
                         <Col style={Styles.column3}>
                             <Row style={[Styles.row, Styles.breakfast]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
+                                {console.log("this.state.diary: itt tortenik a kiírás tutira:" + JSON.stringify(this.state.diary,null,4))}
+                                {console.log("this.state.diary.sugar: " + this.state.diary.sugar)}
+                                {console.log("this.state.time: " + this.state.time)}
+                                <Text style={Styles.text}>Blood sugar: {this.state.diary.sugar}</Text>
+                                <Text style={Styles.text}>Insulin: {this.state.diary.insulin}</Text>
+                                <Text style={Styles.text}>Time: {this.state.diary.time}</Text>
                             </Row>
                             <Row style={[Styles.row, Styles.breakfast]}>
                                 <Text style={Styles.text}>2313123131238921</Text>
