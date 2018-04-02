@@ -17,23 +17,38 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
-import { Col, Row, Grid } from "react-native-easy-grid";
+//import { Col, Row, Grid } from "react-native-easy-grid";
+import {
+    Cell,
+    DataTable,
+    Header,
+    HeaderCell,
+    Row,
+} from 'react-native-data-table';
+import { ListView } from 'realm/react-native';
 
 export default class Diary extends Component<{}> {
     constructor(props){
         super(props);
+        const dataSource = new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        });
         this.state = {
             userId: '',
             time: '',
             diary: {
                 userId: '',
+                type: '',
+                when: '',
+                time: '',
                 insulin: '',
                 sugar: '',
-                time: '',
-                type: '',
             },
+            dataSource: dataSource,
             isLoading: true,
         }
+        this.renderHeader = this.renderHeader.bind(this);
+        this.renderRow = this.renderRow.bind(this);
     }
 
     componentDidMount(){
@@ -43,7 +58,7 @@ export default class Diary extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = new Date().toLocaleString();
+        let date = new Date();
         this.setState(
             {
                 userId: value['userId'],
@@ -75,6 +90,9 @@ export default class Diary extends Component<{}> {
                 .then((res) => {
                     if(res.success === true){
                         this.state.diary = res.diary;
+                        this.setState({
+                            dataSource: this.state.dataSource.cloneWithRows(this.state.diary),
+                        });
                     }else{
                         alert(res.message);
                         this.state.diary= {};
@@ -102,10 +120,11 @@ export default class Diary extends Component<{}> {
                 body: JSON.stringify({
                     diary:{
                         userId: this.state.diary.userId,
+                        type: this.state.diary.type,
+                        when: this.state.diary.when,
+                        time: this.state.diary.time,
                         insulin: this.state.diary.insulin,
                         sugar: this.state.diary.sugar,
-                        time: this.state.diary.time,
-                        type: this.state.diary.type,
                     }
                 })
             })
@@ -124,6 +143,110 @@ export default class Diary extends Component<{}> {
 
     }
 
+    renderHeader() {
+        return (
+            <Header style={{backgroundColor: 'white'}}>
+                <HeaderCell
+                     key={0}
+                     style={{backgroundColor: 'white', borderColor: 'blue'}}
+                     textStyle={{color: 'grey'}}
+                     width={2}
+                     text={"Type"}
+                 />
+                <HeaderCell
+                    key={1}
+                    style={{backgroundColor: 'white', borderColor: 'blue'}}
+                    textStyle={{color: 'grey'}}
+                    width={1}
+                    text={"When"}
+                />
+                 <HeaderCell
+                     key={2}
+                     style={{backgroundColor: 'white', borderColor: 'blue', textAlign: 'center'}}
+                     textStyle={{color: 'grey'}}
+                     width={3}
+                     text={"Time"}
+                 />
+                 <HeaderCell
+                     key={3}
+                     style={{backgroundColor: 'white', borderColor: 'blue'}}
+                     textStyle={{color: 'grey'}}
+                     width={1}
+                     text={"Insulin"}
+                 />
+                <HeaderCell
+                    key={4}
+                    style={{backgroundColor: 'white', borderColor: 'blue'}}
+                    textStyle={{color: 'grey'}}
+                    width={1}
+                    text={"Sugar"}
+                />
+            </Header>
+        );
+    }
+
+    renderRow(item) {
+        const cells = [];
+        if (this.state.diary && this.state.diary.length > 0) {
+            const firstObject = this.state.diary[0];
+            for (const [key] of Object.entries(firstObject)) {
+                if(key != 'measurementId' && key != 'userId') {
+                    let itemString = item[key]
+                        && ((typeof item[key] === 'string')
+                            || (typeof item[key] === 'number')
+                            || (typeof item[key].getMonth === 'function'))
+                        && String(item[key]);
+                    if (!itemString && item[key] && item[key].length) itemString = item[key].length;
+                    if (typeof item[key] === 'boolean') itemString = item[key] ? 'True' : 'False';
+                    if (!itemString && item[key] && item[key].id) itemString = item[key].id;
+                    switch(key) {
+                        case 'type':
+                            cells.push(
+                                <Cell
+                                    key={key}
+                                    style={Styles}
+                                    textStyle={Styles.text}
+                                    width={2}
+                                >
+                                    {itemString}
+                                </Cell>
+                            );
+                            break;
+                        case 'time':
+                            itemString = itemString.slice(11,19);
+                            cells.push(
+                                <Cell
+                                    key={key}
+                                    style={Styles}
+                                    textStyle={Styles.text}
+                                    width={3}
+                                >
+                                    {itemString}
+                                </Cell>
+                            );
+                            break;
+                        default:
+                            cells.push(
+                                <Cell
+                                    key={key}
+                                    style={Styles}
+                                    textStyle={Styles.text}
+                                    width={1}
+                                >
+                                    {itemString}
+                                </Cell>
+                            );
+                    }
+                }
+            }
+        }
+        return (
+            <Row style={{color: "black"}}>
+                {cells}
+            </Row>
+        );
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -136,110 +259,50 @@ export default class Diary extends Component<{}> {
         return (
             <View style={Styles.wrapper}>
                 <Text style={Styles.header}>DIARY</Text>
-                <Grid>
-                    <Row style={{flex: 0.05}}>
-                        <Col>
-                            <DatePicker
-                                style={Styles.birthDay}
-                                date={this.state.time}
-                                mode="date"
-                                placeholder="Date"
-                                format="YYYY-MM-DD"
-                                minDate="1900-01-01"
-                                maxDate={new Date()}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                showIcon={true}
-                                customStyles={{
-                                    dateInput: {
-                                        borderWidth: 0,
-                                        marginBottom: 22,
-                                    },
-                                    dateText: {
-                                        color: '#fff',
-                                        fontWeight: 'bold',
-                                        fontSize: 12,
-                                    },
-                                    dateIcon:{
-                                        marginBottom: 22,
-                                        width: 20,
-                                        height: 20,
-                                    },
-                                }}
-                                onDateChange={(time) => {
-                                    this.setState({
-                                        time: time,
-                                    });
-                                    this.getMeasurements();
-                                }}
-                            />
-                        </Col>
-                        <Col>
-                            <Text style={[Styles.tableHeader,{textAlign: 'center'}]}>
-                                Measurements
-                            </Text>
-                        </Col>
-                    </Row>
-                    <Row style={Styles.row}>
-                        <Col style={Styles.column1}>
-                            <Row style={[Styles.row, Styles.breakfast]}>
-                                <Text style={Styles.tableHeader}>Breakfast</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.lunch]}>
-                                <Text style={Styles.tableHeader}>Lunch</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.dinner]}>
-                                <Text style={Styles.tableHeader}>Dinner</Text>
-                            </Row>
-                        </Col>
-                        <Col style={Styles.column2}>
-                            <Row style={[Styles.row, Styles.breakfast]}>
-                                <Text style={Styles.tableHeader}>Before</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.breakfast]}>
-                                <Text style={Styles.tableHeader}>After</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.lunch]}>
-                                <Text style={Styles.tableHeader}>Before</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.lunch]}>
-                                <Text style={Styles.tableHeader}>After</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.dinner]}>
-                                <Text style={Styles.tableHeader}>Before</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.dinner]}>
-                                <Text style={Styles.tableHeader}>After</Text>
-                            </Row>
-                        </Col>
-                        <Col style={Styles.column3}>
-                            <Row style={[Styles.row, Styles.breakfast]}>
-                                {console.log("this.state.diary: itt tortenik a kiírás tutira:" + JSON.stringify(this.state.diary,null,4))}
-                                {console.log("this.state.diary.sugar: " + this.state.diary.sugar)}
-                                {console.log("this.state.time: " + this.state.time)}
-                                <Text style={Styles.text}>Blood sugar: {this.state.diary.sugar}</Text>
-                                <Text style={Styles.text}>Insulin: {this.state.diary.insulin}</Text>
-                                <Text style={Styles.text}>Time: {this.state.diary.time}</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.breakfast]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.lunch]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.lunch]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.dinner]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
-                            </Row>
-                            <Row style={[Styles.row, Styles.dinner]}>
-                                <Text style={Styles.text}>2313123131238921</Text>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={{flex: 0.05}}/>
-                </Grid>
+                <View>
+                    <DatePicker
+                        style={Styles.birthDay}
+                        date={this.state.time}
+                        mode="date"
+                        placeholder="Date"
+                        format="YYYY-MM-DD"
+                        minDate="1900-01-01"
+                        maxDate={new Date()}
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        showIcon={true}
+                        customStyles={{
+                            dateInput: {
+                                borderWidth: 0,
+                                marginBottom: 22,
+                            },
+                            dateText: {
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                fontSize: 12,
+                            },
+                            dateIcon:{
+                                marginBottom: 22,
+                                width: 20,
+                                height: 20,
+                            },
+                        }}
+                        onDateChange={(time) => {
+                            this.setState({
+                                time: time,
+                            });
+                            this.getMeasurements();
+                        }}
+                    />
+
+                </View>
+                <DataTable
+                    style={Styles.wrapper}
+                    listViewStyle={Styles.wrapper}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    renderHeader={this.renderHeader}
+                />
             </View>
 
         );
