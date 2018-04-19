@@ -23,13 +23,33 @@ export default class AddMeasurement extends Component {
         this.state = {
             diary: {
                 userId: '',
-                type: 'breakfast',
-                when: 'before',
-                time: new Date(),
+                type: '',
+                when: '',
+                time: '',
                 insulin: '',
                 sugar: '',
             },
         };
+    }
+
+    componentDidMount(){
+        this._loadInitialState().done();
+    }
+
+    _loadInitialState = async() => {
+        let val = await AsyncStorage.getItem('user');
+        let value = JSON.parse(val);
+        this.setState(
+            {
+                diary:
+                    {
+                        ...this.state.diary,
+                        type: 'breakfast',
+                        when: 'before',
+                        userId: value['userId'],
+                    },
+            }
+        );
     }
 
     showAddModal = () => {
@@ -166,9 +186,9 @@ export default class AddMeasurement extends Component {
                     keyboardType = 'numeric'
                     maxLength={6}
                     onChangeText={
-                        (amount) => {
+                        (insulin) => {
                             const diary = Object.assign({},
-                                this.state.diary, { amount: amount });
+                                this.state.diary, { insulin: insulin });
                             this.setState({ diary: diary });
                         }}
                     underlineColorAndroid='transparent'
@@ -180,9 +200,9 @@ export default class AddMeasurement extends Component {
                     keyboardType = 'numeric'
                     maxLength={6}
                     onChangeText={
-                        (amount) => {
+                        (sugar) => {
                             const diary = Object.assign({},
-                                this.state.diary, { amount: amount });
+                                this.state.diary, { sugar: sugar });
                             this.setState({ diary: diary });
                         }}
                     underlineColorAndroid='transparent'
