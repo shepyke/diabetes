@@ -17,7 +17,6 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
-//import { Col, Row, Grid } from "react-native-easy-grid";
 import {
     Cell,
     DataTable,
@@ -26,6 +25,8 @@ import {
     Row,
 } from 'react-native-data-table';
 import { ListView } from 'realm/react-native';
+import Swipeout from 'react-native-swipeout';
+
 
 export default class Diary extends Component<{}> {
     constructor(props){
@@ -49,6 +50,7 @@ export default class Diary extends Component<{}> {
         }
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
+        this.deleteMeasurement = this.deleteMeasurement.bind(this);
     }
 
     componentDidMount(){
@@ -186,6 +188,15 @@ export default class Diary extends Component<{}> {
     }
 
     renderRow(item) {
+        let swipeBtns = [{
+            text: 'Delete',
+            backgroundColor: 'red',
+            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+            onPress: () => {
+                this.deleteMeasurement(item['measurementId']);
+            }
+        }];
+
         const cells = [];
         if (this.state.diary && this.state.diary.length > 0) {
             const firstObject = this.state.diary[0];
@@ -253,10 +264,41 @@ export default class Diary extends Component<{}> {
             }
         }
         return (
-            <Row>
-                {cells}
-            </Row>
+            <Swipeout right={swipeBtns}
+                      autoClose={true}
+                      backgroundColor= 'transparent'>
+                <Row>
+                    {cells}
+                </Row>
+            </Swipeout>
         );
+    }
+
+    deleteMeasurement = async(measurementId) => {
+            try {
+                fetch('http://172.20.10.4:3000/diary/deleteMeasurement', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        measurementId: measurementId,
+                    })
+                })
+                    .then((response) => response.json())
+                    .then ((res) => {
+                        if(res.success === true){
+                            alert(res.message);
+                            this.getMeasurements();
+                        }else{
+                            alert(res.message);
+                        }
+                    })
+                    .done();
+            }catch(err){
+                console.log(err);
+            }
     }
 
     render() {
