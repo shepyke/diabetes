@@ -127,9 +127,22 @@ const Styles = StyleSheet.create({
         backgroundColor: '#0000FF',
     },
     tableHeader: {
-        color: '#fff',
+        backgroundColor: 'white',
+        borderColor: 'blue',
+    },
+    tableHeaderText: {
+        color: '#718792',
         fontWeight: 'bold',
         fontSize: 12,
+        textAlign: 'center',
+        alignItems: 'center',
+    },
+    cell: {
+        backgroundColor: '#c2c2c2',
+    },
+    cellText: {
+        color: '#718792',
+        textAlign: 'center',
     },
 });
 

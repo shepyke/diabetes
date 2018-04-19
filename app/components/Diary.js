@@ -17,8 +17,8 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
-//import { Col, Row, Grid } from "react-native-easy-grid";
 import {
+    EditableCell,
     Cell,
     DataTable,
     Header,
@@ -148,36 +148,36 @@ export default class Diary extends Component<{}> {
             <Header style={{backgroundColor: 'white'}}>
                 <HeaderCell
                      key={0}
-                     style={{backgroundColor: 'white', borderColor: 'blue'}}
-                     textStyle={{color: 'grey'}}
+                     style={Styles.tableHeader}
+                     textStyle={Styles.tableHeaderText}
                      width={2}
                      text={"Type"}
                  />
                 <HeaderCell
                     key={1}
-                    style={{backgroundColor: 'white', borderColor: 'blue'}}
-                    textStyle={{color: 'grey'}}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
                     width={1}
                     text={"When"}
                 />
                  <HeaderCell
                      key={2}
-                     style={{backgroundColor: 'white', borderColor: 'blue', textAlign: 'center'}}
-                     textStyle={{color: 'grey'}}
+                     style={Styles.tableHeader}
+                     textStyle={Styles.tableHeaderText}
                      width={3}
                      text={"Time"}
                  />
                  <HeaderCell
                      key={3}
-                     style={{backgroundColor: 'white', borderColor: 'blue'}}
-                     textStyle={{color: 'grey'}}
+                     style={Styles.tableHeader}
+                     textStyle={Styles.tableHeaderText}
                      width={1}
                      text={"Insulin"}
                  />
                 <HeaderCell
                     key={4}
-                    style={{backgroundColor: 'white', borderColor: 'blue'}}
-                    textStyle={{color: 'grey'}}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
                     width={1}
                     text={"Sugar"}
                 />
@@ -204,8 +204,8 @@ export default class Diary extends Component<{}> {
                             cells.push(
                                 <Cell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={2}
                                 >
                                     {itemString}
@@ -217,8 +217,8 @@ export default class Diary extends Component<{}> {
                             cells.push(
                                 <Cell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={3}
                                 >
                                     {itemString}
@@ -227,21 +227,32 @@ export default class Diary extends Component<{}> {
                             break;
                         default:
                             cells.push(
-                                <Cell
+                                <EditableCell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={1}
-                                >
-                                    {itemString}
-                                </Cell>
+                                    //returnKeyType={renderedCell.returnKeyType || 'next'}
+                                    selectTextOnFocus={true}
+                                    placeholder={itemString}
+                                    //keyboardType={renderedCell.keyboardType || 'numeric'}
+                                    onEndEditing={(target, value) => {
+                                        if (!this.props.onEndEditing) return;
+                                        this.props.onEndEditing(key, target, value);
+                                        //this.refreshData();
+                                    }}
+                                    //onSubmitEditing={() => this.focusNextField(parseInt(rowId, 10), columnIndex)}
+                                    target={itemString}
+                                    value={itemString}
+                                    underlineColorAndroid='transparent'
+                                />
                             );
                     }
                 }
             }
         }
         return (
-            <Row style={{color: "black"}}>
+            <Row>
                 {cells}
             </Row>
         );
@@ -294,7 +305,11 @@ export default class Diary extends Component<{}> {
                             this.getMeasurements();
                         }}
                     />
-
+                    <TouchableOpacity
+                        style={Styles.logout}
+                        onPress={this.logout}>
+                        <Text>+</Text>
+                    </TouchableOpacity>
                 </View>
                 <DataTable
                     style={Styles.wrapper}
