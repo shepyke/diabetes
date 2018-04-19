@@ -123,7 +123,7 @@ export default class Intake extends Component<{}> {
                 <Text style={Styles.header}>INTAKE</Text>
 
                 <Picker
-                    style={Styles.drowdown}
+                    style={Styles.dropdown}
                     selectedValue={this.state.intake.foodId}
                     mode="dropdown"
                     onValueChange={(itemValue, itemIndex) => {

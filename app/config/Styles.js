@@ -107,7 +107,7 @@ const Styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
-    drowdown: {
+    dropdown: {
         color: '#fff',
     },
     column1: {
@@ -121,15 +121,6 @@ const Styles = StyleSheet.create({
     },
     row: {
         alignItems: 'center',
-    },
-    breakfast: {
-        backgroundColor: '#ff02FF',
-    },
-    lunch: {
-        backgroundColor: '#00FF00',
-    },
-    dinner: {
-        backgroundColor: '#0000FF',
     },
     tableHeader: {
         backgroundColor: 'white',
@@ -155,7 +146,7 @@ const Styles = StyleSheet.create({
         height: 30,
         width: 30,
         borderRadius: 30 / 2 ,
-        backgroundColor: 'green',
+        backgroundColor: 'mediumseagreen',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
