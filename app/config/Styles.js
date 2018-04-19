@@ -79,6 +79,13 @@ const Styles = StyleSheet.create({
         marginBottom: 6,
         color: '#fff',
     },
+    textInput2: {
+        alignSelf: 'stretch',
+        paddingLeft: 6,
+        marginBottom: 2,
+        color: '#718792',
+        fontSize: 12,
+    },
     button: {
         alignSelf: 'stretch',
         backgroundColor: '#718792',
@@ -109,6 +116,10 @@ const Styles = StyleSheet.create({
     },
     dropdown: {
         color: '#fff',
+    },
+    dropdown2: {
+        color: '#718792',
+        height: 30,
     },
     column1: {
         flex: 0.3,
