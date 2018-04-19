@@ -26,6 +26,7 @@ import {
 } from 'react-native-data-table';
 import { ListView } from 'realm/react-native';
 import Swipeout from 'react-native-swipeout';
+import AddMeasurement from "./AddMeasurement";
 
 
 export default class Diary extends Component<{}> {
@@ -51,6 +52,7 @@ export default class Diary extends Component<{}> {
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
         this.deleteMeasurement = this.deleteMeasurement.bind(this);
+        this._onPressAdd = this._onPressAdd.bind(this);
     }
 
     componentDidMount(){
@@ -109,40 +111,6 @@ export default class Diary extends Component<{}> {
         }catch(error){
             console.error(error);
         }
-    }
-
-    submit = async() => {
-        try {
-            fetch('http://172.20.10.4:3000/diary/addMeasurement', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    diary:{
-                        userId: this.state.diary.userId,
-                        type: this.state.diary.type,
-                        when: this.state.diary.when,
-                        time: this.state.diary.time,
-                        insulin: this.state.diary.insulin,
-                        sugar: this.state.diary.sugar,
-                    }
-                })
-            })
-                .then((response) => response.json())
-                .then ((res) => {
-                    if(res.success === true){
-                        alert('You have successfully added a new measurement');
-                    }else{
-                        alert(res.message);
-                    }
-                })
-                .done();
-        }catch(err){
-            console.log(err);
-        }
-
     }
 
     renderHeader() {
@@ -301,6 +269,10 @@ export default class Diary extends Component<{}> {
             }
     }
 
+    _onPressAdd () {
+        this.refs.addNewMeasurement.showAddModal();
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -350,7 +322,7 @@ export default class Diary extends Component<{}> {
                     />
 
                     <TouchableOpacity
-                        onPress={() => console.log("Add tapped!")}
+                        onPress={this._onPressAdd}
                         style={Styles.plusButton}
                     >
                         <Text>+</Text>
@@ -363,6 +335,7 @@ export default class Diary extends Component<{}> {
                     renderRow={this.renderRow}
                     renderHeader={this.renderHeader}
                 />
+                <AddMeasurement ref={'addNewMeasurement'}/>
             </View>
 
         );
