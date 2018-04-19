@@ -147,37 +147,37 @@ export default class Diary extends Component<{}> {
         return (
             <Header style={{backgroundColor: 'white'}}>
                 <HeaderCell
-                     key={0}
-                     style={{backgroundColor: 'white', borderColor: 'blue'}}
-                     textStyle={{color: 'grey'}}
-                     width={2}
-                     text={"Type"}
-                 />
+                    key={0}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
+                    width={2}
+                    text={"Type"}
+                />
                 <HeaderCell
                     key={1}
-                    style={{backgroundColor: 'white', borderColor: 'blue'}}
-                    textStyle={{color: 'grey'}}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
                     width={1}
                     text={"When"}
                 />
-                 <HeaderCell
-                     key={2}
-                     style={{backgroundColor: 'white', borderColor: 'blue', textAlign: 'center'}}
-                     textStyle={{color: 'grey'}}
-                     width={3}
-                     text={"Time"}
-                 />
-                 <HeaderCell
-                     key={3}
-                     style={{backgroundColor: 'white', borderColor: 'blue'}}
-                     textStyle={{color: 'grey'}}
-                     width={1}
-                     text={"Insulin"}
-                 />
+                <HeaderCell
+                    key={2}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
+                    width={3}
+                    text={"Time"}
+                />
+                <HeaderCell
+                    key={3}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
+                    width={1}
+                    text={"Insulin"}
+                />
                 <HeaderCell
                     key={4}
-                    style={{backgroundColor: 'white', borderColor: 'blue'}}
-                    textStyle={{color: 'grey'}}
+                    style={Styles.tableHeader}
+                    textStyle={Styles.tableHeaderText}
                     width={1}
                     text={"Sugar"}
                 />
@@ -204,8 +204,8 @@ export default class Diary extends Component<{}> {
                             cells.push(
                                 <Cell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={2}
                                 >
                                     {itemString}
@@ -217,8 +217,8 @@ export default class Diary extends Component<{}> {
                             cells.push(
                                 <Cell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={3}
                                 >
                                     {itemString}
@@ -229,8 +229,8 @@ export default class Diary extends Component<{}> {
                             cells.push(
                                 <Cell
                                     key={key}
-                                    style={Styles}
-                                    textStyle={Styles.text}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
                                     width={1}
                                 >
                                     {itemString}
@@ -241,7 +241,7 @@ export default class Diary extends Component<{}> {
             }
         }
         return (
-            <Row style={{color: "black"}}>
+            <Row>
                 {cells}
             </Row>
         );
