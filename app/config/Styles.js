@@ -18,6 +18,11 @@ const Styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#1c313a',
     },
+    dateAndPlus: {
+        flex: 0.1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     header: {
         fontSize: 20,
         color: '#fff',
@@ -133,9 +138,10 @@ const Styles = StyleSheet.create({
     tableHeaderText: {
         color: '#718792',
         fontWeight: 'bold',
-        fontSize: 12,
-        textAlign: 'center',
-        alignItems: 'center',
+        fontSize: 14,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        lineHeight: 40,
     },
     cell: {
         backgroundColor: '#c2c2c2',
@@ -143,7 +149,17 @@ const Styles = StyleSheet.create({
     cellText: {
         color: '#718792',
         textAlign: 'center',
+        lineHeight: 30,
     },
+    plusButton: {
+        height: 30,
+        width: 30,
+        borderRadius: 30 / 2 ,
+        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+    }
 });
 
 export default Styles;

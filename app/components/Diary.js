@@ -151,7 +151,7 @@ export default class Diary extends Component<{}> {
                     style={Styles.tableHeader}
                     textStyle={Styles.tableHeaderText}
                     width={2}
-                    text={"Type"}
+                    text={"     Type"}
                 />
                 <HeaderCell
                     key={1}
@@ -165,13 +165,13 @@ export default class Diary extends Component<{}> {
                     style={Styles.tableHeader}
                     textStyle={Styles.tableHeaderText}
                     width={3}
-                    text={"Time"}
+                    text={"               Time"}
                 />
                 <HeaderCell
                     key={3}
                     style={Styles.tableHeader}
                     textStyle={Styles.tableHeaderText}
-                    width={1}
+                    width={1.5}
                     text={"Insulin"}
                 />
                 <HeaderCell
@@ -225,6 +225,18 @@ export default class Diary extends Component<{}> {
                                 </Cell>
                             );
                             break;
+                        case 'insulin':
+                            cells.push(
+                                <Cell
+                                    key={key}
+                                    style={Styles.cell}
+                                    textStyle={Styles.cellText}
+                                    width={1.5}
+                                >
+                                    {itemString}
+                                </Cell>
+                            );
+                            break;
                         default:
                             cells.push(
                                 <Cell
@@ -259,7 +271,7 @@ export default class Diary extends Component<{}> {
         return (
             <View style={Styles.wrapper}>
                 <Text style={Styles.header}>DIARY</Text>
-                <View>
+                <View style={Styles.dateAndPlus}>
                     <DatePicker
                         style={Styles.birthDay}
                         date={this.state.time}
@@ -274,7 +286,7 @@ export default class Diary extends Component<{}> {
                         customStyles={{
                             dateInput: {
                                 borderWidth: 0,
-                                marginBottom: 22,
+                                marginBottom: 8,
                             },
                             dateText: {
                                 color: '#fff',
@@ -282,7 +294,7 @@ export default class Diary extends Component<{}> {
                                 fontSize: 12,
                             },
                             dateIcon:{
-                                marginBottom: 22,
+                                marginBottom: 8,
                                 width: 20,
                                 height: 20,
                             },
@@ -295,6 +307,12 @@ export default class Diary extends Component<{}> {
                         }}
                     />
 
+                    <TouchableOpacity
+                        onPress={() => console.log("Add tapped!")}
+                        style={Styles.plusButton}
+                    >
+                        <Text>+</Text>
+                    </TouchableOpacity>
                 </View>
                 <DataTable
                     style={Styles.wrapper}
