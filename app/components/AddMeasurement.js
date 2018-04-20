@@ -219,11 +219,11 @@ export default class AddMeasurement extends Component {
                         backgroundColor: 'mediumseagreen'
                     }}
                     onPress={() => {
-                        if (this.state.diary.insulin == null
-                            || this.state.diary.sugar == null
-                            || this.state.diary.time == null
-                            || this.state.diary.type == null
-                            || this.state.diary.when == null
+                        if (this.state.diary.insulin == ''
+                            || this.state.diary.sugar == ''
+                            || this.state.diary.time == ''
+                            || this.state.diary.type == ''
+                            || this.state.diary.when == ''
                         ) {
                             alert("You must fill all fields");
                             return;
