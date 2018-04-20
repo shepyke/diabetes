@@ -55,7 +55,9 @@ export default class Intake extends Component<{}> {
         this.setState(
             {intake:
                 {
+                    ...this.state.intake,
                     userId: value['userId'],
+                    foodId: '1',
                 }
             }
         );
