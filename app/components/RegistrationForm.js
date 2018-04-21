@@ -22,6 +22,7 @@ import RadioForm,
         RadioButtonInput,
         RadioButtonLabel
     } from 'react-native-simple-radio-button';
+import Moment from 'moment';
 
 var gender_props = [
     {label: 'Female    ', value: 'FEMALE' },
@@ -180,7 +181,7 @@ export default class RegistrationForm extends Component<{}> {
                         placeholder="Select your birthday"
                         format="YYYY-MM-DD"
                         minDate="1900-01-01"
-                        maxDate={new Date()}
+                        maxDate={Moment().format('YYYY-MM-DD')}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         showIcon={false}

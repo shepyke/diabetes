@@ -1,3 +1,9 @@
+/**
+ * Diabetes
+ * https://github.com/shepyke/diabetes
+ * @flow
+ */
+
 import React, { Component } from 'react';
 import {
     Platform,
@@ -14,6 +20,7 @@ import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import Moment from 'moment';
 
 let screen = Dimensions.get('window');
 
@@ -39,6 +46,8 @@ export default class AddMeasurement extends Component {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
+        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+
         this.setState(
             {
                 diary:
@@ -46,6 +55,7 @@ export default class AddMeasurement extends Component {
                         ...this.state.diary,
                         type: 'breakfast',
                         when: 'before',
+                        time: date,
                         userId: value['userId'],
                     },
             }
@@ -151,9 +161,9 @@ export default class AddMeasurement extends Component {
                     date={this.state.diary.time}
                     mode="datetime"
                     placeholder="When?"
-                    format="YYYY-MM-DD HH:MM"
+                    format="YYYY-MM-DD HH:mm"
                     minDate="1900-01-01 00:00"
-                    maxDate={new Date()}
+                    maxDate={Moment().format('YYYY-MM-DD HH:mm:ss')}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}

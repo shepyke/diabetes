@@ -27,6 +27,7 @@ import {
 import { ListView } from 'realm/react-native';
 import Swipeout from 'react-native-swipeout';
 import AddMeasurement from "./AddMeasurement";
+import Moment from 'moment';
 
 
 export default class Diary extends Component<{}> {
@@ -62,7 +63,8 @@ export default class Diary extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = new Date();
+        let date = Moment().format('YYYY-MM-DD');
+
         this.setState(
             {
                 userId: value['userId'],
@@ -293,7 +295,7 @@ export default class Diary extends Component<{}> {
                         placeholder="Date"
                         format="YYYY-MM-DD"
                         minDate="1900-01-01"
-                        maxDate={new Date()}
+                        maxDate={Moment().format('YYYY-MM-DD')}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         showIcon={true}

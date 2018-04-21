@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
+import Moment from 'moment';
 
 export default class Intake extends Component<{}> {
     constructor(props){
@@ -52,12 +53,15 @@ export default class Intake extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
+        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+
         this.setState(
             {intake:
                 {
                     ...this.state.intake,
                     userId: value['userId'],
                     foodId: '1',
+                    time: date,
                 }
             }
         );
@@ -160,9 +164,9 @@ export default class Intake extends Component<{}> {
                     date={this.state.intake.time}
                     mode="datetime"
                     placeholder="When?"
-                    format="YYYY-MM-DD HH:MM"
+                    format="YYYY-MM-DD HH:mm"
                     minDate="1900-01-01 00:00"
-                    maxDate={new Date()}
+                    maxDate={Moment().format('YYYY-MM-DD HH:mm:ss')}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}
