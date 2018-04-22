@@ -27,11 +27,28 @@ const Styles = StyleSheet.create({
         fontSize: 20,
         color: '#fff',
         textAlign: 'center',
-        marginBottom: 40,
+        marginBottom: 10,
         paddingBottom: 10,
         fontWeight: 'bold',
         borderBottomColor: '#718792',
         borderBottomWidth: 1,
+    },
+    header2: {
+        fontSize: 14,
+        color: '#fff',
+        textAlign: 'center',
+        paddingBottom: 10,
+        fontWeight: 'bold',
+    },
+    header3: {
+        fontSize: 12,
+        color: '#fff',
+        textAlign: 'center',
+        //paddingBottom: 5,
+        fontWeight: 'bold',
+        padding: 0,
+        paddingLeft: 2,
+        height: 20,
     },
     footer: {
         flex: .3,
@@ -65,9 +82,14 @@ const Styles = StyleSheet.create({
         borderRadius: 150 / 2, //make this a circle
     },
     birthDate: {
-        width: '100%',
         padding: 8,
         marginBottom: 10,
+    },
+    dateSelector: {
+        height: 25,
+        left: 2,
+        margin: 0,
+        marginBottom: 5,
     },
     text: {
         color: '#fff',
