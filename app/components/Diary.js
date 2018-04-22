@@ -27,6 +27,7 @@ import {
 import { ListView } from 'realm/react-native';
 import Swipeout from 'react-native-swipeout';
 import AddMeasurement from "./AddMeasurement";
+import EditMeasurement from "./EditMeasurement";
 import Moment from 'moment';
 
 
@@ -164,7 +165,7 @@ export default class Diary extends Component<{}> {
                 backgroundColor: 'lightblue',
                 underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                 onPress: () => {
-                    alert('Clicked on update');
+                    this.refs.editMeasurement.showEditModal(item);
                 }
             },
             {
@@ -348,6 +349,8 @@ export default class Diary extends Component<{}> {
                     renderHeader={this.renderHeader}
                 />
                 <AddMeasurement ref={'addNewMeasurement'}/>
+                <EditMeasurement ref={'editMeasurement'}/>
+
             </View>
 
         );
