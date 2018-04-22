@@ -55,24 +55,22 @@ export default class Intake extends Component<{}> {
         let value = JSON.parse(val);
         let date = Moment().format('YYYY-MM-DD HH:mm:ss');
 
-        this.setState(
-            {intake:
-                {
-                    ...this.state.intake,
-                    userId: value['userId'],
-                    foodId: '1',
-                    time: date,
-                }
-            }
-        );
         try {
             fetch('http://172.20.10.4:3000/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.foods = res.foods;
                     console.log("this.state.foods: " + JSON.stringify(this.state.foods,null,4));
+
                     this.setState({
-                        isLoading: false
+                        intake:
+                            {
+                                ...this.state.intake,
+                                userId: value['userId'],
+                                foodId: this.state.foods[0].foodId,
+                                time: date,
+                            },
+                        isLoading: false,
                     });
                 })
                 .catch((error) => {
@@ -97,7 +95,8 @@ export default class Intake extends Component<{}> {
                         foodId: this.state.intake.foodId,
                         amount: this.state.intake.amount,
                         time: this.state.intake.time,
-                    }
+                    },
+                    food: this.state.foods[this.state.intake.foodId-1],
                 })
             })
                 .then((response) => response.json())
