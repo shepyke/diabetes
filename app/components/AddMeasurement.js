@@ -202,6 +202,7 @@ export default class AddMeasurement extends Component {
                             this.setState({ diary: diary });
                         }}
                     underlineColorAndroid='transparent'
+                    value={this.state.diary.insulin.toString()}
                 />
 
                 <TextInput
@@ -216,6 +217,7 @@ export default class AddMeasurement extends Component {
                             this.setState({ diary: diary });
                         }}
                     underlineColorAndroid='transparent'
+                    value={this.state.diary.sugar.toString()}
                 />
 
                 <Button
