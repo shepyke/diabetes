@@ -271,7 +271,6 @@ export default class Diary extends Component<{}> {
                     .then ((res) => {
                         if(res.success === true){
                             alert(res.message);
-                            this.getMeasurements();
                         }else{
                             alert(res.message);
                         }
@@ -348,8 +347,8 @@ export default class Diary extends Component<{}> {
                     renderRow={this.renderRow}
                     renderHeader={this.renderHeader}
                 />
-                <AddMeasurement ref={'addNewMeasurement'}/>
-                <EditMeasurement ref={'editMeasurement'}/>
+                <AddMeasurement ref={'addNewMeasurement'} dataTable={this}/>
+                <EditMeasurement ref={'editMeasurement'} dataTable={this}/>
 
             </View>
 

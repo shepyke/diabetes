@@ -64,7 +64,7 @@ export default class EditMeasurement extends Component {
                     measurementId: item.measurementId,
                     type: item.type,
                     when: item.when,
-                    time: Moment(item.time).format('YYYY-MM-DD HH:mm:ss'),
+                    time: Moment((item.time).slice(0, -5)).format('YYYY-MM-DD HH:mm:ss'),
                     insulin: item.insulin,
                     sugar: item.sugar,
                 }
@@ -250,6 +250,7 @@ export default class EditMeasurement extends Component {
                         }
 
                         this.submit();
+                        this.props.dataTable.getMeasurements();
                         this.refs.editMeasurement.close();
                     }}>
                     Save

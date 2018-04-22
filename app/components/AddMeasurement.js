@@ -240,6 +240,7 @@ export default class AddMeasurement extends Component {
                         }
 
                         this.submit();
+                        this.props.dataTable.getMeasurements();
                         this.refs.addNewMeasurement.close();
                     }}>
                     Save
