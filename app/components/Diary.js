@@ -158,14 +158,24 @@ export default class Diary extends Component<{}> {
     }
 
     renderRow(item) {
-        let swipeBtns = [{
-            text: 'Delete',
-            backgroundColor: 'red',
-            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-            onPress: () => {
-                this.deleteMeasurement(item['measurementId']);
+        let swipeBtns = [
+            {
+                text: 'Update',
+                backgroundColor: 'lightblue',
+                underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+                onPress: () => {
+                    alert('Clicked on update');
+                }
+            },
+            {
+                text: 'Delete',
+                backgroundColor: 'red',
+                underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+                onPress: () => {
+                    this.deleteMeasurement(item['measurementId']);
+                }
             }
-        }];
+        ];
 
         const cells = [];
         if (this.state.diary && this.state.diary.length > 0) {
