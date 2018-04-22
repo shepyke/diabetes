@@ -253,7 +253,18 @@ export default class Diagram extends Component<{}> {
                     <Text style={Styles.header2}>
                         Measurements data
                     </Text>
-                    <PureChart data={measurementsData} numberOfYAxisGuideLine={5} gap={150} type='line'/>
+                    <PureChart
+                        data={measurementsData}
+                        numberOfYAxisGuideLine={5}
+                        gap={150}
+                        type='line'
+                        customValueRenderer={(index, point) => {
+                            if (index % 2 === 0) return null
+                            return (
+                                <Text style={{textAlign: 'center'}}>{point.y}</Text>
+                            )
+                        }}
+                    />
                     <View style={[{marginTop: 5, marginBottom: 15, flexDirection: 'row', justifyContent: 'space-evenly',}]}>
                         <View style={[{flexDirection: 'row'}]}>
                             <Icon type="font-awesome" name="circle" size={10} color={'#297AB1'} />
@@ -267,7 +278,12 @@ export default class Diagram extends Component<{}> {
                     <Text style={Styles.header2}>
                         Intakes data
                     </Text>
-                    <PureChart data={intakesData} numberOfYAxisGuideLine={5} gap={150} type='bar' />
+                    <PureChart
+                        data={intakesData}
+                        numberOfYAxisGuideLine={5}
+                        gap={150}
+                        type='bar'
+                    />
                     <View style={[{marginTop: 5, flexDirection: 'row', justifyContent: 'space-evenly',}]}>
                         <View style={[{flexDirection: 'row'}]}>
                             <Icon type="font-awesome" name="circle" size={10} color={'yellow'} />
