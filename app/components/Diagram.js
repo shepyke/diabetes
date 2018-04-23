@@ -45,8 +45,6 @@ export default class Diagram extends Component<{}> {
                 calorie: '',
                 protein: '',
             },
-            measurementsData: [],
-            intakesData: [],
             isLoading: true,
         }
         this.generateData = this.generateData.bind(this);
@@ -88,12 +86,10 @@ export default class Diagram extends Component<{}> {
             })
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log(res.success);
                     if(res.success === true){
                         this.state.measurements = res.measurements;
-                        console.log("this.state.measurements : " + JSON.stringify(this.state.measurements,null,4));
                         this.state.intakes = res.intakes;
-                        console.log("this.state.intakes : " + JSON.stringify(this.state.intakes,null,4));
+                        //console.log("this.state.intakes : " + JSON.stringify(this.state.intakes,null,4));
                     }else{
                         alert(res.message);
                     }
@@ -137,6 +133,7 @@ export default class Diagram extends Component<{}> {
                 </View>
             )
         }
+
         let measurementsData = [
             {
                 seriesName: 'sugar',
@@ -149,6 +146,7 @@ export default class Diagram extends Component<{}> {
                 color: 'yellow'
             },
         ]
+
         let intakesData = [
             {
                 seriesName: 'Carbs',
