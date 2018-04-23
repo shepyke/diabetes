@@ -88,6 +88,7 @@ export default class AddMeasurement extends Component {
                 .then((response) => response.json())
                 .then ((res) => {
                     if(res.success === true){
+                        this.props.dataTable.getMeasurements();
                         alert('You have successfully added a new measurement');
                     }else{
                         alert(res.message);
@@ -242,7 +243,6 @@ export default class AddMeasurement extends Component {
                         }
 
                         this.submit();
-                        this.props.dataTable.getMeasurements();
                         this.refs.addNewMeasurement.close();
                     }}>
                     Save

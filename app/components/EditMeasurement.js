@@ -96,6 +96,7 @@ export default class EditMeasurement extends Component {
                 .then((response) => response.json())
                 .then ((res) => {
                     if(res.success === true){
+                        this.props.dataTable.getMeasurements();
                         alert('You have successfully updated the measurement');
                     }else{
                         alert(res.message);
@@ -250,7 +251,6 @@ export default class EditMeasurement extends Component {
                         }
 
                         this.submit();
-                        this.props.dataTable.getMeasurements();
                         this.refs.editMeasurement.close();
                     }}>
                     Save
