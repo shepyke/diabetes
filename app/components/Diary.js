@@ -102,7 +102,10 @@ export default class Diary extends Component<{}> {
                         });
                     }else{
                         alert(res.message);
-                        this.state.diary= {};
+                        this.setState({
+                            dataSource: this.state.dataSource.cloneWithRows([]),
+                        });
+                        //console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
                     }
                     this.setState({
                         isLoading: false
@@ -158,7 +161,7 @@ export default class Diary extends Component<{}> {
         );
     }
 
-    renderRow(item) {
+    renderRow(item, sectionID, rowID, highlightRow) {
         let swipeBtns = [
             {
                 text: 'Update',
@@ -173,7 +176,8 @@ export default class Diary extends Component<{}> {
                 backgroundColor: 'red',
                 underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                 onPress: () => {
-                    this.deleteMeasurement(item['measurementId']);
+                    this.deleteMeasurement(item['measurementId'], rowID);
+                    console.log("rowID: " + rowID);
                 }
             }
         ];
@@ -255,7 +259,7 @@ export default class Diary extends Component<{}> {
         );
     }
 
-    deleteMeasurement = async(measurementId) => {
+    deleteMeasurement = async(measurementId, rowId) => {
             try {
                 fetch('http://172.20.10.4:3000/diary/deleteMeasurement', {
                     method: 'POST',
@@ -271,6 +275,10 @@ export default class Diary extends Component<{}> {
                     .then ((res) => {
                         if(res.success === true){
                             alert(res.message);
+                            this.state.diary.splice(rowId, 1);
+                            this.setState({
+                                dataSource: this.state.dataSource.cloneWithRows(this.state.diary),
+                            });
                         }else{
                             alert(res.message);
                         }
@@ -346,6 +354,7 @@ export default class Diary extends Component<{}> {
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow}
                     renderHeader={this.renderHeader}
+                    enableEmptySections={true}
                 />
                 <AddMeasurement ref={'addNewMeasurement'} dataTable={this}/>
                 <EditMeasurement ref={'editMeasurement'} dataTable={this}/>
