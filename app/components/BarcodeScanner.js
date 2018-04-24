@@ -90,7 +90,7 @@ export default class BarcodeScanner extends Component {
     render() {
         //if(this.state.showCamera) {
             return (
-                <View style={Styles.container}>
+                <View style={Styles.wrapper}>
                     <RNCamera
                         ref={(cam) => {
                             this.camera = cam;
