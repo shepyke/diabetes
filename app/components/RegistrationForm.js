@@ -24,9 +24,14 @@ import RadioForm,
     } from 'react-native-simple-radio-button';
 import Moment from 'moment';
 
-var gender_props = [
-    {label: 'Female    ', value: 'FEMALE' },
-    {label: 'Male', value: 'MALE' }
+let gender_props = [
+    {label: 'Female    ', value: 'Female' },
+    {label: 'Male', value: 'Male' }
+];
+
+let type_props = [
+    {label: 'Type 1    ', value: '1' },
+    {label: 'Type 2', value: '2' }
 ];
 
 export default class RegistrationForm extends Component<{}> {
@@ -77,7 +82,6 @@ export default class RegistrationForm extends Component<{}> {
             .then((response) => response.json())
             .then ((res) => {
                 if(res.success === true){
-                    console.log("hopp itt a response: " + res.user);
                     AsyncStorage.setItem('user', JSON.stringify(res.user));
                     this.props.navigation.navigate('Profile');
                     alert('You have successfully registered');
@@ -136,7 +140,7 @@ export default class RegistrationForm extends Component<{}> {
                     <RadioForm
                         radio_props={gender_props}
                         labelColor={'#718792'}
-                        initial={'F'}
+                        initial={'Female'}
                         formHorizontal={true}
                         labelHorizontal={true}
                         buttonColor={'#718792'}
@@ -144,6 +148,21 @@ export default class RegistrationForm extends Component<{}> {
                         onPress={(gender) => {
                             const user = Object.assign({},
                                 this.state.user, { gender: gender });
+                            this.setState({ user: user })
+                        }}
+                    />
+
+                    <RadioForm
+                        radio_props={type_props}
+                        labelColor={'#718792'}
+                        initial={'1'}
+                        formHorizontal={true}
+                        labelHorizontal={true}
+                        buttonColor={'#718792'}
+                        animation={true}
+                        onPress={(type) => {
+                            const user = Object.assign({},
+                                this.state.user, { type: type });
                             this.setState({ user: user })
                         }}
                     />
