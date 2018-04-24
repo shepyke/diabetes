@@ -131,9 +131,9 @@ export default class BarcodeScanner extends Component {
 
     onBarCodeRead(barcode) {
         //this.setState({showCamera: false});
-        alert("Barcode Found!",
-            "Type: " + barcode.type + "\nData: " + barcode.data);
-        this.findBarcode(this.state.foods, barcode.data);
+        alert(JSON.stringify(this.findBarcode(this.state.foods, barcode.data),null,4));
+        //this.findBarcode(this.state.foods, barcode.data);
+        this.props.navigation.navigate('Intake', this.state.foods);
     }
 
     render() {
