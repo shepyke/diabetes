@@ -97,13 +97,13 @@ const Styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textInput: {
-        alignSelf: 'center',
+        alignSelf: 'stretch',
         padding: 6,
         marginBottom: 6,
         color: '#fff',
     },
     textInput2: {
-        alignSelf: 'center',
+        alignSelf: 'stretch',
         paddingLeft: 6,
         marginBottom: 2,
         color: '#718792',
