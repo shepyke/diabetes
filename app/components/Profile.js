@@ -17,6 +17,7 @@ import {
     ImageBackground,
 } from 'react-native';
 import Styles from "../config/Styles";
+import Moment from 'moment';
 
 export default class Profile extends Component<{}> {
 
@@ -56,7 +57,7 @@ export default class Profile extends Component<{}> {
                         email: value['email'],
                         firstName: value['firstName'],
                         lastName: value['lastName'],
-                        birthDay: value['birthDay'],
+                        birthDay: Moment(value['dob']).format('YYYY-MM-DD'),
                         profileImage: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A',
                         //value['profile_image'],
                         gender: value['gender'],
@@ -117,7 +118,6 @@ export default class Profile extends Component<{}> {
                     <Text style={Styles.text}>Date of birth: {this.state.user.birthDay}</Text>
                     <Text style={Styles.text}>Gender: {this.state.user.gender}</Text>
                     <Text style={Styles.text}>Diabetes type: {this.state.user.type}</Text>
-                    <Text style={Styles.text}>Average blood sugar: {this.state.user.sugarAVG}</Text>
                 </View>
 
                 <View style={Styles.footer}>
