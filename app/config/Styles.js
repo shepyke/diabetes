@@ -83,6 +83,7 @@ const Styles = StyleSheet.create({
     },
     birthDate: {
         padding: 8,
+        paddingLeft: 6,
         marginBottom: 10,
     },
     dateSelector: {
@@ -96,13 +97,13 @@ const Styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textInput: {
-        alignSelf: 'stretch',
+        alignSelf: 'center',
         padding: 6,
         marginBottom: 6,
         color: '#fff',
     },
     textInput2: {
-        alignSelf: 'stretch',
+        alignSelf: 'center',
         paddingLeft: 6,
         marginBottom: 2,
         color: '#718792',

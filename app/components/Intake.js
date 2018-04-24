@@ -18,6 +18,7 @@ import {
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
+import { Icon } from 'react-native-elements';
 
 export default class Intake extends Component<{}> {
     constructor(props){
@@ -40,6 +41,7 @@ export default class Intake extends Component<{}> {
                     glycemicIndex: '',
                     photo: '',
                     protein:'',
+                    unit: '',
                 },
             ],
             isLoading: true,
@@ -144,22 +146,36 @@ export default class Intake extends Component<{}> {
 
                 </Picker>
 
-                <TextInput
-                    style={Styles.textInput}
-                    placeholder='Amount'
-                    keyboardType = 'numeric'
-                    maxLength={6}
-                    onChangeText={
-                        (amount) => {
-                            const intake = Object.assign({},
-                                this.state.intake, { amount: amount });
-                            this.setState({ intake: intake });
-                        }}
-                    underlineColorAndroid='transparent'
-                />
+                <View style={{flexDirection: 'row'}}>
+                    <TextInput
+                        style={[Styles.textInput,{width: '80%'}]}
+                        placeholder='Amount'
+                        placeholderTextColor='white'
+                        keyboardType = 'numeric'
+                        maxLength={6}
+                        onChangeText={
+                            (amount) => {
+                                const intake = Object.assign({},
+                                    this.state.intake, { amount: amount });
+                                this.setState({ intake: intake });
+                            }}
+                        underlineColorAndroid='white'
+                    />
+                    <Text style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
+                        {this.state.foods[this.state.intake.foodId-1].unit}
+                    </Text>
+                    <Icon
+                        type="font-awesome"
+                        name="question-circle"
+                        size={26}
+                        color={'white'}
+                        style={{position: 'absolute', right: 5}}
+                        onPress={() => alert("Please note, the calculation based on 100" + this.state.foods[this.state.intake.foodId-1].unit)}
+                    />
+                </View>
 
                 <DatePicker
-                    style={Styles.birthDay}
+                    style={Styles.birthDate}
                     date={this.state.intake.time}
                     mode="datetime"
                     placeholder="When?"
