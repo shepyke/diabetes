@@ -68,7 +68,7 @@ export default class AddMeasurement extends Component {
 
     submit = async() => {
         try {
-            fetch('http://172.20.10.4:3000/diary/addMeasurement', {
+            fetch('https://diabetes-backend.herokuapp.com/diary/addMeasurement', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

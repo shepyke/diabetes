@@ -72,7 +72,7 @@ export default class Diagram extends Component<{}> {
 
     fetchDataToDraw = async() => {
         try{
-            fetch('http://172.20.10.4:3000/diagram/getMeasurementData',{
+            fetch('https://diabetes-backend.herokuapp.com/diagram/getMeasurementData',{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

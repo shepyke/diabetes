@@ -50,7 +50,7 @@ export default class Login extends Component<{}> {
 
     login = () => {
         try{
-            fetch('http://172.20.10.4:3000/users/login',{
+            fetch('https://diabetes-backend.herokuapp.com/users/login',{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

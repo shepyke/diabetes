@@ -75,7 +75,7 @@ export default class EditMeasurement extends Component {
 
     submit = async() => {
         try {
-            fetch('http://172.20.10.4:3000/diary/updateMeasurement', {
+            fetch('https://diabetes-backend.herokuapp.com/diary/updateMeasurement', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

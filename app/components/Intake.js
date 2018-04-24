@@ -56,7 +56,7 @@ export default class Intake extends Component<{}> {
         let date = Moment().format('YYYY-MM-DD HH:mm:ss');
 
         try {
-            fetch('http://172.20.10.4:3000/intakes/foods')
+            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.foods = res.foods;
@@ -83,7 +83,7 @@ export default class Intake extends Component<{}> {
 
     submit = async() => {
         try {
-            fetch('http://172.20.10.4:3000/intakes/addIntake', {
+            fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

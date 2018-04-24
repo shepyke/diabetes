@@ -82,7 +82,7 @@ export default class Diary extends Component<{}> {
 
     getMeasurements = async() => {
         try{
-            fetch('http://172.20.10.4:3000/diary/getDiary',{
+            fetch('https://diabetes-backend.herokuapp.com/diary/getDiary',{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -261,7 +261,7 @@ export default class Diary extends Component<{}> {
 
     deleteMeasurement = async(measurementId, rowId) => {
             try {
-                fetch('http://172.20.10.4:3000/diary/deleteMeasurement', {
+                fetch('https://diabetes-backend.herokuapp.com/diary/deleteMeasurement', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
