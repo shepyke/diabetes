@@ -14,15 +14,12 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
-    Dimensions,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import Moment from 'moment';
-
-let screen = Dimensions.get('window');
 
 export default class AddMeasurement extends Component {
     constructor(props) {
@@ -105,21 +102,17 @@ export default class AddMeasurement extends Component {
         return (
             <Modal
                 ref={"addNewMeasurement"}
-                style={{
-                    justifyContent: 'center',
-                    shadowRadius: 10,
-                    width: screen - 80,
-                    height: 300,
-                }}
+                style={Styles.modal}
                 position='center'
                 backdrop={true}
                 onClosed={() => {}}
             >
                 <Text style={{
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: 'bold',
                     textAlign: 'center',
-                    marginTop: 10
+                    marginTop: 10,
+                    marginBottom: 10
                 }}>New measurement</Text>
 
                 <Picker
@@ -229,7 +222,8 @@ export default class AddMeasurement extends Component {
                         marginRight: 70,
                         height: 40,
                         borderRadius: 6,
-                        backgroundColor: 'mediumseagreen'
+                        backgroundColor: 'mediumseagreen',
+                        marginBottom: 10,
                     }}
                     onPress={() => {
                         if (this.state.diary.insulin == ''

@@ -14,15 +14,12 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
-    Dimensions,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import Moment from 'moment';
-
-let screen = Dimensions.get('window');
 
 export default class EditMeasurement extends Component {
     constructor(props) {
@@ -113,12 +110,7 @@ export default class EditMeasurement extends Component {
         return (
             <Modal
                 ref={"editMeasurement"}
-                style={{
-                    justifyContent: 'center',
-                    shadowRadius: 10,
-                    width: screen - 80,
-                    height: 300,
-                }}
+                style={Styles.modal}
                 position='center'
                 backdrop={true}
                 onClosed={() => {}}

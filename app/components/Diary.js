@@ -30,7 +30,6 @@ import AddMeasurement from "./AddMeasurement";
 import EditMeasurement from "./EditMeasurement";
 import Moment from 'moment';
 
-
 export default class Diary extends Component<{}> {
     constructor(props){
         super(props);
@@ -325,12 +324,12 @@ export default class Diary extends Component<{}> {
                             dateText: {
                                 color: '#fff',
                                 fontWeight: 'bold',
-                                fontSize: 12,
+                                fontSize: 16,
                             },
                             dateIcon:{
                                 marginBottom: 8,
-                                width: 20,
-                                height: 20,
+                                width: 25,
+                                height: 25,
                             },
                         }}
                         onDateChange={(time) => {
@@ -345,7 +344,7 @@ export default class Diary extends Component<{}> {
                         onPress={this._onPressAdd}
                         style={Styles.plusButton}
                     >
-                        <Text>+</Text>
+                        <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
                     </TouchableOpacity>
                 </View>
                 <DataTable

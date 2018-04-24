@@ -116,12 +116,12 @@ const Styles = StyleSheet.create({
     },
     bottomtext: {
         color: '#fff',
-        fontSize: 8,
+        fontSize: 12,
         marginTop: 20,
     },
     register: {
         color: '#c2c2c2',
-        fontSize: 8,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     logout: {
@@ -142,6 +142,12 @@ const Styles = StyleSheet.create({
     dropdown2: {
         color: '#718792',
         height: 30,
+        marginBottom: 10,
+    },
+    modal:{
+        justifyContent: 'center',
+        shadowRadius: 10,
+        height: 400,
     },
     column1: {
         flex: 0.3,
@@ -162,10 +168,10 @@ const Styles = StyleSheet.create({
     tableHeaderText: {
         color: '#718792',
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: 17,
         flexDirection: 'row',
         justifyContent: 'center',
-        lineHeight: 40,
+        lineHeight: 60,
     },
     cell: {
         backgroundColor: '#c2c2c2',
@@ -173,12 +179,13 @@ const Styles = StyleSheet.create({
     cellText: {
         color: '#718792',
         textAlign: 'center',
-        lineHeight: 30,
+        lineHeight: 50,
+        fontSize: 14,
     },
     plusButton: {
-        height: 30,
-        width: 30,
-        borderRadius: 30 / 2 ,
+        height: 40,
+        width: 40,
+        borderRadius: 40 / 2 ,
         backgroundColor: 'mediumseagreen',
         justifyContent: 'center',
         alignItems: 'center',
