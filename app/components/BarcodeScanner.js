@@ -1,6 +1,12 @@
+/**
+ * Diabetes
+ * https://github.com/shepyke/diabetes
+ * @flow
+ */
+
 import React, { Component } from 'react';
 import {
-    AppRegistry,
+    AppRegistry, AsyncStorage,
     Dimensions,
     StyleSheet,
     Text,
@@ -10,6 +16,7 @@ import {
 import {RNCamera} from 'react-native-camera';
 import Styles from "../config/Styles";
 import { Icon } from 'react-native-elements';
+import Moment from "moment/moment";
 
 export default class BarcodeScanner extends Component {
     constructor(props) {
@@ -21,7 +28,44 @@ export default class BarcodeScanner extends Component {
                 flashMode: RNCamera.Constants.FlashMode.auto,
             },
             showCamera: true,
+            foods: [
+                {
+                    foodId: '',
+                    barcode: '',
+                    calorie: '',
+                    carbohydrate: '',
+                    fat: '',
+                    foodName: '',
+                    glycemicIndex: '',
+                    photo: '',
+                    protein:'',
+                },
+            ],
         };
+    }
+
+    componentDidMount(){
+        this._loadInitialState().done();
+    }
+
+    _loadInitialState = async() => {
+        let val = await AsyncStorage.getItem('user');
+        let value = JSON.parse(val);
+        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+
+        try {
+            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+                .then((response) => response.json())
+                .then((res) => {
+                    this.state.foods = res.foods;
+                    //console.log("this.state.foods: " + JSON.stringify(this.state.foods,null,4));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }catch(error){
+            console.error(error);
+        }
     }
 
     switchType = () => {
@@ -77,18 +121,23 @@ export default class BarcodeScanner extends Component {
         return icon;
     }
 
-    onBarCodeRead(e) {
+    findBarcode(foodsObject, barcode) {
+        return foodsObject.find((element) => {
+            if(element.barcode == barcode){
+                return element;
+            }
+        })
+    }
+
+    onBarCodeRead(barcode) {
         //this.setState({showCamera: false});
         alert("Barcode Found!",
-            "Type: " + e.type + "\nData: " + e.data);
-        console.log(
-            "Barcode Found!",
-            "Type: " + e.type + "\nData: " + e.data
-        );
+            "Type: " + barcode.type + "\nData: " + barcode.data);
+        this.findBarcode(this.state.foods, barcode.data);
     }
 
     render() {
-        //if(this.state.showCamera) {
+        if(this.state.showCamera) {
             return (
                 <View style={Styles.wrapper}>
                     <RNCamera
@@ -104,11 +153,11 @@ export default class BarcodeScanner extends Component {
                     />
                 </View>
             );
-       /* }else{
+        }else{
             return (
-                <View></View>
+                <View style={Styles.wrapper}></View>
             );
-        }*/
+        }
     }
 
 }
