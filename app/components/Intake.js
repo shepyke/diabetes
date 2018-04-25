@@ -44,7 +44,8 @@ export default class Intake extends Component<{}> {
                     unit: '',
                 },
             ],
-            disableButton: false,
+            disableAddButton: false,
+            disableSubmitButton: true,
             isLoading: true,
             deleteIndex: '',
         }
@@ -63,7 +64,8 @@ export default class Intake extends Component<{}> {
         let date = Moment().format('YYYY-MM-DD HH:mm:ss');
 
         try {
-            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+            fetch('http://172.20.10.4:3000/intakes/foods')
+            //fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.foods = res.foods;
@@ -84,7 +86,8 @@ export default class Intake extends Component<{}> {
 
     submit = async() => {
         try {
-            fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
+            fetch('http://172.20.10.4:3000/intakes/addIntake', {
+            //fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -97,21 +100,25 @@ export default class Intake extends Component<{}> {
                 })
             })
                 .then((response) => response.json())
-                .then ((res) => {
-                    if(res.success === true){
+                .then((res) => {
+                    if (res.success === true) {
                         alert('You have successfully added an intake to your diary');
-                    }else{
+                    } else {
                         alert(res.message);
                     }
                 })
                 .done();
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
 
     addMoreIntake = () =>{
         this.animatedValue.setValue(0);
+
+        this.setState({
+            disableSubmitButton: false,
+        });
 
         if (this.intakeIndex - this.deletedRowNumber < 10) {
             let newlyAddedIntake = {
@@ -120,7 +127,7 @@ export default class Intake extends Component<{}> {
                 amount: '',
             }
 
-            this.setState({disableButton: true, intake: [...this.state.intake, newlyAddedIntake]}, () => {
+            this.setState({disableAddButton: true, intake: [...this.state.intake, newlyAddedIntake]}, () => {
                 Animated.timing(
                     this.animatedValue,
                     {
@@ -130,7 +137,7 @@ export default class Intake extends Component<{}> {
                     }
                 ).start(() => {
                     this.intakeIndex = this.intakeIndex + 1;
-                    this.setState({disableButton: false});
+                    this.setState({disableAddButton: false});
                 });
 
             });
@@ -354,7 +361,7 @@ export default class Intake extends Component<{}> {
                     <TouchableOpacity
                         onPress={this.addMoreIntake}
                         style={Styles.plusButton}
-                        disabled = { this.state.disabled }
+                        disabled = { this.state.disableAddButton}
                     >
                         <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
                     </TouchableOpacity>
@@ -367,7 +374,7 @@ export default class Intake extends Component<{}> {
                     </View>
                     <TouchableOpacity
                         style={[Styles.button, {marginTop: 10, marginBottom: 10}]}
-                        disabled = { this.state.disabled }
+                        disabled = { this.state.disableSubmitButton }
                         onPress={this.submit}>
                         <Text>Submit</Text>
                     </TouchableOpacity>
