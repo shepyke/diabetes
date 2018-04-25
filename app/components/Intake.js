@@ -21,6 +21,7 @@ import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
 import { Icon } from 'react-native-elements';
+import Swipeout from 'react-native-swipeout';
 
 export default class Intake extends Component<{}> {
     constructor(props){
@@ -45,8 +46,10 @@ export default class Intake extends Component<{}> {
             ],
             disableButton: false,
             isLoading: true,
+            deleteIndex: '',
         }
         this.intakeIndex = 0;
+        this.deletedRowNumber = 0;
         this.animatedValue = new Animated.Value(0);
     }
 
@@ -88,7 +91,7 @@ export default class Intake extends Component<{}> {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    intake: this.state.intake,
+                    intakes: this.state.intake,
                     time: this.state.time,
                     //food: this.state.foods[this.state.intake.foodId-1],
                 })
@@ -110,7 +113,7 @@ export default class Intake extends Component<{}> {
     addMoreIntake = () =>{
         this.animatedValue.setValue(0);
 
-        if (this.intakeIndex < 10) {
+        if (this.intakeIndex - this.deletedRowNumber < 10) {
             let newlyAddedIntake = {
                 id: this.intakeIndex,
                 foodId: this.state.foods[0].foodId,
@@ -136,6 +139,15 @@ export default class Intake extends Component<{}> {
         }
     }
 
+    updateOneIntake(intakeArray, intakeId, property, newValue){
+        intakeArray.find(function (obj) {
+            if(obj.id === intakeId){
+                obj[property]= newValue;
+            }
+        })
+        return intakeArray;
+    }
+
     render() {
         const animationValue = this.animatedValue.interpolate(
             {
@@ -144,35 +156,49 @@ export default class Intake extends Component<{}> {
             }
         );
 
-        let newArray = this.state.intake.map(( intakeItem, key ) => {
-            if(key == this.intakeIndex){
+        let swipeBtns = [
+            {
+                text: 'Delete',
+                backgroundColor: 'red',
+                underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+                onPress: () => {
+                    this.state.intake.splice(this.state.deleteIndex,1);
+                    this.setState({
+                        intake: this.state.intake,
+                    });
+                    this.deletedRowNumber = this.deletedRowNumber + 1;
+                }
+            }
+        ];
+
+        let newArray = this.state.intake.map(( intakeItem ) => {
+            if(intakeItem.id == this.intakeIndex){
                 return(
                     <Animated.View
-                        key={key + 50}
+                        key={intakeItem.id + 50}
                         style={[{ opacity: this.animatedValue,
                             transform: [{ translateY: animationValue }] }]}>
                         <Picker
-                            key={key + 100}
+                            key={intakeItem.id + 100}
                             style={Styles.dropdown}
                             selectedValue={intakeItem.foodId}
                             mode="dropdown"
                             onValueChange={(foodId) => {
                                 const intake = this.state.intake;
-                                intake[intakeItem.id].foodId = foodId;
                                 this.setState({
-                                    intake: intake,
+                                    intake: this.updateOneIntake(intake, intakeItem.id, "foodId", foodId),
                                 });
                             }}
                         >
                             {this.state.foods.map((item) => {
-                                return (<Picker.Item label={item.foodName} value={item.foodId} key={(key + "_" + item.foodName)}/>)
+                                return (<Picker.Item label={item.foodName} value={item.foodId} key={(this.intakeIndex + "_" + item.foodName)}/>)
                             })}
                         </Picker>
                         <View
-                            key={key + 150}
+                            key={intakeItem.id + 150}
                             style={{flexDirection: 'row'}}>
                             <TextInput
-                                key={key}
+                                key={intakeItem.id + 650}
                                 style={[Styles.textInput,{width: '80%'}]}
                                 placeholder='Amount'
                                 placeholderTextColor='white'
@@ -180,22 +206,21 @@ export default class Intake extends Component<{}> {
                                 maxLength={6}
                                 onChangeText={(amount) => {
                                     const intake = this.state.intake;
-                                    intake[intakeItem.id].amount = amount;
                                     this.setState({
-                                        intake: intake,
+                                        intake: this.updateOneIntake(intake, intakeItem.id, "amount", amount),
                                     });
                                 }}
-                                    underlineColorAndroid='white'
+                                underlineColorAndroid='white'
                             />
                             <Text
-                                key={key + 200}
+                                key={intakeItem.id + 200}
                                 style={[Styles.text,
                                     {width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}
                                 ]}>
                                 {this.state.foods[intakeItem.foodId-1].unit}
                             </Text>
                             <Icon
-                                key={key + 250}
+                                key={intakeItem.id + 250}
                                 type="font-awesome"
                                 name="question-circle"
                                 size={26}
@@ -210,61 +235,73 @@ export default class Intake extends Component<{}> {
                 );
             }else{
                 return(
-                    <View key={key + 350}>
-                        <Picker
-                            key={key + 400}
-                            style={Styles.dropdown}
-                            selectedValue={intakeItem.foodId}
-                            mode="dropdown"
-                            onValueChange={(foodId) => {
-                                const intake = this.state.intake;
-                                intake[intakeItem.id].foodId = foodId;
-                                this.setState({
-                                    intake: intake,
-                                });
-                            }}
-                        >
-                            {this.state.foods.map((item) => {
-                                return (<Picker.Item label={item.foodName} value={item.foodId} key={(key + item.foodName)}/>)
-                            })}
-                        </Picker>
-                        <View
-                            key={key + 450}
-                            style={{flexDirection: 'row'}}>
-                            <TextInput
-                                key={key + 500}
-                                style={[Styles.textInput,{width: '80%'}]}
-                                placeholder='Amount'
-                                placeholderTextColor='white'
-                                keyboardType = 'numeric'
-                                maxLength={6}
-                                onChangeText={(amount) => {
+                    <Swipeout
+                        close={!(this.state.deleteIndex === this.state.intake.findIndex(x => x.id === intakeItem.id))}
+                        right={swipeBtns}
+                        autoClose={true}
+                        backgroundColor= 'transparent'
+                        key={intakeItem.id + 300}
+                        sensitivity={100}
+                        onOpen={() => {
+                            this.setState({
+                                deleteIndex: this.state.intake.findIndex(x => x.id === intakeItem.id),
+                            });
+                        }}
+                    >
+                        <View key={intakeItem.id + 350}>
+                            <Picker
+                                key={intakeItem.id + 400}
+                                style={Styles.dropdown}
+                                selectedValue={intakeItem.foodId}
+                                mode="dropdown"
+                                onValueChange={(foodId) => {
                                     const intake = this.state.intake;
-                                    intake[intakeItem.id].amount = amount;
                                     this.setState({
-                                        intake: intake,
+                                        intake: this.updateOneIntake(intake, intakeItem.id, "foodId", foodId),
                                     });
                                 }}
-                                underlineColorAndroid='white'
-                            />
-                            <Text
-                                key={key + 550}
-                                style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
-                                {this.state.foods[intakeItem.foodId-1].unit}
-                            </Text>
-                            <Icon
-                                key={key + 600}
-                                type="font-awesome"
-                                name="question-circle"
-                                size={26}
-                                color={'white'}
-                                style={{position: 'absolute', right: 5}}
-                                onPress={() => alert("Please note, the calculation based on 100"
-                                    + this.state.foods[intakeItem.foodId-1].unit + " of "
-                                    + this.state.foods[intakeItem.foodId-1].foodName)}
-                            />
+                            >
+                                {this.state.foods.map((item) => {
+                                    return (<Picker.Item label={item.foodName} value={item.foodId} key={(this.intakeIndex + item.foodName)}/>)
+                                })}
+                            </Picker>
+                            <View
+                                key={intakeItem.id + 450}
+                                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <TextInput
+                                    key={intakeItem.id + 500}
+                                    style={[Styles.textInput,{width: '65%'}]}
+                                    placeholder='Amount'
+                                    placeholderTextColor='white'
+                                    keyboardType = 'numeric'
+                                    maxLength={6}
+                                    onChangeText={(amount) => {
+                                        const intake = this.state.intake;
+                                        this.setState({
+                                            intake: this.updateOneIntake(intake, intakeItem.id, "amount", amount),
+                                        });
+                                    }}
+                                    underlineColorAndroid='white'
+                                />
+                                <Text
+                                    key={intakeItem.id + 550}
+                                    style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
+                                    {this.state.foods[intakeItem.foodId-1].unit}
+                                </Text>
+                                <Icon
+                                    key={intakeItem.id + 600}
+                                    type="font-awesome"
+                                    name="question-circle"
+                                    size={26}
+                                    color={'white'}
+                                    style={{position: 'absolute', right: 5}}
+                                    onPress={() => alert("Please note, the calculation based on 100"
+                                        + this.state.foods[intakeItem.foodId-1].unit + " of "
+                                        + this.state.foods[intakeItem.foodId-1].foodName)}
+                                />
+                            </View>
                         </View>
-                    </View>
+                    </Swipeout>
                 );
             }
         });
