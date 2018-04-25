@@ -109,6 +109,7 @@ export default class Intake extends Component<{}> {
                 body: JSON.stringify({
                     intakes: this.state.intake,
                     time: this.state.time,
+                    userId: this.state.userId,
                     //food: this.state.foods[this.state.intake.foodId-1],
                 })
             })
@@ -261,6 +262,16 @@ export default class Intake extends Component<{}> {
                                     + this.state.foods[intakeItem.foodId-1].unit + " of "
                                     + this.state.foods[intakeItem.foodId-1].foodName)}
                             />
+                            <Icon
+                                key={intakeItem.id + 950}
+                                type="entypo"
+                                name="camera"
+                                size={26}
+                                color={'white'}
+                                style={{position: 'absolute', right: 5}}
+                                onPress={() =>
+                                    this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id})}
+                            />
                         </View>
                     </Animated.View>
                 );
@@ -301,7 +312,7 @@ export default class Intake extends Component<{}> {
                                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <TextInput
                                     key={intakeItem.id + 500}
-                                    style={[Styles.textInput,{width: '65%'}]}
+                                    style={[Styles.textInput,{width: '70%'}]}
                                     placeholder='Amount'
                                     placeholderTextColor='white'
                                     keyboardType = 'numeric'
