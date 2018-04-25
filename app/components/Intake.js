@@ -84,6 +84,19 @@ export default class Intake extends Component<{}> {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.navigation.state.params != undefined
+            && nextProps.navigation.state.params.intakeId != undefined) {
+            const intake = this.state.intake;
+            this.setState({
+                intake: this.updateOneIntake(intake,
+                    nextProps.navigation.state.params.intakeId,
+                    "foodId",
+                    nextProps.navigation.state.params.foodId),
+            });
+        }
+    }
+
     submit = async() => {
         try {
             fetch('http://172.20.10.4:3000/intakes/addIntake', {
@@ -147,9 +160,20 @@ export default class Intake extends Component<{}> {
     }
 
     updateOneIntake(intakeArray, intakeId, property, newValue){
+        let propertyTmp = property;
+        let newValueTmp = newValue;
+
+        if(this.props.navigation.state.params != undefined){
+            if(this.props.navigation.state.params.intakeId != undefined
+                && this.props.navigation.state.params.intakeId === intakeId) {
+                propertyTmp = "foodId";
+                newValueTmp = this.props.navigation.state.params.foodId;
+            }
+        }
+
         intakeArray.find(function (obj) {
             if(obj.id === intakeId){
-                obj[property]= newValue;
+                obj[propertyTmp]= newValueTmp;
             }
         })
         return intakeArray;
@@ -305,6 +329,16 @@ export default class Intake extends Component<{}> {
                                     onPress={() => alert("Please note, the calculation based on 100"
                                         + this.state.foods[intakeItem.foodId-1].unit + " of "
                                         + this.state.foods[intakeItem.foodId-1].foodName)}
+                                />
+                                <Icon
+                                    key={intakeItem.id + 900}
+                                    type="entypo"
+                                    name="camera"
+                                    size={26}
+                                    color={'white'}
+                                    style={{position: 'absolute', right: 5}}
+                                    onPress={() =>
+                                        this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id})}
                                 />
                             </View>
                         </View>

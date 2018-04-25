@@ -39,8 +39,10 @@ export default class BarcodeScanner extends Component {
                     glycemicIndex: '',
                     photo: '',
                     protein:'',
+                    unit: '',
                 },
             ],
+            intakeId: -1,
         };
     }
 
@@ -130,10 +132,11 @@ export default class BarcodeScanner extends Component {
     }
 
     onBarCodeRead(barcode) {
-        //this.setState({showCamera: false});
-        alert(JSON.stringify(this.findBarcode(this.state.foods, barcode.data),null,4));
-        //this.findBarcode(this.state.foods, barcode.data);
-        this.props.navigation.navigate('Intake', this.state.foods);
+        this.setState({
+            intakeId: this.props.navigation.state.params.id,
+        });
+        let food = this.findBarcode(this.state.foods, barcode.data);
+        this.props.navigation.navigate('Intake', {intakeId: this.state.intakeId, foodId: food.foodId});
     }
 
     render() {
