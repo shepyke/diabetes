@@ -28,12 +28,7 @@ export default class Intake extends Component<{}> {
         this.state = {
             time: '',
             userId: '',
-            intake: [
-                {
-                    foodId: 1,
-                    amount: '',
-                }
-            ],
+            intake: [],
             foods: [
                 {
                     foodId: '',
@@ -73,10 +68,8 @@ export default class Intake extends Component<{}> {
                     this.setState({
                         time: date,
                         userId: value['userId'],
-
                         isLoading: false,
                     });
-                    console.log("this.state.intake: " + JSON.stringify(this.state.intake,null,4));
                 })
                 .catch((error) => {
                     console.error(error);
@@ -115,16 +108,16 @@ export default class Intake extends Component<{}> {
     }
 
     addMoreIntake = () =>{
-            //this.animatedValue.setValue(0);
-        if (this.intakeIndex < 5) {
+        this.animatedValue.setValue(0);
+
+        if (this.intakeIndex < 10) {
             let newlyAddedIntake = {
+                id: this.intakeIndex,
                 foodId: this.state.foods[0].foodId,
                 amount: '',
             }
 
             this.setState({disableButton: true, intake: [...this.state.intake, newlyAddedIntake]}, () => {
-                console.log("newlyAddedIntake in function: " + JSON.stringify(newlyAddedIntake,null,4));
-                console.log("this.state.intake in function: " + JSON.stringify(this.state.intake,null,4));
                 Animated.timing(
                     this.animatedValue,
                     {
@@ -133,10 +126,10 @@ export default class Intake extends Component<{}> {
                         useNativeDriver: true
                     }
                 ).start(() => {
+                    this.intakeIndex = this.intakeIndex + 1;
                     this.setState({disableButton: false});
                 });
-                this.intakeIndex += 1;
-                console.log("this.intakeIndex in function: " + this.intakeIndex);
+
             });
         }
     }
@@ -149,36 +142,34 @@ export default class Intake extends Component<{}> {
             }
         );
 
-        let newArray = this.state.intake.map(( intakeItem, key ) =>{
-            console.log( (key) + ". intakeItem: " + JSON.stringify(intakeItem,null,4));
-            console.log("key: " + key);
-            console.log("this.intakeIndex: " + this.intakeIndex);
-            console.log("this.state.intake in function: " + JSON.stringify(this.state.intake,null,4));
-            if(( key ) == this.intakeIndex){
+        let newArray = this.state.intake.map(( intakeItem, key ) => {
+            //FIXME: "Warning: Encountered two children with the same key, `0`."
+            if(key == this.intakeIndex){
                 return(
-                    <Animated.View key={key} style={[{ opacity: this.animatedValue, transform: [{ translateY: animationValue }] }]}>
+                    <Animated.View
+                        key={key}
+                        style={[{ opacity: this.animatedValue,
+                            transform: [{ translateY: animationValue }] }]}>
                         <Picker
                             key={key}
                             style={Styles.dropdown}
                             selectedValue={intakeItem.foodId}
                             mode="dropdown"
                             onValueChange={(foodId) => {
+                                const intake = this.state.intake;
+                                intake[intakeItem.id].foodId = foodId;
                                 this.setState({
-                                    intake:[
-                                        ...this.state.intake,
-                                        intakeItem = {
-                                            ...intakeItem,
-                                            foodId: foodId,
-                                        },
-                                    ]
+                                    intake: intake,
                                 });
                             }}
                         >
                             {this.state.foods.map((item) => {
-                                return (<Picker.Item label={item.foodName} value={item.foodId} key={key}/>)
+                                return (<Picker.Item label={item.foodName} value={item.foodId} key={(key + "_" + item.foodName)}/>)
                             })}
                         </Picker>
-                        <View key={key} style={{flexDirection: 'row'}}>
+                        <View
+                            key={key}
+                            style={{flexDirection: 'row'}}>
                             <TextInput
                                 key={key}
                                 style={[Styles.textInput,{width: '80%'}]}
@@ -187,21 +178,19 @@ export default class Intake extends Component<{}> {
                                 keyboardType = 'numeric'
                                 maxLength={6}
                                 onChangeText={(amount) => {
+                                    const intake = this.state.intake;
+                                    intake[intakeItem.id].amount = amount;
                                     this.setState({
-                                        intake:[
-                                            ...this.state.intake,
-                                            intakeItem = {
-                                                ...intakeItem,
-                                                amount: amount,
-                                            },
-                                        ]
+                                        intake: intake,
                                     });
                                 }}
-                                underlineColorAndroid='white'
+                                    underlineColorAndroid='white'
                             />
                             <Text
                                 key={key}
-                                style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
+                                style={[Styles.text,
+                                    {width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}
+                                ]}>
                                 {this.state.foods[intakeItem.foodId-1].unit}
                             </Text>
                             <Icon
@@ -220,29 +209,27 @@ export default class Intake extends Component<{}> {
                 );
             }else{
                 return(
-                    <View>
+                    <View key={key}>
                         <Picker
                             key={key}
                             style={Styles.dropdown}
                             selectedValue={intakeItem.foodId}
                             mode="dropdown"
                             onValueChange={(foodId) => {
+                                const intake = this.state.intake;
+                                intake[intakeItem.id].foodId = foodId;
                                 this.setState({
-                                    intake:[
-                                        ...this.state.intake,
-                                        intakeItem = {
-                                            ...intakeItem,
-                                            foodId: foodId,
-                                        },
-                                    ]
+                                    intake: intake,
                                 });
                             }}
                         >
                             {this.state.foods.map((item) => {
-                                return (<Picker.Item label={item.foodName} value={item.foodId} key={key}/>)
+                                return (<Picker.Item label={item.foodName} value={item.foodId} key={(key + item.foodName)}/>)
                             })}
                         </Picker>
-                        <View key={key} style={{flexDirection: 'row'}}>
+                        <View
+                            key={key}
+                            style={{flexDirection: 'row'}}>
                             <TextInput
                                 key={key}
                                 style={[Styles.textInput,{width: '80%'}]}
@@ -251,14 +238,10 @@ export default class Intake extends Component<{}> {
                                 keyboardType = 'numeric'
                                 maxLength={6}
                                 onChangeText={(amount) => {
+                                    const intake = this.state.intake;
+                                    intake[intakeItem.id].amount = amount;
                                     this.setState({
-                                        intake:[
-                                            ...this.state.intake,
-                                            intakeItem = {
-                                                ...intakeItem,
-                                                amount: amount,
-                                            },
-                                        ]
+                                        intake: intake,
                                     });
                                 }}
                                 underlineColorAndroid='white'
@@ -333,6 +316,7 @@ export default class Intake extends Component<{}> {
                     <TouchableOpacity
                         onPress={this.addMoreIntake}
                         style={Styles.plusButton}
+                        disabled = { this.state.disabled }
                     >
                         <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
                     </TouchableOpacity>
@@ -345,6 +329,7 @@ export default class Intake extends Component<{}> {
                     </View>
                     <TouchableOpacity
                         style={[Styles.button, {marginTop: 10, marginBottom: 10}]}
+                        disabled = { this.state.disabled }
                         onPress={this.submit}>
                         <Text>Submit</Text>
                     </TouchableOpacity>
