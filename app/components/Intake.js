@@ -131,6 +131,8 @@ export default class Intake extends Component<{}> {
                 });
 
             });
+        }else{
+            alert("You cannot add more than 10 dishes to one time meal");
         }
     }
 
@@ -143,15 +145,14 @@ export default class Intake extends Component<{}> {
         );
 
         let newArray = this.state.intake.map(( intakeItem, key ) => {
-            //FIXME: "Warning: Encountered two children with the same key, `0`."
             if(key == this.intakeIndex){
                 return(
                     <Animated.View
-                        key={key}
+                        key={key + 50}
                         style={[{ opacity: this.animatedValue,
                             transform: [{ translateY: animationValue }] }]}>
                         <Picker
-                            key={key}
+                            key={key + 100}
                             style={Styles.dropdown}
                             selectedValue={intakeItem.foodId}
                             mode="dropdown"
@@ -168,7 +169,7 @@ export default class Intake extends Component<{}> {
                             })}
                         </Picker>
                         <View
-                            key={key}
+                            key={key + 150}
                             style={{flexDirection: 'row'}}>
                             <TextInput
                                 key={key}
@@ -187,14 +188,14 @@ export default class Intake extends Component<{}> {
                                     underlineColorAndroid='white'
                             />
                             <Text
-                                key={key}
+                                key={key + 200}
                                 style={[Styles.text,
                                     {width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}
                                 ]}>
                                 {this.state.foods[intakeItem.foodId-1].unit}
                             </Text>
                             <Icon
-                                key={key}
+                                key={key + 250}
                                 type="font-awesome"
                                 name="question-circle"
                                 size={26}
@@ -209,9 +210,9 @@ export default class Intake extends Component<{}> {
                 );
             }else{
                 return(
-                    <View key={key}>
+                    <View key={key + 350}>
                         <Picker
-                            key={key}
+                            key={key + 400}
                             style={Styles.dropdown}
                             selectedValue={intakeItem.foodId}
                             mode="dropdown"
@@ -228,10 +229,10 @@ export default class Intake extends Component<{}> {
                             })}
                         </Picker>
                         <View
-                            key={key}
+                            key={key + 450}
                             style={{flexDirection: 'row'}}>
                             <TextInput
-                                key={key}
+                                key={key + 500}
                                 style={[Styles.textInput,{width: '80%'}]}
                                 placeholder='Amount'
                                 placeholderTextColor='white'
@@ -247,12 +248,12 @@ export default class Intake extends Component<{}> {
                                 underlineColorAndroid='white'
                             />
                             <Text
-                                key={key}
+                                key={key + 550}
                                 style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
                                 {this.state.foods[intakeItem.foodId-1].unit}
                             </Text>
                             <Icon
-                                key={key}
+                                key={key + 600}
                                 type="font-awesome"
                                 name="question-circle"
                                 size={26}
