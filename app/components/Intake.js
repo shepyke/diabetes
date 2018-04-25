@@ -64,8 +64,8 @@ export default class Intake extends Component<{}> {
         let date = Moment().format('YYYY-MM-DD HH:mm:ss');
 
         try {
-            fetch('http://172.20.10.4:3000/intakes/foods')
-            //fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+            //fetch('http://172.20.10.4:3000/intakes/foods')
+            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.foods = res.foods;
@@ -99,18 +99,17 @@ export default class Intake extends Component<{}> {
 
     submit = async() => {
         try {
-            fetch('http://172.20.10.4:3000/intakes/addIntake', {
-            //fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
+            //fetch('http://172.20.10.4:3000/intakes/addIntake', {
+            fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    intakes: this.state.intake,
                     time: this.state.time,
                     userId: this.state.userId,
-                    //food: this.state.foods[this.state.intake.foodId-1],
+                    intakes: this.state.intake,
                 })
             })
                 .then((response) => response.json())
@@ -371,13 +370,13 @@ export default class Intake extends Component<{}> {
                 <Text style={Styles.header}>INTAKE</Text>
                 <View style={Styles.dateAndPlus}>
                     <DatePicker
-                        style={Styles.birthDay}
+                        style={[Styles.birthDay, {width: '50%'}]}
                         date={this.state.time}
                         mode="date"
                         placeholder="Date"
-                        format="YYYY-MM-DD"
+                        format="YYYY-MM-DD HH:mm"
                         minDate="1900-01-01"
-                        maxDate={Moment().format('YYYY-MM-DD')}
+                        maxDate={Moment().format('YYYY-MM-DD HH:mm')}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         showIcon={true}
