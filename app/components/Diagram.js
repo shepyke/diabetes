@@ -6,23 +6,15 @@
 
 import React, { Component } from 'react';
 import {
-    Platform,
     Text,
     View,
-    TextInput,
-    KeyboardAvoidingView,
-    TouchableOpacity,
     AsyncStorage, Dimensions,
 } from 'react-native';
 import Styles from "../config/Styles";
 import PureChart from 'react-native-pure-chart';
 import { Icon } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
-import { ListView } from 'realm/react-native';
 import Moment from 'moment';
-
-
-let screen = Dimensions.get('window');
 
 export default class Diagram extends Component<{}> {
 
@@ -46,6 +38,7 @@ export default class Diagram extends Component<{}> {
                 protein: '',
             },
             isLoading: true,
+            isFocused: false,
         }
         this.generateData = this.generateData.bind(this);
     }
@@ -55,10 +48,11 @@ export default class Diagram extends Component<{}> {
     }
 
     _loadInitialState = async() => {
+        //this._sub = this.props.navigation.addListener('didFocus', this.setFocus());
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
-        let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+        let date = Moment().format('YYYY-MM-DD HH:mm');
+        let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm');
 
         this.setState(
             {
@@ -67,7 +61,24 @@ export default class Diagram extends Component<{}> {
                 toDate: date,
             }
         );
+
         this.fetchDataToDraw();
+
+        this._sub = this.props.navigation.addListener('didFocus', () => {
+            let date = Moment().format('YYYY-MM-DD HH:mm');
+            let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm');
+
+            this.setState({
+                isFocused: true,
+                fromDate: date7,
+                toDate: date,
+            });
+            this.fetchDataToDraw();
+        });
+    }
+
+    componentWillUnmount() {
+        this._sub.remove();
     }
 
     fetchDataToDraw = async() => {
@@ -89,7 +100,6 @@ export default class Diagram extends Component<{}> {
                     if(res.success === true){
                         this.state.measurements = res.measurements;
                         this.state.intakes = res.intakes;
-                        //console.log("this.state.intakes : " + JSON.stringify(this.state.intakes,null,4));
                     }else{
                         alert(res.message);
                     }
@@ -111,7 +121,7 @@ export default class Diagram extends Component<{}> {
         let fillUp = function(obj) {
             dataTmp.push(
                 {
-                    x: Moment((obj.time).slice(0, -5)).format('YYYY-MM-DD HH:mm:ss'),
+                    x: Moment((obj.time).slice(0, -5)).format('YYYY-MM-DD HH:mm'),
                     y: obj[metric],
                 }
             )
@@ -145,6 +155,11 @@ export default class Diagram extends Component<{}> {
                 data: (this.generateData(this.state.measurements, 'insulin')),
                 color: 'yellow'
             },
+            /*{
+                seriesName: 'glycemicIndex',
+                data: (this.generateData(this.state.intakes, 'glycemicIndex')),
+                color: 'green'
+            },*/
         ]
 
         let intakesData = [
@@ -176,7 +191,7 @@ export default class Diagram extends Component<{}> {
                 <View style={[Styles.container, {
                     alignItems: 'stretch',
                 }]}>
-                    <View style={[{flexDirection: 'row'}]}>
+                    <View style={[{position: 'absolute', top: 20, height: 40, flexDirection: 'row', marginBottom: 10}]}>
                         <View style={[{flexDirection: 'row'}]}>
                             <Text style={Styles.header3}>From Date: </Text>
                             <DatePicker
@@ -200,7 +215,7 @@ export default class Diagram extends Component<{}> {
                                     },
                                     dateText: {
                                         color: '#fff',
-                                        fontSize: 12,
+                                        fontSize: 14,
                                     },
                                     placeholderText: {
                                         color: '#718792',
@@ -212,7 +227,7 @@ export default class Diagram extends Component<{}> {
                                 }}
                             />
                         </View>
-                        <View style={[{flexDirection: 'row', justifyContent: 'space-evenly'}]}>
+                        <View style={[{flexDirection: 'row'}]}>
                             <Text style={Styles.header3}>To Date: </Text>
                             <DatePicker
                                 style={Styles.dateSelector}
@@ -221,7 +236,7 @@ export default class Diagram extends Component<{}> {
                                 placeholder="When?"
                                 format="YYYY-MM-DD HH:mm"
                                 minDate={this.state.fromDate}
-                                maxDate={Moment().format('YYYY-MM-DD HH:mm:ss')}
+                                maxDate={Moment().format('YYYY-MM-DD HH:mm')}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 showIcon={false}
@@ -235,7 +250,7 @@ export default class Diagram extends Component<{}> {
                                     },
                                     dateText: {
                                         color: '#fff',
-                                        fontSize: 12,
+                                        fontSize: 14,
                                     },
                                     placeholderText: {
                                         color: '#718792',
@@ -251,11 +266,13 @@ export default class Diagram extends Component<{}> {
                     <Text style={Styles.header2}>
                         Measurements data
                     </Text>
+                    {console.log("intakesData: " + JSON.stringify(intakesData,null,4))}
                     <PureChart
                         data={measurementsData}
                         numberOfYAxisGuideLine={5}
                         gap={150}
                         type='line'
+                        height={150}
                         customValueRenderer={(index, point) => {
                             if (index % 2 === 0) return null
                             return (
@@ -280,6 +297,7 @@ export default class Diagram extends Component<{}> {
                         data={intakesData}
                         numberOfYAxisGuideLine={5}
                         gap={150}
+                        height={150}
                         type='bar'
                     />
                     <View style={[{marginTop: 5, flexDirection: 'row', justifyContent: 'space-evenly',}]}>
