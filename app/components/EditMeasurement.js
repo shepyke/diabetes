@@ -195,7 +195,7 @@ export default class EditMeasurement extends Component {
                     style={Styles.textInput2}
                     placeholder='Insulin'
                     keyboardType = 'numeric'
-                    maxLength={6}
+                    maxLength={3}
                     onChangeText={
                         (insulin) => {
                             const diary = Object.assign({},
@@ -210,7 +210,7 @@ export default class EditMeasurement extends Component {
                     style={Styles.textInput2}
                     placeholder='Sugar'
                     keyboardType = 'numeric'
-                    maxLength={6}
+                    maxLength={3}
                     onChangeText={
                         (sugar) => {
                             const diary = Object.assign({},

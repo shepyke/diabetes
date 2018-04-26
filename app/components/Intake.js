@@ -250,7 +250,7 @@ export default class Intake extends Component<{}> {
                                 placeholder='Amount'
                                 placeholderTextColor='white'
                                 keyboardType = 'numeric'
-                                maxLength={6}
+                                maxLength={3}
                                 onChangeText={(amount) => {
                                     const intake = this.state.intake;
                                     this.setState({
@@ -331,7 +331,7 @@ export default class Intake extends Component<{}> {
                                     placeholder='Amount'
                                     placeholderTextColor='white'
                                     keyboardType = 'numeric'
-                                    maxLength={6}
+                                    maxLength={3}
                                     onChangeText={(amount) => {
                                         const intake = this.state.intake;
                                         this.setState({
