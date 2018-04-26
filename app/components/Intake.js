@@ -102,7 +102,11 @@ export default class Intake extends Component<{}> {
 
     componentWillReceiveProps(nextProps){
         if(nextProps.navigation.state.params != undefined
-            && nextProps.navigation.state.params.intakeId != undefined) {
+            && nextProps.navigation.state.params.intakeId != undefined
+            && this.props.navigation.state.params != undefined
+            && this.props.navigation.state.params.intakeId != undefined
+            && this.props.navigation.state.params.intakeId != nextProps.navigation.state.params.intakeId
+        ) {
             const intake = this.state.intake;
             this.setState({
                 intake: this.updateOneIntake(intake,
@@ -183,20 +187,9 @@ export default class Intake extends Component<{}> {
     }
 
     updateOneIntake(intakeArray, intakeId, property, newValue){
-        let propertyTmp = property;
-        let newValueTmp = newValue;
-
-        if(this.props.navigation.state.params != undefined){
-            if(this.props.navigation.state.params.intakeId != undefined
-                && this.props.navigation.state.params.intakeId === intakeId) {
-                propertyTmp = "foodId";
-                newValueTmp = this.props.navigation.state.params.foodId;
-            }
-        }
-
         intakeArray.find(function (obj) {
             if(obj.id === intakeId){
-                obj[propertyTmp]= newValueTmp;
+                obj[property]= newValue;
             }
         })
         return intakeArray;
@@ -229,7 +222,7 @@ export default class Intake extends Component<{}> {
             if(intakeItem.id == this.intakeIndex){
                 return(
                     <Animated.View
-                        key={intakeItem.id + 50}
+                        key={intakeItem.id}
                         style={[{ opacity: this.animatedValue,
                             transform: [{ translateY: animationValue }] }]}>
                         <Picker
@@ -249,10 +242,10 @@ export default class Intake extends Component<{}> {
                             })}
                         </Picker>
                         <View
-                            key={intakeItem.id + 150}
+                            key={intakeItem.id + 200}
                             style={{flexDirection: 'row'}}>
                             <TextInput
-                                key={intakeItem.id + 650}
+                                key={intakeItem.id + 300}
                                 style={[Styles.textInput,{width: '80%'}]}
                                 placeholder='Amount'
                                 placeholderTextColor='white'
@@ -267,14 +260,14 @@ export default class Intake extends Component<{}> {
                                 underlineColorAndroid='white'
                             />
                             <Text
-                                key={intakeItem.id + 200}
+                                key={intakeItem.id + 400}
                                 style={[Styles.text,
                                     {width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}
                                 ]}>
                                 {this.state.foods[intakeItem.foodId-1].unit}
                             </Text>
                             <Icon
-                                key={intakeItem.id + 250}
+                                key={intakeItem.id + 500}
                                 type="font-awesome"
                                 name="question-circle"
                                 size={26}
@@ -285,7 +278,7 @@ export default class Intake extends Component<{}> {
                                     + this.state.foods[intakeItem.foodId-1].foodName)}
                             />
                             <Icon
-                                key={intakeItem.id + 950}
+                                key={intakeItem.id + 600}
                                 type="entypo"
                                 name="camera"
                                 size={26}
@@ -300,11 +293,11 @@ export default class Intake extends Component<{}> {
             }else{
                 return(
                     <Swipeout
+                        key={intakeItem.id + 700}
                         close={!(this.state.deleteIndex === this.state.intake.findIndex(x => x.id === intakeItem.id))}
                         right={swipeBtns}
                         autoClose={true}
                         backgroundColor= 'transparent'
-                        key={intakeItem.id + 300}
                         sensitivity={100}
                         onOpen={() => {
                             this.setState({
@@ -312,9 +305,9 @@ export default class Intake extends Component<{}> {
                             });
                         }}
                     >
-                        <View key={intakeItem.id + 350}>
+                        <View key={intakeItem.id + 800}>
                             <Picker
-                                key={intakeItem.id + 400}
+                                key={intakeItem.id + 900}
                                 style={Styles.dropdown}
                                 selectedValue={intakeItem.foodId}
                                 mode="dropdown"
@@ -330,10 +323,10 @@ export default class Intake extends Component<{}> {
                                 })}
                             </Picker>
                             <View
-                                key={intakeItem.id + 450}
+                                key={intakeItem.id + 1000}
                                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                                 <TextInput
-                                    key={intakeItem.id + 500}
+                                    key={intakeItem.id + 1100}
                                     style={[Styles.textInput,{width: '70%'}]}
                                     placeholder='Amount'
                                     placeholderTextColor='white'
@@ -348,12 +341,12 @@ export default class Intake extends Component<{}> {
                                     underlineColorAndroid='white'
                                 />
                                 <Text
-                                    key={intakeItem.id + 550}
+                                    key={intakeItem.id + 1200}
                                     style={[Styles.text,{width: '5%', alignSelf: 'center', fontSize: 16, marginRight: 10}]}>
                                     {this.state.foods[intakeItem.foodId-1].unit}
                                 </Text>
                                 <Icon
-                                    key={intakeItem.id + 600}
+                                    key={intakeItem.id + 1300}
                                     type="font-awesome"
                                     name="question-circle"
                                     size={26}
@@ -364,7 +357,7 @@ export default class Intake extends Component<{}> {
                                         + this.state.foods[intakeItem.foodId-1].foodName)}
                                 />
                                 <Icon
-                                    key={intakeItem.id + 900}
+                                    key={intakeItem.id + 1400}
                                     type="entypo"
                                     name="camera"
                                     size={26}
