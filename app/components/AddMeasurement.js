@@ -43,7 +43,7 @@ export default class AddMeasurement extends Component {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+        let date = Moment().format('YYYY-MM-DD HH:mm');
 
         this.setState(
             {
@@ -157,7 +157,7 @@ export default class AddMeasurement extends Component {
                     placeholder="When?"
                     format="YYYY-MM-DD HH:mm"
                     minDate="1900-01-01 00:00"
-                    maxDate={Moment().format('YYYY-MM-DD HH:mm:ss')}
+                    maxDate={Moment().format('YYYY-MM-DD HH:mm')}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}

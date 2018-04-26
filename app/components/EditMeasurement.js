@@ -61,7 +61,7 @@ export default class EditMeasurement extends Component {
                     measurementId: item.measurementId,
                     type: item.type,
                     when: item.when,
-                    time: Moment((item.time).slice(0, -5)).format('YYYY-MM-DD HH:mm:ss'),
+                    time: Moment((item.time).slice(0, -5)).format('YYYY-MM-DD HH:mm'),
                     insulin: item.insulin,
                     sugar: item.sugar,
                 }
@@ -164,7 +164,7 @@ export default class EditMeasurement extends Component {
                     placeholder="When?"
                     format="YYYY-MM-DD HH:mm"
                     minDate="1900-01-01 00:00"
-                    maxDate={Moment().format('YYYY-MM-DD HH:mm:ss')}
+                    maxDate={Moment().format('YYYY-MM-DD HH:mm')}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}

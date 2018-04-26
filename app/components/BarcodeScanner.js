@@ -53,7 +53,7 @@ export default class BarcodeScanner extends Component {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+        let date = Moment().format('YYYY-MM-DD HH:mm');
 
         try {
             fetch('https://diabetes-backend.herokuapp.com/intakes/foods')

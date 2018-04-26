@@ -61,7 +61,7 @@ export default class Intake extends Component<{}> {
     _loadInitialState = async() => {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm:ss');
+        let date = Moment().format('YYYY-MM-DD HH:mm');
 
         try {
             //fetch('http://172.20.10.4:3000/intakes/foods')
