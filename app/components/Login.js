@@ -15,6 +15,7 @@ import {
     AsyncStorage,
 } from 'react-native';
 import Styles from "../config/Styles";
+import { NavigationActions } from 'react-navigation';
 
 export default class Login extends Component<{}> {
 
@@ -66,7 +67,7 @@ export default class Login extends Component<{}> {
             .then ((res) => {
                 if(res.success === true){
                     AsyncStorage.setItem('user', JSON.stringify(res.user));
-                    this.props.navigation.navigate('Tabs');
+                    this.resetNavigation('Tabs');
                 }else{
                     alert(res.message);
                 }
@@ -79,6 +80,16 @@ export default class Login extends Component<{}> {
 
     goToRegistration = () => {
         this.props.navigation.navigate('Registration');
+    }
+
+    resetNavigation(targetRoute) {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: targetRoute }),
+            ],
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 
     render() {
