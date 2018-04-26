@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import Moment from 'moment';
+import {NavigationActions} from "react-navigation";
 
 export default class Profile extends Component<{}> {
 
@@ -74,12 +75,22 @@ export default class Profile extends Component<{}> {
             const value = AsyncStorage.getItem('user');
             if (value !== null){
                 this.setState({user: value});
-                this.props.navigation.navigate('Home');
+                this.resetNavigation('Home');
                 alert('You have successfully logged out.');
             }
         }catch(err){
             console.log(err);
         }
+    }
+
+    resetNavigation(targetRoute) {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: targetRoute }),
+            ],
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 
     render() {
