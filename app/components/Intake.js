@@ -372,7 +372,7 @@ export default class Intake extends Component<{}> {
                     <DatePicker
                         style={[Styles.birthDay, {width: '50%'}]}
                         date={this.state.time}
-                        mode="date"
+                        mode="datetime"
                         placeholder="Date"
                         format="YYYY-MM-DD HH:mm"
                         minDate="1900-01-01"
