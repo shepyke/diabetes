@@ -131,7 +131,14 @@ export default class Intake extends Component<{}> {
                 .then((response) => response.json())
                 .then((res) => {
                     if (res.success === true) {
-                        alert('You have successfully added an intake to your diary');
+                        console.log("res.intake: " + JSON.stringify(res.intake,null,4));
+                        alert('You have successfully added an intake:'
+                            + '\nAverage Glycemic index: ' + res.intake.avgGI
+                            + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate
+                            + '\nTotal fat: ' + res.intake.totalFat
+                            + '\nTotal calorie: ' + res.intake.totalCalorie
+                            + '\nTotal protein: ' + res.intake.totalProtein
+                        );
                     } else {
                         alert(res.message);
                     }
