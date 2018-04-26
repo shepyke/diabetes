@@ -261,7 +261,6 @@ export default class Diagram extends Component<{}> {
                     <Text style={Styles.header2}>
                         Measurements data
                     </Text>
-                    {console.log("intakesData: " + JSON.stringify(intakesData,null,4))}
                     <PureChart
                         data={measurementsData}
                         numberOfYAxisGuideLine={5}
