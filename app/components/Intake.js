@@ -143,6 +143,10 @@ export default class Intake extends Component<{}> {
                             + '\nTotal calorie: ' + res.intake.totalCalorie
                             + '\nTotal protein: ' + res.intake.totalProtein
                         );
+                        this.setState({
+                            intake: [],
+                            disableSubmitButton: true,
+                        });
                     } else {
                         alert(res.message);
                     }
