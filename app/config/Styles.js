@@ -41,14 +41,14 @@ const Styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     header3: {
-        fontSize: 12,
+        fontSize: 16,
         color: '#fff',
         textAlign: 'center',
         //paddingBottom: 5,
         fontWeight: 'bold',
         padding: 0,
         paddingLeft: 2,
-        height: 20,
+        height: 30,
     },
     footer: {
         flex: .3,
@@ -87,7 +87,7 @@ const Styles = StyleSheet.create({
         marginBottom: 10,
     },
     dateSelector: {
-        height: 25,
+        height: 30,
         left: 2,
         margin: 0,
         marginBottom: 5,
