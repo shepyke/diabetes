@@ -155,11 +155,6 @@ export default class Diagram extends Component<{}> {
                 data: (this.generateData(this.state.measurements, 'insulin')),
                 color: 'yellow'
             },
-            /*{
-                seriesName: 'glycemicIndex',
-                data: (this.generateData(this.state.intakes, 'glycemicIndex')),
-                color: 'green'
-            },*/
         ]
 
         let intakesData = [
