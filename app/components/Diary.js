@@ -14,6 +14,7 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
+    YellowBox,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -29,6 +30,8 @@ import Swipeout from 'react-native-swipeout';
 import AddMeasurement from "./AddMeasurement";
 import EditMeasurement from "./EditMeasurement";
 import Moment from 'moment';
+
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 export default class Diary extends Component<{}> {
     constructor(props){

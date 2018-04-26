@@ -15,13 +15,16 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Animated,
-    ScrollView
+    ScrollView,
+    YellowBox
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
 import { Icon } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
+
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 export default class Intake extends Component<{}> {
     constructor(props){
