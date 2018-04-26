@@ -136,12 +136,12 @@ export default class Intake extends Component<{}> {
                 .then((res) => {
                     if (res.success === true) {
                         console.log("res.intake: " + JSON.stringify(res.intake,null,4));
-                        alert('You have successfully added an intake:'
+                        alert('You have successfully added an intake:\n'
                             + '\nAverage Glycemic index: ' + res.intake.avgGI
-                            + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate
-                            + '\nTotal fat: ' + res.intake.totalFat
-                            + '\nTotal calorie: ' + res.intake.totalCalorie
-                            + '\nTotal protein: ' + res.intake.totalProtein
+                            + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
+                            + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
+                            + '\nTotal fat: ' + res.intake.totalFat + 'g'
+                            + '\nTotal protein: ' + res.intake.totalProtein + 'g'
                         );
                         this.setState({
                             intake: [],
