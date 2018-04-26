@@ -48,6 +48,7 @@ export default class Intake extends Component<{}> {
             disableSubmitButton: true,
             isLoading: true,
             deleteIndex: '',
+            isFocused: false,
         }
         this.intakeIndex = 0;
         this.deletedRowNumber = 0;
@@ -56,6 +57,18 @@ export default class Intake extends Component<{}> {
 
     componentDidMount(){
         this._loadInitialState().done();
+        this._sub = this.props.navigation.addListener('didFocus', () => {
+            let date = Moment().format('YYYY-MM-DD HH:mm');
+
+            this.setState({
+                isFocused: true,
+                time: date,
+            });
+        });
+    }
+
+    componentWillUnmount() {
+        this._sub.remove();
     }
 
     _loadInitialState = async() => {
