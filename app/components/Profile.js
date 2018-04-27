@@ -95,7 +95,7 @@ export default class Profile extends Component<{}> {
         data.append('avatar', image);
 
         try {
-            fetch('http://192.168.0.117:3000/profile', {
+            fetch('https://diabetes-backend.herokuapp.com/profile', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
