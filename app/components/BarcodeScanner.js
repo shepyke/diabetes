@@ -16,6 +16,7 @@ import {
 import {RNCamera} from 'react-native-camera';
 import Styles from "../config/Styles";
 import { Icon } from 'react-native-elements';
+import Moment from "moment/moment";
 
 export default class BarcodeScanner extends Component {
     constructor(props) {
@@ -41,7 +42,8 @@ export default class BarcodeScanner extends Component {
                     unit: '',
                 },
             ],
-            intakeId: -1,
+            intakeId: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.id : -1,
+            viaIntake: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.viaIntake : false,
         };
     }
 
@@ -49,16 +51,23 @@ export default class BarcodeScanner extends Component {
         this._loadInitialState().done();
     }
 
-    _loadInitialState = async() => {
-        let val = await AsyncStorage.getItem('user');
-        let value = JSON.parse(val);
+    componentWillReceiveProps(nextProps){
+        if(nextProps.navigation.state.params != undefined){
+            if(nextProps.navigation.state.params.viaIntake != undefined) {
+                this.setState({
+                    intakeId: nextProps.navigation.state.params.id,
+                    viaIntake: nextProps.navigation.state.params.viaIntake,
+                });
+            }
+        }
+    }
 
+    _loadInitialState = async() => {
         try {
             fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
                     this.state.foods = res.foods;
-                    //console.log("this.state.foods: " + JSON.stringify(this.state.foods,null,4));
                 })
                 .catch((error) => {
                     console.error(error);
@@ -66,59 +75,16 @@ export default class BarcodeScanner extends Component {
         }catch(error){
             console.error(error);
         }
+
+        this._sub = this.props.navigation.addListener('didFocus', () => {
+            this.setState({
+                showCamera: true,
+            });
+        });
     }
 
-    switchType = () => {
-        let newType;
-        const { back, front } = RNCamera.Constants.Type;
-
-        if (this.state.camera.type === back) {
-            newType = front;
-        } else if (this.state.camera.type === front) {
-            newType = back;
-        }
-
-        this.setState({
-            camera: {
-                ...this.state.camera,
-                type: newType,
-            },
-        });
-    };
-
-    switchFlash = () => {
-        let newFlashMode;
-        const { auto, on, off } = RNCamera.Constants.FlashMode;
-
-        if (this.state.camera.flashMode === auto) {
-            newFlashMode = on;
-        } else if (this.state.camera.flashMode === on) {
-            newFlashMode = off;
-        } else if (this.state.camera.flashMode === off) {
-            newFlashMode = auto;
-        }
-
-        this.setState({
-            camera: {
-                ...this.state.camera,
-                flashMode: newFlashMode,
-            },
-        });
-    };
-
-    get flashIcon() {
-        let icon;
-        const { auto, on, off } = RNCamera.Constants.FlashMode;
-
-        if (this.state.camera.flashMode === auto) {
-            icon =  <Icon name="flash-auto" size={10} color={"white"} />;
-        } else if (this.state.camera.flashMode === on) {
-            icon = <Icon name="flash-on" size={10} color={"white"} />;
-        } else if (this.state.camera.flashMode === off) {
-            icon = <Icon name="flash-off" size={10} color={"white"} />;
-        }
-
-        return icon;
+    componentWillUnmount() {
+        this._sub.remove();
     }
 
     findBarcode(foodsObject, barcode) {
@@ -130,11 +96,18 @@ export default class BarcodeScanner extends Component {
     }
 
     onBarCodeRead(barcode) {
-        this.setState({
-            intakeId: this.props.navigation.state.params.id,
-        });
         let food = this.findBarcode(this.state.foods, barcode.data);
-        this.props.navigation.navigate('Intake', {intakeId: this.state.intakeId, foodId: food.foodId});
+        this.setState({
+            showCamera: false,
+        });
+        if(this.state.viaIntake) {
+            this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: false, intakeId: this.state.intakeId});
+        }else{
+            this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: true})
+        }
+        this.setState({
+            viaIntake: false,
+        });
     }
 
     render() {

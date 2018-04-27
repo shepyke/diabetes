@@ -84,11 +84,31 @@ export default class Intake extends Component<{}> {
             fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
-                    this.state.foods = res.foods;
-
                     this.setState({
                         time: date,
                         userId: value['userId'],
+                        foods: res.foods,
+                    });
+                })
+                .then(() => {
+                    //it is needed if the user comes here via BarcodeScanner for the first time
+                    if (this.props.navigation.state.params != undefined
+                        && this.props.navigation.state.params.foodId != undefined) {
+                        this.setState({
+                            intake: [
+                                ...this.state.intake,
+                                {
+                                    "id": this.intakeIndex,
+                                    "foodId": this.props.navigation.state.params.foodId,
+                                    "amount": "",
+                                },
+                            ],
+                            disableSubmitButton: false,
+                        });
+                        this.intakeIndex = this.intakeIndex + 1;
+                    }
+                }).then(() => {
+                    this.setState({
                         isLoading: false,
                     });
                 })
@@ -101,19 +121,34 @@ export default class Intake extends Component<{}> {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.navigation.state.params != undefined
-            && nextProps.navigation.state.params.intakeId != undefined
-            && this.props.navigation.state.params != undefined
-            && this.props.navigation.state.params.intakeId != undefined
-            && this.props.navigation.state.params.intakeId != nextProps.navigation.state.params.intakeId
-        ) {
-            const intake = this.state.intake;
-            this.setState({
-                intake: this.updateOneIntake(intake,
-                    nextProps.navigation.state.params.intakeId,
-                    "foodId",
-                    nextProps.navigation.state.params.foodId),
-            });
+        if(nextProps.navigation.state.params != undefined){
+            //user clicked on camera icon of an Element
+            if(nextProps.navigation.state.params.newElement == false) {
+                if (nextProps.navigation.state.params.intakeId != undefined) {
+                    const intake = this.state.intake;
+                    this.setState({
+                        intake: this.updateOneIntake(intake,
+                            nextProps.navigation.state.params.intakeId,
+                            "foodId",
+                            nextProps.navigation.state.params.foodId),
+                    });
+
+                }
+            }else{
+                //user comes via BarcodeScanner but before that opened this page
+                this.setState({
+                    intake: [
+                        ...this.state.intake,
+                        {
+                            "id": this.intakeIndex,
+                            "foodId": nextProps.navigation.state.params.foodId,
+                            "amount": "",
+                        },
+                    ],
+                    disableSubmitButton: false,
+                });
+                this.intakeIndex = this.intakeIndex + 1;
+            }
         }
     }
 
@@ -135,7 +170,6 @@ export default class Intake extends Component<{}> {
                 .then((response) => response.json())
                 .then((res) => {
                     if (res.success === true) {
-                        console.log("res.intake: " + JSON.stringify(res.intake,null,4));
                         alert('You have successfully added an intake:\n'
                             + '\nAverage Glycemic index: ' + res.intake.avgGI
                             + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
@@ -289,7 +323,7 @@ export default class Intake extends Component<{}> {
                                 color={'white'}
                                 style={{position: 'absolute', right: 5}}
                                 onPress={() =>
-                                    this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id})}
+                                    this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id, viaIntake: true})}
                             />
                         </View>
                     </Animated.View>
@@ -368,7 +402,7 @@ export default class Intake extends Component<{}> {
                                     color={'white'}
                                     style={{position: 'absolute', right: 5}}
                                     onPress={() =>
-                                        this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id})}
+                                        this.props.navigation.navigate('BarcodeScanner', {id: intakeItem.id, viaIntake: true})}
                                 />
                             </View>
                         </View>
