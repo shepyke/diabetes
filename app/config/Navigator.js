@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements';
 import Login  from '../components/Login';
 import Profile  from '../components/Profile';
 import RegistrationForm  from '../components/RegistrationForm';
+import ResetPassword from '../components/ResetPassword';
 import Intake from '../components/Intake';
 import Diary from '../components/Diary';
 import Diagram from '../components/Diagram';
@@ -75,6 +76,7 @@ export const Tabs = TabNavigator({
 export const Root = StackNavigator({
         Home: {screen: Login},
         Registration: {screen: RegistrationForm},
+        // ResetPassword: {screen: ResetPassword},
         Tabs: {screen: Tabs},
     }, {
         navigationOptions: {

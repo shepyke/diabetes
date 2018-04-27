@@ -84,6 +84,10 @@ export default class Login extends Component<{}> {
         this.props.navigation.navigate('Registration');
     }
 
+    goToResetPassword= () => {
+        this.props.navigation.navigate('ResetPassword');
+    }
+
     resetNavigation(targetRoute) {
         const resetAction = NavigationActions.reset({
             index: 0,
@@ -135,14 +139,14 @@ export default class Login extends Component<{}> {
                             <Text>Log in </Text>
                         </TouchableOpacity>
 
-                        <Text style={Styles.bottomtext}>
-                            <Text>Forgot your password? </Text>
-                            <Text
-                                style={Styles.register}
-                                onPress={this.goToRegistration}>
-                                Reset my password!
-                            </Text>
-                        </Text>
+                        {/*<Text style={Styles.bottomtext}>*/}
+                            {/*<Text>Forgot your password? </Text>*/}
+                            {/*<Text*/}
+                                {/*style={Styles.register}*/}
+                                {/*onPress={this.goToResetPassword}>*/}
+                                {/*Reset my password!*/}
+                            {/*</Text>*/}
+                        {/*</Text>*/}
 
                         <Text style={Styles.bottomtext}>
                             <Text>Not registered yet? </Text>
