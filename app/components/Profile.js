@@ -94,17 +94,23 @@ export default class Profile extends Component<{}> {
 
         data.append('avatar', image);
 
-        fetch('http://192.168.0.117:3000/profile', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: data
-        })
-            .then(res => {
-                alert(res.message);
-        });
+        try{
+            fetch('http://192.168.0.117:3000/profile', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                },
+                body: data
+            })
+                .then(res => {
+                    alert(res.message);
+                    return
+                });
+        }catch(err){
+            console.error(err);
+            return
+        }
     }
 
     resetNavigation(targetRoute) {
