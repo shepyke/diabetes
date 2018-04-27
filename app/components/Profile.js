@@ -20,7 +20,7 @@ import Styles from "../config/Styles";
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
 import { Icon } from 'react-native-elements';
-import PhotoUpload from 'react-native-photo-upload'
+import PhotoUpload from 'react-native-photo-upload';
 
 
 export default class Profile extends Component<{}> {
@@ -94,7 +94,7 @@ export default class Profile extends Component<{}> {
 
         data.append('avatar', image);
 
-        try{
+        try {
             fetch('http://192.168.0.117:3000/profile', {
                 method: 'POST',
                 headers: {
@@ -107,7 +107,7 @@ export default class Profile extends Component<{}> {
                     alert(res.message);
                     return
                 });
-        }catch(err){
+        } catch (err) {
             console.error(err);
             return
         }
@@ -138,9 +138,45 @@ export default class Profile extends Component<{}> {
                 <View style={Styles.backgroundImage}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
                         <PhotoUpload
-                            onResponse = {response => {
-                                this.uploadPhoto(response);
+                            onCancel = {(result) => {
+                                // console.log("Cancelled");
+                                // if(result){
+                                //     console.log("onPhotoSelect.result: " + JSON.stringify(result,null,4));
+                                // }
                             }}
+                            onStart = {(result) => {
+                                // console.log("onStart");
+                                // if(result){
+                                //     console.log("onStart.result: " + JSON.stringify(result,null,4));
+                                // }
+                            }}
+                            onPhotoSelect = {(result) => {
+                                // console.log("onPhotoSelect");
+                                // if(result){
+                                //     console.log("onPhotoSelect.result: " + JSON.stringify(result,null,4));
+                                // }
+                            }}
+                            onResponse = {(result) => {
+                                //console.log("onResponse");
+                                if(result.uri){
+                                    //console.log("onResponse.result: " + JSON.stringify(result,null,4));
+                                    this.uploadPhoto(result);
+                                }
+                            }}
+                            onRender = {(result) => {
+                                console.log("onRender");
+                                // if(result){
+                                //     console.log("onRender.result: " + JSON.stringify(result,null,4));
+                                // }
+                            }}
+                            onError = {(result) =>{
+                                    console.log("onError");
+                                    if(result){
+                                        console.log("onError.result: " + JSON.stringify(result,null,4));
+                                        this.props.navigate('Profile');
+                                    }
+                                }
+                            }
                         >
                             <Image
                                 style={Styles.profileImage}
