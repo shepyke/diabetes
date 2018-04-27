@@ -23,6 +23,7 @@ import RadioForm,
         RadioButtonLabel
     } from 'react-native-simple-radio-button';
 import Moment from 'moment';
+import {NavigationActions} from "react-navigation";
 
 let gender_props = [
     {label: 'Female    ', value: 'Female' },
@@ -87,7 +88,7 @@ export default class RegistrationForm extends Component<{}> {
                         user: res.user,
                     });
                     AsyncStorage.setItem('user', JSON.stringify(this.state.user));
-                    this.props.navigation.navigate('Profile');
+                    this.resetNavigation('Login');
                     alert('You have successfully registered');
                 }else{
                     alert(res.message);
@@ -102,6 +103,16 @@ export default class RegistrationForm extends Component<{}> {
 
     goToLogin = () => {
         this.props.navigation.navigate('Home');
+    }
+
+    resetNavigation(targetRoute) {
+        const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: targetRoute }),
+            ],
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 
     render() {

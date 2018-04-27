@@ -44,7 +44,7 @@ export default class Login extends Component<{}> {
     _loadInitialState = async() => {
         let value = await AsyncStorage.getItem('user');
         if (value !== null){
-            this.props.navigation.navigate('Tabs');
+            this.resetNavigation('Tabs');
         }
     }
 
@@ -68,7 +68,7 @@ export default class Login extends Component<{}> {
                     this.setState({
                         user: res.user,
                     });
-                    AsyncStorage.setItem('user', JSON.stringify(res.user));
+                    AsyncStorage.setItem('user', JSON.stringify(this.state.user));
                     this.resetNavigation('Tabs');
                 }else{
                     alert(res.message);
