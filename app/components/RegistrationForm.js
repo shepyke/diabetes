@@ -46,7 +46,7 @@ export default class RegistrationForm extends Component<{}> {
                 firstName: '',
                 lastName: '',
                 email: '',
-                image: '',
+                profileImage: '',
                 birthDay: '',
                 gender: '',
                 type: '',
@@ -71,8 +71,8 @@ export default class RegistrationForm extends Component<{}> {
                         birthDay: this.state.user.birthDay,
                         profileImage:
                             (this.state.user.gender == 'Female')
-                                ? 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.png'
-                                : 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.png',
+                                ? 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.jpg'
+                                : 'https://diabetes-backend.herokuapp.com/uploads/anonym_man.png',
                         gender: this.state.user.gender,
                         type: this.state.user.type,
                         password: this.state.user.password,
@@ -83,7 +83,10 @@ export default class RegistrationForm extends Component<{}> {
             .then((response) => response.json())
             .then ((res) => {
                 if(res.success === true){
-                    AsyncStorage.setItem('user', JSON.stringify(res.user));
+                    this.setState({
+                        user: res.user,
+                    });
+                    AsyncStorage.setItem('user', JSON.stringify(this.state.user));
                     this.props.navigation.navigate('Profile');
                     alert('You have successfully registered');
                 }else{

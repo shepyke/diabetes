@@ -36,7 +36,7 @@ export default class Profile extends Component<{}> {
                 lastName: '',
                 email: '',
                 profileImage: '',
-                birthDate: '',
+                birthDay: '',
                 gender: '',
                 type: '',
             },
@@ -54,7 +54,6 @@ export default class Profile extends Component<{}> {
         if( value !== null ){
             this.setState({
                 user:{
-                    ...this.state.user,
                     userId: value['userId'],
                     username: value['username'],
                     email: value['email'],
@@ -63,6 +62,7 @@ export default class Profile extends Component<{}> {
                     birthDay: Moment(value['dob']).format('YYYY-MM-DD'),
                     gender: value['gender'],
                     type: value['type'],
+                    profileImage: value['profileImage'],
                 },
                 isLoading: false,
             });

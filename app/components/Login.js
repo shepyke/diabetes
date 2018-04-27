@@ -30,7 +30,7 @@ export default class Login extends Component<{}> {
                 lastName: '',
                 email: '',
                 profileImage: '',
-                birthDate: '',
+                birthDay: '',
                 gender: '',
                 type: '',
             }
@@ -65,6 +65,9 @@ export default class Login extends Component<{}> {
             .then((response) => response.json())
             .then ((res) => {
                 if(res.success === true){
+                    this.setState({
+                        user: res.user,
+                    });
                     AsyncStorage.setItem('user', JSON.stringify(res.user));
                     this.resetNavigation('Tabs');
                 }else{
