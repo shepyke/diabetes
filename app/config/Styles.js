@@ -81,11 +81,6 @@ const Styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 30,
     },
-    birthDate: {
-        padding: 8,
-        paddingLeft: 6,
-        marginBottom: 10,
-    },
     dateSelector: {
         height: 30,
         left: 2,
@@ -101,6 +96,7 @@ const Styles = StyleSheet.create({
         padding: 6,
         marginBottom: 6,
         color: '#fff',
+        fontSize: 16,
     },
     textInput2: {
         alignSelf: 'stretch',

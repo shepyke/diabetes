@@ -104,7 +104,6 @@ export default class Profile extends Component<{}> {
                 body: data
             })
                 .then(res => {
-                    alert(res.message);
                     return
                 });
         } catch (err) {
