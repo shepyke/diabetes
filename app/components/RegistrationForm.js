@@ -88,8 +88,8 @@ export default class RegistrationForm extends Component<{}> {
                         user: res.user,
                     });
                     AsyncStorage.setItem('user', JSON.stringify(this.state.user));
-                    this.resetNavigation('Login');
                     alert('You have successfully registered');
+                    this.resetNavigation('Tabs');
                 }else{
                     alert(res.message);
                 }
