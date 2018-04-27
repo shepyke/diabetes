@@ -35,11 +35,10 @@ export default class Profile extends Component<{}> {
                 firstName: '',
                 lastName: '',
                 email: '',
-                profileImage: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A',
+                profileImage: '',
                 birthDate: '',
                 gender: '',
                 type: '',
-                bloodSugarAVG: '',
             },
             isLoading: true,
         }
@@ -104,13 +103,7 @@ export default class Profile extends Component<{}> {
             body: data
         })
             .then(res => {
-                console.log(res)
-                this.setState({
-                    user: {
-                        ...this.state.user,
-                        profileImage: res.uri,
-                    },
-                });
+                alert(res.message);
         });
     }
 

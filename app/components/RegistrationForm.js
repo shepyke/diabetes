@@ -50,7 +50,6 @@ export default class RegistrationForm extends Component<{}> {
                 birthDay: '',
                 gender: '',
                 type: '',
-                sugarAVG: '',
             }
         }
     }
@@ -70,10 +69,12 @@ export default class RegistrationForm extends Component<{}> {
                         username: this.state.user.username,
                         email: this.state.user.email,
                         birthDay: this.state.user.birthDay,
-                        //profileImage: this.state.user.profileImage,
+                        profileImage:
+                            (this.state.user.gender == 'Female')
+                                ? 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.png'
+                                : 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.png',
                         gender: this.state.user.gender,
                         type: this.state.user.type,
-                        //bloodSugarAVG: this.state.user.bloodSugarAVG,
                         password: this.state.user.password,
                         repassword: this.state.user.repassword,
                     }

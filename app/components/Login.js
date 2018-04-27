@@ -33,7 +33,6 @@ export default class Login extends Component<{}> {
                 birthDate: '',
                 gender: '',
                 type: '',
-                bloodSugarAVG: '',
             }
         }
     }
