@@ -20,6 +20,8 @@ import Styles from "../config/Styles";
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
 import { Icon } from 'react-native-elements';
+import PhotoUpload from 'react-native-photo-upload'
+
 
 export default class Profile extends Component<{}> {
 
@@ -121,10 +123,18 @@ export default class Profile extends Component<{}> {
 
                 <View style={Styles.backgroundImage}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                        <Image
-                            style={Styles.profileImage}
-                            source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
-                        />
+                        <PhotoUpload
+                            onPhotoSelect={avatar => {
+                                if (avatar) {
+                                    console.log('Image base64 string: ', avatar)
+                                }
+                            }}
+                        >
+                            <Image
+                                style={Styles.profileImage}
+                                source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
+                            />
+                        </PhotoUpload>
                     </View>
                     <View>
                         <View style={{marginTop: 10}}>
