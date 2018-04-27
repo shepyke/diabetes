@@ -35,7 +35,7 @@ export default class Profile extends Component<{}> {
                 firstName: '',
                 lastName: '',
                 email: '',
-                profileImage: '',
+                profileImage: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A',
                 birthDate: '',
                 gender: '',
                 type: '',
@@ -55,6 +55,7 @@ export default class Profile extends Component<{}> {
         if( value !== null ){
             this.setState({
                 user:{
+                    ...this.state.user,
                     userId: value['userId'],
                     username: value['username'],
                     email: value['email'],
@@ -83,19 +84,33 @@ export default class Profile extends Component<{}> {
         }
     }
 
-    uploadPhoto(photo, photoName){
-        const data = new FormData();
-        data.append('userId', this.state.user.userId);
-        data.append('photo', {
+    uploadPhoto(photo){
+        const image = {
             uri: photo.uri,
-            type: photo.type, // or photo.type
-            name: photoName,
-        });
-        fetch(url, {
-            method: 'post',
+            type: 'image/jpeg',
+            name: this.state.user.userId + '-' + Date.now() + '.jpg'
+        }
+
+        const data = new FormData();
+
+        data.append('avatar', image);
+
+        fetch('http://192.168.0.117:3000/profile', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
             body: data
-        }).then(res => {
-            console.log(res)
+        })
+            .then(res => {
+                console.log(res)
+                this.setState({
+                    user: {
+                        ...this.state.user,
+                        profileImage: res.uri,
+                    },
+                });
         });
     }
 
@@ -124,15 +139,13 @@ export default class Profile extends Component<{}> {
                 <View style={Styles.backgroundImage}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
                         <PhotoUpload
-                            onPhotoSelect={avatar => {
-                                if (avatar) {
-                                    console.log('Image base64 string: ', avatar)
-                                }
+                            onResponse = {response => {
+                                this.uploadPhoto(response);
                             }}
                         >
                             <Image
                                 style={Styles.profileImage}
-                                source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
+                                source={{uri: this.state.user.profileImage}}
                             />
                         </PhotoUpload>
                     </View>
