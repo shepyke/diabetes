@@ -17,6 +17,7 @@
     "react-native-datepicker": "^1.7.1",
     "react-native-elements": "^0.19.1",
     "react-native-modalbox": "^1.4.2",
+    "react-native-photo-upload": "^1.2.0",
     "react-native-pure-chart": "0.0.20",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-swipeout": "^2.3.3",
