@@ -65,11 +65,9 @@ const Styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     backgroundImage: {
-        width: undefined,
-        height: undefined,
+        flex: 1,
+        flexDirection: 'row',
         backgroundColor:'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
         marginBottom: 20,
         padding: 10,
         borderBottomColor: '#fff',
@@ -77,9 +75,11 @@ const Styles = StyleSheet.create({
         borderBottomWidth: 2,
     },
     profileImage: {
-        height: 150,
-        width: 150,
-        borderRadius: 150 / 2, //make this a circle
+        height: 200,
+        width: 200,
+        borderRadius: 200 / 2, //make this a circle
+        alignSelf: 'center',
+        marginLeft: 30,
     },
     birthDate: {
         padding: 8,

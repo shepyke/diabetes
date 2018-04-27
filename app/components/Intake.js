@@ -187,6 +187,7 @@ export default class Intake extends Component<{}> {
                 })
                 .done();
         } catch (err) {
+            alert("There is a connection issue, please check you are connected to any Network");
             console.log(err);
         }
     }

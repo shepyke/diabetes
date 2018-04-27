@@ -19,6 +19,7 @@ import {
 import Styles from "../config/Styles";
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
+import { Icon } from 'react-native-elements';
 
 export default class Profile extends Component<{}> {
 
@@ -80,6 +81,22 @@ export default class Profile extends Component<{}> {
         }
     }
 
+    uploadPhoto(photo, photoName){
+        const data = new FormData();
+        data.append('userId', this.state.user.userId);
+        data.append('photo', {
+            uri: photo.uri,
+            type: photo.type, // or photo.type
+            name: photoName,
+        });
+        fetch(url, {
+            method: 'post',
+            body: data
+        }).then(res => {
+            console.log(res)
+        });
+    }
+
     resetNavigation(targetRoute) {
         const resetAction = NavigationActions.reset({
             index: 0,
@@ -103,11 +120,33 @@ export default class Profile extends Component<{}> {
             <View style={Styles.wrapper}>
 
                 <View style={Styles.backgroundImage}>
-                    <Image
-                        style={Styles.profileImage}
-                        /*source={{uri: this.state.user.profileImage}}*/
-                        source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
-                    />
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                        <Image
+                            style={Styles.profileImage}
+                            source={{uri: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A'}}
+                        />
+                    </View>
+                    <View>
+                        <View style={{marginTop: 10}}>
+                            <Icon
+                                type="material-community"
+                                name="face-profile"
+                                size={30}
+                                color={'white'}
+                                onPress={() => {alert("alert")}}
+                            />
+                        </View>
+                        <View style={{marginTop: 10}}>
+                            <Icon
+                                type="material"
+                                name="add-a-photo"
+                                size={30}
+                                color={'white'}
+                                onPress={() => {alert("alert")}}
+                            />
+                        </View>
+                    </View>
+
                 </View>
 
                 <View style={[Styles.container, {flex: .2}]}>
