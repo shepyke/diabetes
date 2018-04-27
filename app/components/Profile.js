@@ -184,25 +184,14 @@ export default class Profile extends Component<{}> {
                             />
                         </PhotoUpload>
                     </View>
-                    <View>
-                        <View style={{marginTop: 10}}>
-                            <Icon
-                                type="material-community"
-                                name="face-profile"
-                                size={30}
-                                color={'white'}
-                                onPress={() => {alert("alert")}}
-                            />
-                        </View>
-                        <View style={{marginTop: 10}}>
-                            <Icon
-                                type="material"
-                                name="add-a-photo"
-                                size={30}
-                                color={'white'}
-                                onPress={() => {alert("alert")}}
-                            />
-                        </View>
+                    <View style={{marginTop: 10}}>
+                        <Icon
+                            type="material"
+                            name="add-a-photo"
+                            size={30}
+                            color={'white'}
+                            onPress={() => {alert("Please click on your profile photo to change that.")}}
+                        />
                     </View>
 
                 </View>
