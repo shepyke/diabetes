@@ -58,11 +58,8 @@ export default class Profile extends Component<{}> {
                     firstName: value['firstName'],
                     lastName: value['lastName'],
                     birthDay: Moment(value['dob']).format('YYYY-MM-DD'),
-                    profileImage: 'https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/21272370_1799954673352735_6326314071398295511_n.jpg?oh=21445389cab89047568d12a4379f2a2d&oe=5AE4C51A',
-                    //value['profile_image'],
                     gender: value['gender'],
                     type: value['type'],
-                    bloodSugarAVG: value['sugarAVG'],
                 },
                 isLoading: false,
             });
