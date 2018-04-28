@@ -327,11 +327,13 @@ export default class RegistrationForm extends Component<{}> {
                                 secureTextEntry={true}
                                 validators={[
                                     'required',
-                                    'minNumberFunc'
+                                    'minNumberFunc',
+                                    'maxNumberFunc'
                                 ]}
                                 errorMessages={[
                                     'This field is required',
-                                    'Minimum character number: 6'
+                                    'Minimum character number: 6',
+                                    'Maximum character number: 20'
                                 ]}
                                 type="text"
                                 value={user.password}
@@ -347,12 +349,14 @@ export default class RegistrationForm extends Component<{}> {
                                 validators={[
                                     'isPasswordMatch',
                                     'required',
-                                    'minNumberFunc'
+                                    'minNumberFunc',
+                                    'maxNumberFunc'
                                 ]}
                                 errorMessages={[
                                     'Password mismatch',
                                     'This field is required',
-                                    'Minimum character number: 6'
+                                    'Minimum character number: 6',
+                                    'Maximum character number: 20'
                                 ]}
                                 type="text"
                                 value={user.repassword}
@@ -361,7 +365,7 @@ export default class RegistrationForm extends Component<{}> {
                         </ScrollView>
                         <TouchableOpacity
                             style={[Styles.button, {marginTop: 20}]}
-                            onPress={this.submit}>
+                            onPress={this.handleSubmit}>
                             <Text style={Styles.text}>Sign up</Text>
                         </TouchableOpacity>
                     </Form>
