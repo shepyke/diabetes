@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+    Alert,
     AppRegistry, AsyncStorage,
     Dimensions,
     StyleSheet,
@@ -91,23 +92,44 @@ export default class BarcodeScanner extends Component {
         return foodsObject.find((element) => {
             if(element.barcode == barcode){
                 return element;
+            }else{
+                return undefined;
             }
         })
     }
 
     onBarCodeRead(barcode) {
         let food = this.findBarcode(this.state.foods, barcode.data);
-        this.setState({
-            showCamera: false,
-        });
-        if(this.state.viaIntake) {
-            this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: false, intakeId: this.state.intakeId});
+        if(food != undefined){
+            this.setState({
+                showCamera: false,
+            });
+            if(this.state.viaIntake) {
+                this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: false, intakeId: this.state.intakeId});
+            }else{
+                this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: true})
+            }
+            this.setState({
+                viaIntake: false,
+            });
         }else{
-            this.props.navigation.navigate('Intake', {foodId: food.foodId, newElement: true})
+            this.setState({
+                showCamera: false,
+            });
+            Alert.alert(
+                'Sorry',
+                'not found any food with this barcode',
+                [
+                    {text: 'Ok', onPress: () => {
+                            console.log('Cancel Pressed');
+                            this.setState({
+                               showCamera: true,
+                            });
+                    }, style: 'cancel'},
+                ],
+                { cancelable: false }
+            )
         }
-        this.setState({
-            viaIntake: false,
-        });
     }
 
     render() {
