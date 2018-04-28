@@ -14,7 +14,7 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Image,
-    ImageBackground,
+    ImageBackground, Alert,
 } from 'react-native';
 import Styles from "../config/Styles";
 import Moment from 'moment';
@@ -69,15 +69,25 @@ export default class Profile extends Component<{}> {
         }
     }
 
-    logout = () => {
+    logout = async() => {
         try{
-            AsyncStorage.removeItem('user');
-            const value = AsyncStorage.getItem('user');
-            if (value !== null){
-                this.setState({user: value});
-                this.resetNavigation('Home');
-                alert('You have successfully logged out.');
-            }
+            Alert.alert(
+                'Log out',
+                'Are you sure you want to log out?',
+                [
+                    {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    {text: 'Yes', onPress: () => {
+                        AsyncStorage.removeItem('user');
+                        const value = AsyncStorage.getItem('user');
+                        if (value !== null){
+                            this.setState({user: value});
+                            this.resetNavigation('Home');
+                            alert('You have successfully logged out.');
+                        }
+                    }},
+                ],
+                { cancelable: false }
+            )
         }catch(err){
             console.log(err);
         }

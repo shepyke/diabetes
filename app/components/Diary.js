@@ -11,7 +11,7 @@ import {
     Text,
     View,
     TextInput,
-    KeyboardAvoidingView,
+    Alert,
     TouchableOpacity,
     AsyncStorage,
     YellowBox,
@@ -178,8 +178,15 @@ export default class Diary extends Component<{}> {
                 backgroundColor: 'red',
                 underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                 onPress: () => {
-                    this.deleteMeasurement(item['measurementId'], rowID);
-                    console.log("rowID: " + rowID);
+                    Alert.alert(
+                        'Delete row',
+                        'Are you sure you want to delete?',
+                        [
+                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            {text: 'Yes', onPress: () => this.deleteMeasurement(item['measurementId'], rowID)},
+                        ],
+                        { cancelable: false }
+                    )
                 }
             }
         ];

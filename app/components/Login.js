@@ -48,7 +48,7 @@ export default class Login extends Component<{}> {
         }
     }
 
-    login = () => {
+    login = async() => {
         try{
             fetch('https://diabetes-backend.herokuapp.com/users/login',{
                 method: 'POST',

@@ -16,7 +16,7 @@ import {
     AsyncStorage,
     Animated,
     ScrollView,
-    YellowBox
+    YellowBox, Alert
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -248,11 +248,21 @@ export default class Intake extends Component<{}> {
                 backgroundColor: 'red',
                 underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                 onPress: () => {
-                    this.state.intake.splice(this.state.deleteIndex,1);
-                    this.setState({
-                        intake: this.state.intake,
-                    });
-                    this.deletedRowNumber = this.deletedRowNumber + 1;
+                    Alert.alert(
+                        'Delete row',
+                        'Are you sure you want to delete?',
+                        [
+                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            {text: 'Yes', onPress: () => {
+                                    this.state.intake.splice(this.state.deleteIndex,1);
+                                    this.setState({
+                                        intake: this.state.intake,
+                                    });
+                                    this.deletedRowNumber = this.deletedRowNumber + 1;
+                            }},
+                        ],
+                        { cancelable: false }
+                    )
                 }
             }
         ];
