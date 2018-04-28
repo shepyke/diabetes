@@ -124,6 +124,12 @@ export default class RegistrationForm extends Component<{}> {
             }
             return true;
         });
+        Form.addValidationRule('maxNumberFunc', (value) => {
+            if (value.length > 20) {
+                return false;
+            }
+            return true;
+        });
     }
 
     handleEmail(event) {
@@ -278,7 +284,7 @@ export default class RegistrationForm extends Component<{}> {
                             />
 
                             <TextValidator
-                                style={Styles.textInput}
+                                style={[Styles.textInput, {marginTop: 4}]}
                                 name="email"
                                 label="email"
                                 validators={['required', 'isEmail']}
@@ -292,11 +298,19 @@ export default class RegistrationForm extends Component<{}> {
                             />
 
                             <TextValidator
-                                style={Styles.textInput}
+                                style={[Styles.textInput, {marginTop: 4}]}
                                 name="username"
                                 label="username"
-                                validators={['required']}
-                                errorMessages={['This field is required']}
+                                validators={[
+                                    'required',
+                                    'minNumberFunc',
+                                    'maxNumberFunc'
+                                ]}
+                                errorMessages={[
+                                    'This field is required',
+                                    'Minimum character number: 6',
+                                    'Maximum character number: 20'
+                                ]}
                                 type="text"
                                 placeholder='Username'
                                 placeholderTextColor='#718792'
@@ -305,7 +319,7 @@ export default class RegistrationForm extends Component<{}> {
                             />
 
                             <TextValidator
-                                style={Styles.textInput}
+                                style={[Styles.textInput, {marginTop: 4}]}
                                 name="password"
                                 placeholder='Password'
                                 placeholderTextColor='#718792'
@@ -324,7 +338,7 @@ export default class RegistrationForm extends Component<{}> {
                                 onChange={this.handlePassword}
                             />
                             <TextValidator
-                                style={Styles.textInput}
+                                style={[Styles.textInput, {marginTop: 4}]}
                                 placeholder='Re-password'
                                 placeholderTextColor='#718792'
                                 name="repassword"
@@ -347,7 +361,7 @@ export default class RegistrationForm extends Component<{}> {
                         </ScrollView>
                         <TouchableOpacity
                             style={[Styles.button, {marginTop: 20}]}
-                            onPress={this.handleSubmit}>
+                            onPress={this.submit}>
                             <Text style={Styles.text}>Sign up</Text>
                         </TouchableOpacity>
                     </Form>
