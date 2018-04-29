@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import Styles from "../config/Styles";
 import { NavigationActions } from 'react-navigation';
+import { sha256 } from 'react-native-sha256';
+
 
 export default class Login extends Component<{}> {
 
@@ -121,9 +123,13 @@ export default class Login extends Component<{}> {
                             placeholder='Password'
                             onChangeText={
                                 (password) => {
-                                    const user = Object.assign({},
-                                        this.state.user, { password: password });
-                                    this.setState({ user: user });
+                                    var securePswd;
+                                    sha256(password).then( hash => {
+                                        securePswd = hash;
+                                        const user = Object.assign({},
+                                            this.state.user, { password: securePswd });
+                                        this.setState({ user: user });
+                                    });
                                 }}
                             underlineColorAndroid='transparent'
                             secureTextEntry={true}

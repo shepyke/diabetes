@@ -26,6 +26,7 @@ import RadioForm,
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
 import { Form, TextValidator } from 'react-native-validator-form';
+import { sha256 } from 'react-native-sha256';
 
 let gender_props = [
     {label: 'Female     ', value: 'Female' },
@@ -145,15 +146,23 @@ export default class RegistrationForm extends Component<{}> {
     }
 
     handlePassword(event) {
-        const { user } = this.state;
-        user.password = event.nativeEvent.text;
-        this.setState({ user });
+        var securePswd;
+        sha256(event.nativeEvent.text).then( hash => {
+            securePswd = hash;
+            const { user } = this.state;
+            user.password = securePswd;
+            this.setState({ user });
+        });
     }
 
     handleRepeatPassword(event) {
-        const { user } = this.state;
-        user.repassword = event.nativeEvent.text;
-        this.setState({ user });
+        var securePswd;
+        sha256(event.nativeEvent.text).then( hash => {
+            securePswd = hash;
+            const { user } = this.state;
+            user.repassword = securePswd;
+            this.setState({ user });
+        });
     }
 
     handleSubmit() {
