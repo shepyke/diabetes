@@ -119,10 +119,12 @@ export default class Profile extends Component<{}> {
                     this.setState({
                        user: {
                            ...this.state.user,
-                           profileImage: res.imageURL,
+                           profileImage: res.profileImage,
                        }
                     });
                     alert(res.message);
+                    AsyncStorage.removeItem('user');
+                    AsyncStorage.setItem('user', JSON.stringify(this.state.user));
                 }else{
                     alert(res.message);
                 }
@@ -153,9 +155,6 @@ export default class Profile extends Component<{}> {
         }).then(image => {
             console.log('received image', image);
             this.uploadPhoto(image);
-            this.setState({
-                image: this.state.image + 1,
-            });
         }).catch(e => alert(e));
     }
 
@@ -168,9 +167,6 @@ export default class Profile extends Component<{}> {
             includeExif: true,
         }).then(image => {
             this.uploadPhoto(image);
-            this.setState({
-                image: this.state.image + 1,
-            });
         }).catch(e => alert(e));
     }
 
@@ -188,9 +184,6 @@ export default class Profile extends Component<{}> {
         }).then(image => {
             console.log('received image', image);
             this.uploadPhoto(image);
-            this.setState({
-                image: this.state.image + 1,
-            });
         }).catch(e => {
             console.log(e);
             Alert.alert(e.message ? e.message : e);
@@ -198,7 +191,7 @@ export default class Profile extends Component<{}> {
     }
 
     renderImage(profileImage) {
-        return <Image style={Styles.profileImage} source={profileImage} />
+        return <Image style={Styles.profileImage} source={{uri: profileImage}} />
     }
 
     selectType(){
