@@ -6,15 +6,11 @@
 
 import React, { Component } from 'react';
 import {
-    Platform,
     Text,
     View,
-    TextInput,
-    KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
     Image,
-    ImageBackground,
     Alert,
     NativeModules,
 } from 'react-native';
@@ -22,7 +18,6 @@ import Styles from "../config/Styles";
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
 import { Icon } from 'react-native-elements';
-import PhotoUpload from 'react-native-photo-upload';
 
 let ImagePicker = NativeModules.ImageCropPicker;
 
