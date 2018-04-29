@@ -14,13 +14,17 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Image,
-    ImageBackground, Alert,
+    ImageBackground,
+    Alert,
+    NativeModules,
 } from 'react-native';
 import Styles from "../config/Styles";
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
 import { Icon } from 'react-native-elements';
 import PhotoUpload from 'react-native-photo-upload';
+
+let ImagePicker = NativeModules.ImageCropPicker;
 
 
 export default class Profile extends Component<{}> {
@@ -65,6 +69,7 @@ export default class Profile extends Component<{}> {
                     profileImage: value['profileImage'],
                 },
                 isLoading: false,
+                image: 0,
             });
         }
     }
@@ -95,8 +100,8 @@ export default class Profile extends Component<{}> {
 
     uploadPhoto(photo){
         const image = {
-            uri: photo.uri,
-            type: 'image/jpeg',
+            uri: photo.path,
+            type: photo.mime,
             name: this.state.user.userId + '-' + Date.now() + '.jpg'
         }
 
@@ -113,9 +118,21 @@ export default class Profile extends Component<{}> {
                 },
                 body: data
             })
-                .then(res => {
-                    return
-                });
+            .then((response) => response.json())
+            .then ((res) => {
+                if(res.success === true){
+                    this.setState({
+                       user: {
+                           ...this.state.user,
+                           profileImage: res.imageURL,
+                       }
+                    });
+                    alert(res.message);
+                }else{
+                    alert(res.message);
+                }
+            })
+            .done();
         } catch (err) {
             console.error(err);
             return
@@ -132,6 +149,80 @@ export default class Profile extends Component<{}> {
         this.props.navigation.dispatch(resetAction);
     }
 
+    pickSingleWithCamera(cropping) {
+        ImagePicker.openCamera({
+            cropping: cropping,
+            width: 200,
+            height: 200,
+            includeExif: true,
+        }).then(image => {
+            console.log('received image', image);
+            this.uploadPhoto(image);
+            this.setState({
+                image: this.state.image + 1,
+            });
+        }).catch(e => alert(e));
+    }
+
+    pickSingleBase64(cropit) {
+        ImagePicker.openPicker({
+            width: 200,
+            height: 200,
+            cropping: cropit,
+            includeBase64: true,
+            includeExif: true,
+        }).then(image => {
+            this.uploadPhoto(image);
+            this.setState({
+                image: this.state.image + 1,
+            });
+        }).catch(e => alert(e));
+    }
+
+    pickSingle(cropit, circular=false) {
+        ImagePicker.openPicker({
+            width: 200,
+            height: 200,
+            cropping: cropit,
+            cropperCircleOverlay: circular,
+            compressImageMaxWidth: 640,
+            compressImageMaxHeight: 480,
+            compressImageQuality: 0.5,
+            compressVideoPreset: 'MediumQuality',
+            includeExif: true,
+        }).then(image => {
+            console.log('received image', image);
+            this.uploadPhoto(image);
+            this.setState({
+                image: this.state.image + 1,
+            });
+        }).catch(e => {
+            console.log(e);
+            Alert.alert(e.message ? e.message : e);
+        });
+    }
+
+    renderImage(profileImage) {
+        return <Image style={Styles.profileImage} source={profileImage} />
+    }
+
+    selectType(){
+        Alert.alert(
+            'New profile photo',
+            'Are you sure you want to log out?',
+            [
+                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'From Gallery', onPress: () => {
+                        this.pickSingleBase64(false);
+                    }},
+                {text: 'Use camera', onPress: () => {
+                        this.pickSingleWithCamera(false);
+                    }},
+            ],
+            { cancelable: false }
+        )
+    }
+
     render() {
        if (this.state.isLoading) {
             return (
@@ -146,52 +237,7 @@ export default class Profile extends Component<{}> {
 
                 <View style={Styles.backgroundImage}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                        <PhotoUpload
-                            onCancel = {(result) => {
-                                // console.log("Cancelled");
-                                // if(result){
-                                //     console.log("onPhotoSelect.result: " + JSON.stringify(result,null,4));
-                                // }
-                            }}
-                            onStart = {(result) => {
-                                // console.log("onStart");
-                                // if(result){
-                                //     console.log("onStart.result: " + JSON.stringify(result,null,4));
-                                // }
-                            }}
-                            onPhotoSelect = {(result) => {
-                                // console.log("onPhotoSelect");
-                                // if(result){
-                                //     console.log("onPhotoSelect.result: " + JSON.stringify(result,null,4));
-                                // }
-                            }}
-                            onResponse = {(result) => {
-                                //console.log("onResponse");
-                                if(result.uri){
-                                    //console.log("onResponse.result: " + JSON.stringify(result,null,4));
-                                    this.uploadPhoto(result);
-                                }
-                            }}
-                            onRender = {(result) => {
-                                console.log("onRender");
-                                // if(result){
-                                //     console.log("onRender.result: " + JSON.stringify(result,null,4));
-                                // }
-                            }}
-                            onError = {(result) =>{
-                                    console.log("onError");
-                                    if(result){
-                                        console.log("onError.result: " + JSON.stringify(result,null,4));
-                                        this.props.navigate('Profile');
-                                    }
-                                }
-                            }
-                        >
-                            <Image
-                                style={Styles.profileImage}
-                                source={{uri: this.state.user.profileImage}}
-                            />
-                        </PhotoUpload>
+                        {this.state.user.profileImage ? this.renderImage(this.state.user.profileImage) : null}
                     </View>
                     <View style={{marginTop: 10}}>
                         <Icon
@@ -199,7 +245,7 @@ export default class Profile extends Component<{}> {
                             name="add-a-photo"
                             size={30}
                             color={'white'}
-                            onPress={() => {alert("Please click on your profile photo to change that.")}}
+                            onPress={() => {this.selectType()}}
                         />
                     </View>
 
