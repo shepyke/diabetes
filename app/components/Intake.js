@@ -171,7 +171,6 @@ export default class Intake extends Component<{}> {
                 .then((res) => {
                     if (res.success === true) {
                         alert('You have successfully added an intake:\n'
-                            + '\nAverage Glycemic index: ' + res.intake.avgGI
                             + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
                             + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
                             + '\nTotal fat: ' + res.intake.totalFat + 'g'
@@ -322,9 +321,17 @@ export default class Intake extends Component<{}> {
                                 size={26}
                                 color={'white'}
                                 style={{position: 'absolute', right: 5}}
-                                onPress={() => alert("Please note, the calculation based on 100"
-                                    + this.state.foods[intakeItem.foodId-1].unit + " of "
-                                    + this.state.foods[intakeItem.foodId-1].foodName)}
+                                onPress={() =>
+                                    alert("Please note, the calculation based on 100"
+                                        + this.state.foods[intakeItem.foodId-1].unit + " of "
+                                        + this.state.foods[intakeItem.foodId-1].foodName + "\n"
+                                        + "\nGlycemic Index: " + this.state.foods[intakeItem.foodId-1].glycemicIndex + "%"
+                                        + "\nCalorie: " + this.state.foods[intakeItem.foodId-1].calorie + " kCal"
+                                        + "\nCarbohydrate: " + this.state.foods[intakeItem.foodId-1].carbohydrate + "g"
+                                        + "\nFat: " + this.state.foods[intakeItem.foodId-1].fat + "g"
+                                        + "\nProtein: " + this.state.foods[intakeItem.foodId-1].protein + "g"
+                                    )
+                                }
                             />
                             <Icon
                                 key={intakeItem.id + 600}
@@ -401,9 +408,17 @@ export default class Intake extends Component<{}> {
                                     size={26}
                                     color={'white'}
                                     style={{position: 'absolute', right: 5}}
-                                    onPress={() => alert("Please note, the calculation based on 100"
-                                        + this.state.foods[intakeItem.foodId-1].unit + " of "
-                                        + this.state.foods[intakeItem.foodId-1].foodName)}
+                                    onPress={() =>
+                                        alert("Please note, the calculation based on 100"
+                                            + this.state.foods[intakeItem.foodId-1].unit + " of "
+                                            + this.state.foods[intakeItem.foodId-1].foodName + "\n"
+                                            + "\nGlycemic Index: " + this.state.foods[intakeItem.foodId-1].glycemicIndex + "%"
+                                            + "\nCalorie: " + this.state.foods[intakeItem.foodId-1].calorie + " kCal"
+                                            + "\nCarbohydrate: " + this.state.foods[intakeItem.foodId-1].carbohydrate + "g"
+                                            + "\nFat: " + this.state.foods[intakeItem.foodId-1].fat + "g"
+                                            + "\nProtein: " + this.state.foods[intakeItem.foodId-1].protein + "g"
+                                        )
+                                    }
                                 />
                                 <Icon
                                     key={intakeItem.id + 1400}
