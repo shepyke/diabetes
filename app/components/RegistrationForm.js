@@ -66,49 +66,53 @@ export default class RegistrationForm extends Component<{}> {
     }
 
     submit = async() => {
-        try {
-            fetch('https://diabetes-backend.herokuapp.com/users/registration', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    user:{
-                        firstName: this.state.user.firstName,
-                        lastName: this.state.user.lastName,
-                        username: this.state.user.username,
-                        email: this.state.user.email,
-                        birthDay: this.state.user.birthDay,
-                        profileImage:
-                            (this.state.user.gender == 'Female')
-                                ? 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_woman.png'
-                                : 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_man.png',
-                        gender: this.state.user.gender,
-                        type: this.state.user.type,
-                        password: this.state.user.password,
-                        repassword: this.state.user.repassword,
-                    }
+        var securePswd;
+        sha256(this.state.password).then( hash => {
+            securePswd = hash;
+            try {
+                fetch('https://diabetes-backend.herokuapp.com/users/registration', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user:{
+                            firstName: this.state.firstName,
+                            lastName: this.state.lastName,
+                            username: this.state.username,
+                            email: this.state.email,
+                            birthDay: this.state.birthDay,
+                            profileImage:
+                                (this.state.gender == 'Female')
+                                    ? 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_woman.png'
+                                    : 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_man.png',
+                            gender: this.state.gender,
+                            type: this.state.type,
+                            password: securePswd,
+                            repassword: securePswd,
+                        }
+                    })
                 })
-            })
-                .then((response) => response.json())
-                .then ((res) => {
-                    if(res.success === true){
-                        this.setState({
-                            user: res.user,
-                        });
-                        AsyncStorage.setItem('user', JSON.stringify(this.state.user));
-                        alert('You have successfully registered');
-                        this.resetNavigation('Tabs');
-                    }else{
-                        alert(res.message);
-                    }
-                })
-                .done();
-        }catch(err){
-            console.log(err);
-        }
+                    .then((response) => response.json())
+                    .then ((res) => {
+                        if(res.success === true){
+                            this.setState({
+                                user: res.user,
+                            });
+                            AsyncStorage.setItem('user', JSON.stringify(this.state.user));
+                            alert('You have successfully registered');
+                            this.resetNavigation('Tabs');
+                        }else{
+                            alert(res.message);
+                        }
+                    })
+                    .done();
+            }catch(err){
+                console.log(err);
+            }
 
+        });
     }
 
     componentWillMount() {
@@ -146,23 +150,15 @@ export default class RegistrationForm extends Component<{}> {
     }
 
     handlePassword(event) {
-        var securePswd;
-        sha256(event.nativeEvent.text).then( hash => {
-            securePswd = hash;
-            const { user } = this.state;
-            user.password = securePswd;
-            this.setState({ user });
-        });
+        const { user } = this.state;
+        user.password = event.nativeEvent.text;
+        this.setState({ user });
     }
 
     handleRepeatPassword(event) {
-        var securePswd;
-        sha256(event.nativeEvent.text).then( hash => {
-            securePswd = hash;
-            const { user } = this.state;
-            user.repassword = securePswd;
-            this.setState({ user });
-        });
+        const { user } = this.state;
+        user.repassword = event.nativeEvent.text;
+        this.setState({ user });
     }
 
     handleSubmit() {
