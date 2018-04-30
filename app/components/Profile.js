@@ -197,7 +197,7 @@ export default class Profile extends Component<{}> {
     selectType(){
         Alert.alert(
             'New profile photo',
-            'Are you sure you want to log out?',
+            'Please select the source',
             [
                 {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {text: 'From Gallery', onPress: () => {
