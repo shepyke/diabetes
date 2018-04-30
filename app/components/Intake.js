@@ -136,18 +136,22 @@ export default class Intake extends Component<{}> {
                 }
             }else{
                 //user comes via BarcodeScanner but before that opened this page
-                this.setState({
-                    intake: [
-                        ...this.state.intake,
-                        {
-                            "id": this.intakeIndex,
-                            "foodId": nextProps.navigation.state.params.foodId,
-                            "amount": "",
-                        },
-                    ],
-                    disableSubmitButton: false,
-                });
-                this.intakeIndex = this.intakeIndex + 1;
+                if (this.intakeIndex - this.deletedRowNumber < 10) {
+                    this.setState({
+                        intake: [
+                            ...this.state.intake,
+                            {
+                                "id": this.intakeIndex,
+                                "foodId": nextProps.navigation.state.params.foodId,
+                                "amount": "",
+                            },
+                        ],
+                        disableSubmitButton: false,
+                    });
+                    this.intakeIndex = this.intakeIndex + 1;
+                }else{
+                    alert("You cannot add more than 10 dishes to one time meal");
+                }
             }
         }
     }
