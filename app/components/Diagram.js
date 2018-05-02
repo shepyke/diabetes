@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    AsyncStorage, Dimensions,
+    AsyncStorage,
 } from 'react-native';
 import Styles from "../config/Styles";
 import PureChart from 'react-native-pure-chart';

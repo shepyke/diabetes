@@ -7,17 +7,10 @@
 import React, { Component } from 'react';
 import {
     Alert,
-    AppRegistry, AsyncStorage,
-    Dimensions,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
     View
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import Styles from "../config/Styles";
-import { Icon } from 'react-native-elements';
-import Moment from "moment/moment";
 
 export default class BarcodeScanner extends Component {
     constructor(props) {

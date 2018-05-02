@@ -6,13 +6,9 @@
 
 import React, { Component } from 'react';
 import {
-    Platform,
     Picker,
     Text,
-    View,
     TextInput,
-    KeyboardAvoidingView,
-    TouchableOpacity,
     AsyncStorage,
 } from 'react-native';
 import Styles from "../config/Styles";

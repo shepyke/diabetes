@@ -6,17 +6,16 @@
 
 import React, { Component } from 'react';
 import {
-    Platform,
     Picker,
     Text,
     View,
     TextInput,
-    KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
     Animated,
     ScrollView,
-    YellowBox, Alert
+    YellowBox,
+    Alert,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';

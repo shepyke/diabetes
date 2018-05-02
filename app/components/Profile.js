@@ -170,26 +170,6 @@ export default class Profile extends Component<{}> {
         }).catch(e => alert(e));
     }
 
-    pickSingle(cropit, circular=false) {
-        ImagePicker.openPicker({
-            width: 200,
-            height: 200,
-            cropping: cropit,
-            cropperCircleOverlay: circular,
-            compressImageMaxWidth: 640,
-            compressImageMaxHeight: 480,
-            compressImageQuality: 0.5,
-            compressVideoPreset: 'MediumQuality',
-            includeExif: true,
-        }).then(image => {
-            console.log('received image', image);
-            this.uploadPhoto(image);
-        }).catch(e => {
-            console.log(e);
-            Alert.alert(e.message ? e.message : e);
-        });
-    }
-
     renderImage(profileImage) {
         return <Image style={Styles.profileImage} source={{uri: profileImage}} />
     }

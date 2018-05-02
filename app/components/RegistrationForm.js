@@ -13,30 +13,26 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
-    ScrollView
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
 import RadioForm,
-    {
-        RadioButton,
-        RadioButtonInput,
-        RadioButtonLabel
-    } from 'react-native-simple-radio-button';
+{
+    RadioButton,
+    RadioButtonInput,
+    RadioButtonLabel
+} from 'react-native-simple-radio-button';
 import Moment from 'moment';
 import {NavigationActions} from "react-navigation";
-import { Form, TextValidator } from 'react-native-validator-form';
-import { sha256 } from 'react-native-sha256';
 
 let gender_props = [
-    {label: 'Female     ', value: 'Female' },
+    {label: 'Female    ', value: 'Female' },
     {label: 'Male', value: 'Male' }
 ];
 
 let type_props = [
-    {label: 'Type 1     ', value: '1' },
-    {label: 'Type 2     ', value: '2' },
-    {label: 'None', value: '0' }
+    {label: 'Type 1    ', value: '1' },
+    {label: 'Type 2', value: '2' }
 ];
 
 export default class RegistrationForm extends Component<{}> {
@@ -57,18 +53,10 @@ export default class RegistrationForm extends Component<{}> {
                 type: '',
             }
         }
-
-        this.handleEmail = this.handleEmail.bind(this);
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handlePassword = this.handlePassword.bind(this);
-        this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     submit = async() => {
-        var securePswd;
-        sha256(this.state.password).then( hash => {
-            securePswd = hash;
+        if(this.state.user.password === this.state.user.repassword){
             try {
                 fetch('https://diabetes-backend.herokuapp.com/users/registration', {
                     method: 'POST',
@@ -78,19 +66,19 @@ export default class RegistrationForm extends Component<{}> {
                     },
                     body: JSON.stringify({
                         user:{
-                            firstName: this.state.firstName,
-                            lastName: this.state.lastName,
-                            username: this.state.username,
-                            email: this.state.email,
-                            birthDay: this.state.birthDay,
+                            firstName: this.state.user.firstName,
+                            lastName: this.state.user.lastName,
+                            username: this.state.user.username,
+                            email: this.state.user.email,
+                            birthDay: this.state.user.birthDay,
                             profileImage:
-                                (this.state.gender == 'Female')
-                                    ? 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_woman.png'
-                                    : 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_man.png',
-                            gender: this.state.gender,
-                            type: this.state.type,
-                            password: securePswd,
-                            repassword: securePswd,
+                                (this.state.user.gender == 'Female')
+                                    ? 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.jpg'
+                                    : 'https://diabetes-backend.herokuapp.com/uploads/anonym_man.png',
+                            gender: this.state.user.gender,
+                            type: this.state.user.type,
+                            password: this.state.user.password,
+                            repassword: this.state.user.repassword,
                         }
                     })
                 })
@@ -111,58 +99,10 @@ export default class RegistrationForm extends Component<{}> {
             }catch(err){
                 console.log(err);
             }
+        }else{
+            alert('The re-password is mismatching');
+        }
 
-        });
-    }
-
-    componentWillMount() {
-        Form.addValidationRule('isPasswordMatch', (value) => {
-            if (value !== this.state.user.password) {
-                return false;
-            }
-            return true;
-        });
-
-        Form.addValidationRule('minNumberFunc', (value) => {
-            if (value.length < 6) {
-                return false;
-            }
-            return true;
-        });
-        Form.addValidationRule('maxNumberFunc', (value) => {
-            if (value.length > 20) {
-                return false;
-            }
-            return true;
-        });
-    }
-
-    handleEmail(event) {
-        const { user } = this.state;
-        user.email = event.nativeEvent.text;
-        this.setState({ user });
-    }
-
-    handleUsername(event) {
-        const { user } = this.state;
-        user.username = event.nativeEvent.text;
-        this.setState({ user });
-    }
-
-    handlePassword(event) {
-        const { user } = this.state;
-        user.password = event.nativeEvent.text;
-        this.setState({ user });
-    }
-
-    handleRepeatPassword(event) {
-        const { user } = this.state;
-        user.repassword = event.nativeEvent.text;
-        this.setState({ user });
-    }
-
-    handleSubmit() {
-        this.refs.form.submit();
     }
 
     goToLogin = () => {
@@ -180,8 +120,6 @@ export default class RegistrationForm extends Component<{}> {
     }
 
     render() {
-        const { user } = this.state;
-
         return (
             <View style={Styles.wrapper}>
                 <KeyboardAvoidingView id='registration' behavior='padding' />
@@ -189,194 +127,160 @@ export default class RegistrationForm extends Component<{}> {
 
                     <Text style={Styles.header}>Registration</Text>
 
-                    <Form
-                        style={[{flex: 0.8, width: '100%'}]}
-                        ref="form"
-                        onSubmit={this.handleSubmit}
-                    >
-                        <ScrollView>
-                            <View style={[Styles.rowContainer, {justifyContent: 'space-evenly'}]}>
-                                <TextInput
-                                    style={[Styles.textInput, {width: '45%', textAlign: 'center'}]}
-                                    placeholder='First Name'
-                                    underlineColorAndroid='transparent'
-                                    placeholderTextColor='#718792'
-                                    onPress={(firstName) => {
-                                        const user = Object.assign({},
-                                            this.state.user, { firstName: firstName });
-                                        this.setState({ user: user })
-                                    }}
-                                />
+                    <View style={Styles.rowContainer}>
 
-                                <TextInput
-                                    style={[Styles.textInput, {width: '45%', textAlign: 'center'}]}
-                                    placeholder='Last name'
-                                    underlineColorAndroid='transparent'
-                                    placeholderTextColor='#718792'
-                                    onPress={(lastName) => {
-                                        const user = Object.assign({},
-                                            this.state.user, { lastName: lastName });
-                                        this.setState({ user: user })
-                                    }}
-                                />
-                            </View>
-
-                            <DatePicker
-                                style={[{alignSelf: 'stretch', marginBottom: 10,
-                                        width: '100%', height: 40}]}
-                                date={this.state.user.birthDay}
-                                mode="date"
-                                placeholder="Select your birthday"
-                                format="YYYY-MM-DD"
-                                minDate="1900-01-01"
-                                maxDate={Moment().format('YYYY-MM-DD')}
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                showIcon={true}
-                                customStyles={{
-                                    dateInput: {
-                                        borderWidth: 0,
-                                        alignSelf: 'center',
-                                    },
-                                    dateText: {
-                                        alignSelf: 'center',
-                                        fontSize: 16,
-                                        color: '#fff',
-                                    },
-                                    placeholderText: {
-                                        alignSelf: 'center',
-                                        fontSize: 16,
-                                        color: '#718792',
-                                    }
-                                }}
-                                onDateChange={(birthDay) => {
+                        <TextInput
+                            style={[Styles.textInput, {width: '45%'}]}
+                            placeholder='First Name'
+                            onChangeText={
+                                (firstName) => {
                                     const user = Object.assign({},
-                                        this.state.user, { birthDay: birthDay });
+                                        this.state.user, { firstName: firstName });
                                     this.setState({ user: user });
                                 }}
-                            />
+                            underlineColorAndroid='transparent'
+                            placeholderTextColor='#718792'
+                        />
 
-                            <RadioForm
-                                style={[{alignSelf: 'center'}]}
-                                radio_props={gender_props}
-                                labelColor={'#718792'}
-                                initial={'Female'}
-                                formHorizontal={true}
-                                labelHorizontal={true}
-                                buttonColor={'#718792'}
-                                animation={true}
-                                onPress={(gender) => {
+                        <TextInput
+                            style={[Styles.textInput, {width: '45%', marginLeft: '7%'}]}
+                            placeholder='Last name'
+                            onChangeText={
+                                (lastName) => {
                                     const user = Object.assign({},
-                                        this.state.user, { gender: gender });
-                                    this.setState({ user: user })
+                                        this.state.user, { lastName: lastName });
+                                    this.setState({ user: user });
                                 }}
-                            />
+                            underlineColorAndroid='transparent'
+                            placeholderTextColor='#718792'
+                        />
+                    </View>
 
-                            <RadioForm
-                                style={[{alignSelf: 'center', marginBottom: 20}]}
-                                radio_props={type_props}
-                                labelColor={'#718792'}
-                                initial={'0'}
-                                formHorizontal={true}
-                                labelHorizontal={true}
-                                buttonColor={'#718792'}
-                                animation={true}
-                                onPress={(type) => {
+                    <RadioForm
+                        radio_props={gender_props}
+                        labelColor={'#718792'}
+                        initial={'Female'}
+                        formHorizontal={true}
+                        labelHorizontal={true}
+                        buttonColor={'#718792'}
+                        animation={true}
+                        onPress={(gender) => {
+                            const user = Object.assign({},
+                                this.state.user, { gender: gender });
+                            this.setState({ user: user })
+                        }}
+                    />
+
+                    <RadioForm
+                        radio_props={type_props}
+                        labelColor={'#718792'}
+                        initial={'1'}
+                        formHorizontal={true}
+                        labelHorizontal={true}
+                        buttonColor={'#718792'}
+                        animation={true}
+                        onPress={(type) => {
+                            const user = Object.assign({},
+                                this.state.user, { type: type });
+                            this.setState({ user: user })
+                        }}
+                    />
+
+                    <TextInput
+                        style={Styles.textInput}
+                        placeholder='Email'
+                        onChangeText={
+                            (email) => {
+                                const user = Object.assign({},
+                                    this.state.user, { email: email });
+                                this.setState({ user: user });
+                            }}
+                        underlineColorAndroid='transparent'
+                        placeholderTextColor='#718792'
+                    />
+
+                    <TextInput
+                        style={Styles.textInput}
+                        placeholder='Username'
+                        onChangeText={
+                            (username) => {
+                                const user = Object.assign({},
+                                    this.state.user, { username: username });
+                                this.setState({ user: user });
+                            }}
+                        underlineColorAndroid='transparent'
+                        placeholderTextColor='#718792'
+                    />
+
+                    <DatePicker
+                        style={Styles.birthDay}
+                        date={this.state.user.birthDay}
+                        mode="date"
+                        placeholder="Select your birthday"
+                        format="YYYY-MM-DD"
+                        minDate="1900-01-01"
+                        maxDate={Moment().format('YYYY-MM-DD')}
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        showIcon={false}
+                        customStyles={{
+                            dateInput: {
+                                borderWidth: 0,
+                                position: 'absolute',
+                                marginLeft: 0,
+                                left: 0,
+                            },
+                            dateText: {
+                                color: '#fff',
+                            },
+                            placeholderText: {
+                                color: '#718792',
+                            },
+                        }}
+                        onDateChange={(birthDay) => {
+                            const user = Object.assign({},
+                                this.state.user, { birthDay: birthDay });
+                            this.setState({ user: user });
+                        }}
+                    />
+                    <View style={Styles.rowContainer}>
+                        <TextInput
+                            style={[Styles.textInput, {width: '45%'}]}
+                            placeholder='Password'
+                            placeholderTextColor='#718792'
+                            onChangeText={
+                                (password) => {
                                     const user = Object.assign({},
-                                        this.state.user, { type: type });
-                                    this.setState({ user: user })
+                                        this.state.user, { password: password });
+                                    this.setState({ user: user });
                                 }}
-                            />
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={true}
+                        />
 
-                            <TextValidator
-                                style={[Styles.textInput, {marginTop: 4}]}
-                                name="email"
-                                label="email"
-                                validators={['required', 'isEmail']}
-                                errorMessages={['This field is required', 'Email invalid']}
-                                placeholder="Your email address"
-                                placeholderTextColor='#718792'
-                                type="text"
-                                keyboardType="email-address"
-                                value={user.email}
-                                onChange={this.handleEmail}
-                            />
+                        <TextInput
+                            style={[Styles.textInput, {width: '45%', marginLeft: '7%'}]}
+                            placeholder='Password again'
+                            placeholderTextColor='#718792'
+                            onChangeText={
+                                (repassword) => {
+                                    const user = Object.assign({},
+                                        this.state.user, { repassword: repassword });
+                                    this.setState({ user: user });
+                                }}
+                            underlineColorAndroid='transparent'
+                            secureTextEntry={true}
+                        />
+                    </View>
 
-                            <TextValidator
-                                style={[Styles.textInput, {marginTop: 4}]}
-                                name="username"
-                                label="username"
-                                validators={[
-                                    'required',
-                                    'minNumberFunc',
-                                    'maxNumberFunc'
-                                ]}
-                                errorMessages={[
-                                    'This field is required',
-                                    'Minimum character number: 6',
-                                    'Maximum character number: 20'
-                                ]}
-                                type="text"
-                                placeholder='Username'
-                                placeholderTextColor='#718792'
-                                value={user.username}
-                                onChange={this.handleUsername}
-                            />
-
-                            <TextValidator
-                                style={[Styles.textInput, {marginTop: 4}]}
-                                name="password"
-                                placeholder='Password'
-                                placeholderTextColor='#718792'
-                                label="password"
-                                secureTextEntry={true}
-                                validators={[
-                                    'required',
-                                    'minNumberFunc',
-                                    'maxNumberFunc'
-                                ]}
-                                errorMessages={[
-                                    'This field is required',
-                                    'Minimum character number: 6',
-                                    'Maximum character number: 20'
-                                ]}
-                                type="text"
-                                value={user.password}
-                                onChange={this.handlePassword}
-                            />
-                            <TextValidator
-                                style={[Styles.textInput, {marginTop: 4}]}
-                                placeholder='Re-password'
-                                placeholderTextColor='#718792'
-                                name="repassword"
-                                label="repassword"
-                                secureTextEntry={true}
-                                validators={[
-                                    'isPasswordMatch',
-                                    'required',
-                                    'minNumberFunc',
-                                    'maxNumberFunc'
-                                ]}
-                                errorMessages={[
-                                    'Password mismatch',
-                                    'This field is required',
-                                    'Minimum character number: 6',
-                                    'Maximum character number: 20'
-                                ]}
-                                type="text"
-                                value={user.repassword}
-                                onChange={this.handleRepeatPassword}
-                            />
-                        </ScrollView>
-                        <TouchableOpacity
-                            style={[Styles.button, {marginTop: 20}]}
-                            onPress={this.handleSubmit}>
-                            <Text style={Styles.text}>Sign up</Text>
-                        </TouchableOpacity>
-                    </Form>
+                    <TouchableOpacity
+                        style={Styles.button}
+                        onPress={this.submit}>
+                        <Text style={Styles.text}>Sign up</Text>
+                    </TouchableOpacity>
 
                     <Text style={Styles.bottomtext}>
-                        <Text>Already have an account? </Text>
+                        <Text>Already have account? </Text>
                         <Text
                             style={Styles.register}
                             onPress={this.goToLogin}>
