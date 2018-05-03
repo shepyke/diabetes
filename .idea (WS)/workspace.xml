@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="68e213ba-f6fe-4e59-a5cc-2a4062d1a500" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/app/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Login.js" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="RegistrationForm.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/RegistrationForm.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="111" column="19" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="19" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#69#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/Profile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="366">
+              <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+              <folding>
+                <element signature="e#69#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Login.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/components/Login.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="59" column="47" selection-start-line="59" selection-start-column="47" selection-end-line="59" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Intake.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/components/Intake.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="244" column="10" lean-forward="true" selection-start-line="244" selection-start-column="10" selection-end-line="244" selection-end-column="10" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#69#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>matchReg</find>
+      <find>RNFS</find>
+      <find>compile</find>
+      <find>buildscript</find>
+      <find>camera</find>
+      <find>showImage</find>
+      <find>launchImageLibrary</find>
+      <find>launchCamera</find>
+      <find>Take a photo</find>
+      <find>options</find>
+      <find>showImagePickercamera</find>
+      <find>showImagePicker</find>
+      <find>storageOptions</find>
+      <find>provide</find>
+      <find>anonym</find>
+      <find>console.log</find>
+      <find>valida</find>
+      <find>onchange</find>
+      <find>onda</find>
+      <find>user</find>
+      <find>Form</find>
+      <find>datepicker</find>
+      <find>validate</find>
+      <find>datepi</find>
+      <find>value</find>
+      <find>email</find>
+      <find>this.state.user.</find>
+      <find>textinput</find>
+      <find>new</find>
+      <find>icon</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Styles</replace>
+      <replace>let</replace>
+      <replace>implementation</replace>
+      <replace>PropTypes</replace>
+      <replace>_PropTypes</replace>
+      <replace>RNCamera</replace>
+      <replace>RNCamera.Constants</replace>
+      <replace>size={18}</replace>
+      <replace>size={26}</replace>
+      <replace>blue</replace>
+      <replace>api</replace>
+      <replace>dropdown</replace>
+      <replace>Text style={[{color: 'white'}]}</replace>
+      <replace>Moment().format()</replace>
+      <replace>color: 'white', marginLeft: 3</replace>
+      <replace>Moment().format('YYYY-MM-DD HH:mm:ss')</replace>
+      <replace>key={Math.random() * 1000 + key}</replace>
+      <replace>key={key + 250}</replace>
+      <replace>key={key + 600}</replace>
+      <replace>this.state.intakes</replace>
+      <replace>format=&quot;YYYY-MM-DD HH:mm&quot;</replace>
+      <replace>key={intakeItem.id</replace>
+      <replace>disableAddButton</replace>
+      <replace>YYYY-MM-DD HH:mm</replace>
+      <replace />
+      <replace>this.generateKey(intakeItem.id)</replace>
+      <replace>this.state.</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/node_modules</dir>
+      <dir>$PROJECT_DIR$/node_modules/react-native-chart</dir>
+      <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/node_modules/react-native-swipeout</dir>
+      <dir>$PROJECT_DIR$/android</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/sound.js" />
+        <option value="$PROJECT_DIR$/app/components/Navigator.js" />
+        <option value="$PROJECT_DIR$/app/controller/Navigator.js" />
+        <option value="$PROJECT_DIR$/app/config/Styles.js.css" />
+        <option value="$PROJECT_DIR$/android/app/app.iml" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/src/Grid.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/src/Chart.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/src/Wedge.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/src/yAxis.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/Grid.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/Circle.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/Wedge.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/yAxis.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/xAxis.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-chart/dist/Chart.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native/ReactAndroid/gradle.properties" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-vector-icons/android/build.gradle" />
+        <option value="$PROJECT_DIR$/app/components/Measurements.js" />
+        <option value="$PROJECT_DIR$/app/components/Measurement.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-camera/android/src/main/java/org/reactnative/camera/CameraModule.java" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-camera/android/src/main/java/org/reactnative/camera/RNCameraViewHelper.java" />
+        <option value="$PROJECT_DIR$/app.json" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-camera/android/build.gradle" />
+        <option value="$PROJECT_DIR$/App.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/components/column-chart.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/components/line-chart.js" />
+        <option value="$PROJECT_DIR$/app/components/ResetPassword.js" />
+        <option value="$PROJECT_DIR$/android/app/src/main/java/com/diabetes/MainApplication.java" />
+        <option value="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-photo-upload/index.js" />
+        <option value="$PROJECT_DIR$/android/settings.gradle" />
+        <option value="$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/index.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/android/app/src/main/java/com/diabetes/MainActivity.java" />
+        <option value="$PROJECT_DIR$/android/build.gradle" />
+        <option value="$PROJECT_DIR$/android/app/build.gradle" />
+        <option value="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/components/Registration.js" />
+        <option value="$PROJECT_DIR$/app/config/Navigator.js" />
+        <option value="$PROJECT_DIR$/app/config/Styles.js" />
+        <option value="$PROJECT_DIR$/app/components/Profile.js" />
+        <option value="$PROJECT_DIR$/app/components/Diary.js" />
+        <option value="$PROJECT_DIR$/app/components/AddMeasurement.js" />
+        <option value="$PROJECT_DIR$/app/components/EditMeasurement.js" />
+        <option value="$PROJECT_DIR$/app/components/Diagram.js" />
+        <option value="$PROJECT_DIR$/app/components/BarcodeScanner.js" />
+        <option value="$PROJECT_DIR$/app/components/Intake.js" />
+        <option value="$PROJECT_DIR$/app/components/RegistrationForm.js" />
+        <option value="$PROJECT_DIR$/app/components/Login.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="51" />
+    <option name="y" value="-4" />
+    <option name="width" value="1315" />
+    <option name="height" value="772" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diabetes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diabetes" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diabetes" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diabetes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diabetes" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="ToolWindowRun.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/node_modules/react-native-swipeout" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.selected.package.prettier" value="" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/components" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="React Native.Android">
+    <configuration name="Android" type="ReactNative" factoryName="React Native">
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v9.3.0/bin/node" />
+      <react-native value="/usr/local/lib/node_modules/react-native-cli" />
+      <platform value="ANDROID" />
+      <envs />
+      <only-packager />
+      <browser value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <method>
+        <option name="ReactNativePackager" enabled="false" />
+      </method>
+    </configuration>
+    <configuration name="Debug" type="ReactNative" factoryName="React Native">
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v9.3.0/bin/node" />
+      <react-native value="" />
+      <platform value="ANDROID" />
+      <envs />
+      <only-packager />
+      <build-and-launch value="false" />
+      <browser value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <debug-port value="8082" />
+    </configuration>
+    <configuration default="true" type="ReactNative" factoryName="React Native">
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v9.3.0/bin/node" />
+      <react-native value="" />
+      <platform value="ANDROID" />
+      <envs />
+      <only-packager />
+      <browser value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+    </configuration>
+    <configuration name="iOS" type="ReactNative" factoryName="React Native">
+      <node-interpreter value="$USER_HOME$/.nvm/versions/node/v9.3.0/bin/node" />
+      <react-native value="/usr/local/lib/node_modules/react-native-cli" />
+      <platform value="IOS" />
+      <envs />
+      <only-packager />
+      <browser value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+    </configuration>
+    <list>
+      <item itemvalue="React Native.Android" />
+      <item itemvalue="React Native.Debug" />
+      <item itemvalue="React Native.iOS" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68e213ba-f6fe-4e59-a5cc-2a4062d1a500" name="Default" comment="" />
+      <created>1513859649631</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1513859649631</updated>
+      <workItem from="1513859652645" duration="9220000" />
+      <workItem from="1514413407974" duration="4961000" />
+      <workItem from="1514458267781" duration="229000" />
+      <workItem from="1514458513616" duration="16380000" />
+      <workItem from="1514974863229" duration="26944000" />
+      <workItem from="1515519227425" duration="16087000" />
+      <workItem from="1515571952283" duration="20802000" />
+      <workItem from="1515616703478" duration="34474000" />
+      <workItem from="1515708729901" duration="29775000" />
+      <workItem from="1515996557160" duration="5090000" />
+      <workItem from="1516178651123" duration="620000" />
+      <workItem from="1516216976813" duration="1843000" />
+      <workItem from="1516277319573" duration="660000" />
+      <workItem from="1516307372624" duration="6776000" />
+      <workItem from="1516364555943" duration="1085000" />
+      <workItem from="1516365684208" duration="31000" />
+      <workItem from="1516365786022" duration="24256000" />
+      <workItem from="1516736187043" duration="3819000" />
+      <workItem from="1516744110265" duration="5294000" />
+      <workItem from="1516822724097" duration="9082000" />
+      <workItem from="1516875292320" duration="6081000" />
+      <workItem from="1516907025531" duration="9908000" />
+      <workItem from="1516974794139" duration="5661000" />
+      <workItem from="1517169807564" duration="4431000" />
+      <workItem from="1517421375880" duration="7199000" />
+      <workItem from="1518640135160" duration="4119000" />
+      <workItem from="1518722475214" duration="804000" />
+      <workItem from="1518767350994" duration="22517000" />
+      <workItem from="1518944997572" duration="28758000" />
+      <workItem from="1519195570542" duration="11923000" />
+      <workItem from="1519244305470" duration="10688000" />
+      <workItem from="1519478678747" duration="678000" />
+      <workItem from="1519479406924" duration="157000" />
+      <workItem from="1519504436377" duration="15235000" />
+      <workItem from="1520185756353" duration="32079000" />
+      <workItem from="1520701506234" duration="32263000" />
+      <workItem from="1521202162210" duration="51197000" />
+      <workItem from="1521709415678" duration="4098000" />
+      <workItem from="1522177702326" duration="18055000" />
+      <workItem from="1522680421789" duration="18757000" />
+      <workItem from="1523252579854" duration="598000" />
+      <workItem from="1523304155863" duration="5824000" />
+      <workItem from="1523957614433" duration="2146000" />
+      <workItem from="1523969750399" duration="77000" />
+      <workItem from="1523969856349" duration="3756000" />
+      <workItem from="1524052233550" duration="599000" />
+      <workItem from="1524053394941" duration="1178000" />
+      <workItem from="1524054922176" duration="385000" />
+      <workItem from="1524055399732" duration="70000" />
+      <workItem from="1524055523852" duration="1609000" />
+      <workItem from="1524083337246" duration="49439000" />
+      <workItem from="1524307920891" duration="30000" />
+      <workItem from="1524308036190" duration="5116000" />
+      <workItem from="1524319919501" duration="204288000" />
+      <workItem from="1524751499616" duration="82317000" />
+      <workItem from="1524907355723" duration="49565000" />
+      <workItem from="1525038523958" duration="1281000" />
+      <workItem from="1525039938304" duration="52872000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="963199000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="51" y="-4" width="1315" height="772" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18555133" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5003802" side_tool="true" weight="0.32831326" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3298193" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49961978" weight="0.32831326" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.24849397" />
+      <window_info anchor="bottom" id="TypeScript" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24942966" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="25" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-data-table/src/Row.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-896">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-vector-icons/dist/lib/create-icon-set.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="4703" selection-start-column="4703" selection-end-column="4703" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/Components/TextInput/TextInput.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2106" />
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="1225" column="4" selection-start-line="1225" selection-start-column="4" selection-end-line="1225" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-swipeout/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="238" column="19" selection-start-line="238" selection-start-column="14" selection-end-line="238" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-navigation/src/createNavigationContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="177" column="29" selection-start-line="177" selection-start-column="25" selection-end-line="177" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-navigation/src/react-navigation.web.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="19" column="38" lean-forward="true" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-760">
+          <caret line="259" column="13" selection-start-line="259" selection-start-column="13" selection-end-line="259" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-navigation/src/react-navigation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="28" column="36" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-navigation/src/navigators/TabNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-navigation/src/navigators/createNavigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/components/line-chart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="194" column="58" selection-start-line="194" selection-start-column="58" selection-end-line="194" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/components/column-chart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="860">
+          <caret line="117" column="76" selection-start-line="117" selection-start-column="76" selection-end-line="117" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-swipeout/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-54" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.flowconfig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-594" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/ResetPassword.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-validator-form/lib/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-validator-form/lib/Form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="112" column="34" selection-start-line="112" selection-start-column="34" selection-end-line="112" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/react-native/react-native-implementation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="108" column="46" lean-forward="true" selection-start-line="108" selection-start-column="46" selection-end-line="108" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="77" lean-forward="true" selection-start-line="5" selection-start-column="77" selection-end-line="5" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-fs/FS.common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="96" selection-start-line="10" selection-start-column="96" selection-end-line="10" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-pure-chart/examples/pure-chart/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/diabetes/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/src/main/java/com/diabetes/MainApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-image-picker/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="7247" column="38" selection-start-line="7247" selection-start-column="38" selection-end-line="7247" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-photo-upload/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="108" column="48" selection-start-line="108" selection-start-column="48" selection-end-line="108" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/Image/ImageSourcePropType.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="82" column="6" selection-start-line="82" selection-start-column="6" selection-end-line="82" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native/Libraries/Image/Image.ios.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Registration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+          <folding>
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-datepicker/datepicker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="75" column="17" selection-start-line="75" selection-start-column="12" selection-end-line="75" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-simple-radio-button/lib/SimpleRadioButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="67" column="23" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-native-form-validator/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="87" column="2" selection-start-line="87" selection-start-column="2" selection-end-line="87" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/Styles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="108" column="8" selection-start-line="108" selection-start-column="8" selection-end-line="108" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/Navigator.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-162">
+          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Diary.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5580">
+          <caret line="28" column="43" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/AddMeasurement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/EditMeasurement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3654">
+          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Diagram.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1844">
+          <caret line="146" column="28" selection-start-line="146" selection-start-column="12" selection-end-line="146" selection-end-column="28" />
+          <folding>
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/BarcodeScanner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1246">
+          <caret line="100" column="107" selection-start-line="100" selection-start-column="78" selection-end-line="100" selection-end-column="107" />
+          <folding>
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+          <folding>
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Intake.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="244" column="10" lean-forward="true" selection-start-line="244" selection-start-column="10" selection-end-line="244" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/RegistrationForm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="111" column="19" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="19" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+          <folding>
+            <element signature="e#69#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="59" column="47" selection-start-line="59" selection-start-column="47" selection-end-line="59" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

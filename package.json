@@ -31,8 +31,9 @@
     "babel-jest": "22.0.3",
     "babel-preset-react-native": "4.0.0",
     "jest": "22.0.3",
+    "react-native-jest-mocks": "^1.2.0",
     "react-native-kill-packager": "^1.0.0",
-    "react-test-renderer": "16.0.0"
+    "react-test-renderer": "^16.3.2"
   },
   "jest": {
     "preset": "react-native"
