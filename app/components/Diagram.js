@@ -274,7 +274,7 @@ export default class Diagram extends Component<{}> {
                             )
                         }}
                     />
-                    <View style={[{marginTop: 5, marginBottom: 15, flexDirection: 'row', justifyContent: 'space-evenly',}]}>
+                    <View style={Styles.enumMetricsName}>
                         <View style={[{flexDirection: 'row'}]}>
                             <Icon type="font-awesome" name="circle" size={10} color={'#297AB1'} />
                             <Text style={[{color: 'white', marginLeft: 3}]}>Sugar</Text>
@@ -294,7 +294,7 @@ export default class Diagram extends Component<{}> {
                         height={150}
                         type='bar'
                     />
-                    <View style={[{marginTop: 5, flexDirection: 'row', justifyContent: 'space-evenly',}]}>
+                    <View style={Styles.enumMetricsName}>
                         <View style={[{flexDirection: 'row'}]}>
                             <Icon type="font-awesome" name="circle" size={10} color={'yellow'} />
                             <Text style={[{color: 'white', marginLeft: 3}]}>Carbs</Text>

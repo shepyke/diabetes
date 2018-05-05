@@ -6,15 +6,11 @@
 
 import React, { Component } from 'react';
 import {
-    Platform,
-    Picker,
     Text,
     View,
-    TextInput,
     Alert,
     TouchableOpacity,
     AsyncStorage,
-    YellowBox,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -30,8 +26,6 @@ import Swipeout from 'react-native-swipeout';
 import AddMeasurement from "./AddMeasurement";
 import EditMeasurement from "./EditMeasurement";
 import Moment from 'moment';
-
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 export default class Diary extends Component<{}> {
     constructor(props){
@@ -354,7 +348,9 @@ export default class Diary extends Component<{}> {
                         onPress={this._onPressAdd}
                         style={Styles.plusButton}
                     >
-                        <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
+                        <View>
+                            <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <DataTable

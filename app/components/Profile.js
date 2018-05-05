@@ -237,7 +237,9 @@ export default class Profile extends Component<{}> {
                     <TouchableOpacity
                         style={Styles.logout}
                         onPress={this.logout}>
-                        <Text>Logout</Text>
+                        <View>
+                            <Text>Logout</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
 

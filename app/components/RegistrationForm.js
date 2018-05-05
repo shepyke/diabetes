@@ -276,7 +276,9 @@ export default class RegistrationForm extends Component<{}> {
                     <TouchableOpacity
                         style={Styles.button}
                         onPress={this.submit}>
-                        <Text style={Styles.text}>Sign up</Text>
+                        <View>
+                            <Text style={Styles.text}>Sign up</Text>
+                        </View>
                     </TouchableOpacity>
 
                     <Text style={Styles.bottomtext}>

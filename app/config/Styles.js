@@ -67,7 +67,6 @@ const Styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor:'transparent',
         marginBottom: 20,
         padding: 10,
         borderBottomColor: '#fff',
@@ -187,7 +186,13 @@ const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
-    }
+    },
+    enumMetricsName: {
+        marginTop: 5,
+        marginBottom: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
 });
 
 export default Styles;

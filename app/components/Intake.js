@@ -14,7 +14,6 @@ import {
     AsyncStorage,
     Animated,
     ScrollView,
-    YellowBox,
     Alert,
 } from 'react-native';
 import Styles from "../config/Styles";
@@ -22,8 +21,6 @@ import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
 import { Icon } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
-
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 export default class Intake extends Component<{}> {
     constructor(props){
@@ -490,7 +487,9 @@ export default class Intake extends Component<{}> {
                         style={Styles.plusButton}
                         disabled = { this.state.disableAddButton}
                     >
-                        <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
+                        <View>
+                            <Text style={[{fontSize: 20, fontWeight: 'bold'}]}>+</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <ScrollView>
@@ -503,7 +502,9 @@ export default class Intake extends Component<{}> {
                         style={[Styles.button, {marginTop: 10, marginBottom: 10}]}
                         disabled = { this.state.disableSubmitButton }
                         onPress={this.submit}>
-                        <Text>Submit</Text>
+                        <View>
+                            <Text>Submit</Text>
+                        </View>
                     </TouchableOpacity>
                 </ScrollView>
 

@@ -37,6 +37,10 @@ export default class Login extends Component<{}> {
                 type: '',
             }
         }
+        if(typeof global.self === "undefined")
+        {
+            global.self = global;
+        }
     }
 
     componentDidMount(){
@@ -138,7 +142,9 @@ export default class Login extends Component<{}> {
                         <TouchableOpacity
                             style={Styles.button}
                             onPress={this.login}>
-                            <Text>Log in </Text>
+                            <View>
+                                <Text>Log in </Text>
+                            </View>
                         </TouchableOpacity>
 
                         {/*<Text style={Styles.bottomtext}>*/}
