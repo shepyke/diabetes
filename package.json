@@ -19,7 +19,7 @@
     "react-native-image-crop-picker": "^0.20.1",
     "react-native-modalbox": "^1.4.2",
     "react-native-photo-upload": "^1.2.0",
-    "react-native-pure-chart": "0.0.20",
+    "react-native-pure-chart": "git+https://github.com/shepyke/react-native-pure-chart.git",
     "react-native-sha256": "^1.1.1",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-swipeout": "^2.3.3",
