@@ -9,7 +9,7 @@ import {
     Picker,
     Text,
     TextInput,
-    AsyncStorage,
+    AsyncStorage, NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -29,11 +29,40 @@ export default class AddMeasurement extends Component {
                 insulin: '',
                 sugar: '',
             },
+            isConnected: false,
         };
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
+    }
+
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
     }
 
     _loadInitialState = async() => {
@@ -60,38 +89,41 @@ export default class AddMeasurement extends Component {
     }
 
     submit = async() => {
-        try {
-            fetch('https://diabetes-backend.herokuapp.com/diary/addMeasurement', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    diary:{
-                        userId: this.state.diary.userId,
-                        type: this.state.diary.type,
-                        when: this.state.diary.when,
-                        time: this.state.diary.time,
-                        insulin: this.state.diary.insulin,
-                        sugar: this.state.diary.sugar,
-                    }
+        if(this.state.isConnected){
+            try {
+                fetch('https://diabetes-backend.herokuapp.com/diary/addMeasurement', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        diary:{
+                            userId: this.state.diary.userId,
+                            type: this.state.diary.type,
+                            when: this.state.diary.when,
+                            time: this.state.diary.time,
+                            insulin: this.state.diary.insulin,
+                            sugar: this.state.diary.sugar,
+                        }
+                    })
                 })
-            })
-                .then((response) => response.json())
-                .then ((res) => {
-                    if(res.success === true){
-                        this.props.dataTable.getMeasurements();
-                        alert('You have successfully added a new measurement');
-                    }else{
-                        alert(res.message);
-                    }
-                })
-                .done();
-        }catch(err){
-            console.log(err);
+                    .then((response) => response.json())
+                    .then ((res) => {
+                        if(res.success === true){
+                            this.props.dataTable.getMeasurements();
+                            alert('You have successfully added a new measurement');
+                        }else{
+                            alert(res.message);
+                        }
+                    })
+                    .done();
+            }catch(err){
+                console.log(err);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
-
     }
 
     render() {
@@ -212,6 +244,7 @@ export default class AddMeasurement extends Component {
 
                 <Button
                     style={{ fontSize: 18, color: 'white' }}
+                    disabled={!this.state.isConnected}
                     containerStyle={{
                         padding: 8,
                         marginLeft: 70,

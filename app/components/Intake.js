@@ -14,7 +14,7 @@ import {
     AsyncStorage,
     Animated,
     ScrollView,
-    Alert,
+    Alert, NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -48,6 +48,7 @@ export default class Intake extends Component<{}> {
             isLoading: true,
             deleteIndex: '',
             isFocused: false,
+            isConnected: false
         }
         this.intakeIndex = 0;
         this.deletedRowNumber = 0;
@@ -55,6 +56,8 @@ export default class Intake extends Component<{}> {
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
         this._sub = this.props.navigation.addListener('didFocus', () => {
             let date = Moment().format('YYYY-MM-DD HH:mm');
@@ -66,6 +69,32 @@ export default class Intake extends Component<{}> {
         });
     }
 
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
+    }
+
     componentWillUnmount() {
         this._sub.remove();
     }
@@ -74,45 +103,48 @@ export default class Intake extends Component<{}> {
         let val = await AsyncStorage.getItem('user');
         let value = JSON.parse(val);
         let date = Moment().format('YYYY-MM-DD HH:mm');
-
-        try {
-            //fetch('http://172.20.10.4:3000/intakes/foods')
-            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
-                .then((response) => response.json())
-                .then((res) => {
-                    this.setState({
-                        time: date,
-                        userId: value['userId'],
-                        foods: res.foods,
-                    });
-                })
-                .then(() => {
-                    //it is needed if the user comes here via BarcodeScanner for the first time
-                    if (this.props.navigation.state.params != undefined
-                        && this.props.navigation.state.params.foodId != undefined) {
+        if (this.state.isConnected){
+            try {
+                //fetch('http://172.20.10.4:3000/intakes/foods')
+                await fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+                    .then((response) => response.json())
+                    .then((res) => {
                         this.setState({
-                            intake: [
-                                ...this.state.intake,
-                                {
-                                    "id": this.intakeIndex,
-                                    "foodId": this.props.navigation.state.params.foodId,
-                                    "amount": "",
-                                },
-                            ],
-                            disableSubmitButton: false,
+                            time: date,
+                            userId: value['userId'],
+                            foods: res.foods,
                         });
-                        this.intakeIndex = this.intakeIndex + 1;
-                    }
-                }).then(() => {
-                    this.setState({
-                        isLoading: false,
+                    })
+                    .then(() => {
+                        //it is needed if the user comes here via BarcodeScanner for the first time
+                        if (this.props.navigation.state.params != undefined
+                            && this.props.navigation.state.params.foodId != undefined) {
+                            this.setState({
+                                intake: [
+                                    ...this.state.intake,
+                                    {
+                                        "id": this.intakeIndex,
+                                        "foodId": this.props.navigation.state.params.foodId,
+                                        "amount": "",
+                                    },
+                                ],
+                                disableSubmitButton: false,
+                            });
+                            this.intakeIndex = this.intakeIndex + 1;
+                        }
+                    }).then(() => {
+                        this.setState({
+                            isLoading: false,
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }catch(error){
-            console.error(error);
+            }catch(error){
+                console.error(error);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
     }
 
@@ -153,41 +185,44 @@ export default class Intake extends Component<{}> {
     }
 
     submit = async() => {
-        try {
-            //fetch('http://172.20.10.4:3000/intakes/addIntake', {
-            fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    time: this.state.time,
-                    userId: this.state.userId,
-                    intakes: this.state.intake,
+        if(this.state.isConnected){
+            try {
+                fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        time: this.state.time,
+                        userId: this.state.userId,
+                        intakes: this.state.intake,
+                    })
                 })
-            })
-                .then((response) => response.json())
-                .then((res) => {
-                    if (res.success === true) {
-                        alert('You have successfully added an intake:\n'
-                            + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
-                            + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
-                            + '\nTotal fat: ' + res.intake.totalFat + 'g'
-                            + '\nTotal protein: ' + res.intake.totalProtein + 'g'
-                        );
-                        this.setState({
-                            intake: [],
-                            disableSubmitButton: true,
-                        });
-                    } else {
-                        alert(res.message);
-                    }
-                })
-                .done();
-        } catch (err) {
-            alert("There is a connection issue, please check you are connected to any Network");
-            console.log(err);
+                    .then((response) => response.json())
+                    .then((res) => {
+                        if (res.success === true) {
+                            alert('You have successfully added an intake:\n'
+                                + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
+                                + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
+                                + '\nTotal fat: ' + res.intake.totalFat + 'g'
+                                + '\nTotal protein: ' + res.intake.totalProtein + 'g'
+                            );
+                            this.setState({
+                                intake: [],
+                                disableSubmitButton: true,
+                            });
+                        } else {
+                            alert(res.message);
+                        }
+                    })
+                    .done();
+            } catch (err) {
+                alert("There is a connection issue, please check you are connected to any Network");
+                console.log(err);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
     }
 

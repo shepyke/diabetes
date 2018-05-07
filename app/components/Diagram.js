@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    AsyncStorage,
+    AsyncStorage, NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import PureChart from 'react-native-pure-chart';
@@ -39,12 +39,41 @@ export default class Diagram extends Component<{}> {
             },
             isLoading: true,
             isFocused: false,
+            isConnected: false,
         }
         this.generateData = this.generateData.bind(this);
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
+    }
+
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
     }
 
     _loadInitialState = async() => {
@@ -82,36 +111,40 @@ export default class Diagram extends Component<{}> {
     }
 
     fetchDataToDraw = async() => {
-        try{
-            fetch('https://diabetes-backend.herokuapp.com/diagram/getMeasurementData',{
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: this.state.userId,
-                    fromDate: this.state.fromDate,
-                    toDate: this.state.toDate,
+        if(this.state.isConnected) {
+            try {
+                await fetch('https://diabetes-backend.herokuapp.com/diagram/getMeasurementData', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: this.state.userId,
+                        fromDate: this.state.fromDate,
+                        toDate: this.state.toDate,
+                    })
                 })
-            })
-                .then((response) => response.json())
-                .then((res) => {
-                    if(res.success === true){
-                        this.state.measurements = res.measurements;
-                        this.state.intakes = res.intakes;
-                    }else{
-                        alert(res.message);
-                    }
-                    this.setState({
-                        isLoading: false
+                    .then((response) => response.json())
+                    .then((res) => {
+                        if (res.success === true) {
+                            this.state.measurements = res.measurements;
+                            this.state.intakes = res.intakes;
+                        } else {
+                            alert(res.message);
+                        }
+                        this.setState({
+                            isLoading: false
+                        });
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }catch(error){
-            console.error(error);
+            } catch (error) {
+                console.error(error);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
     }
 

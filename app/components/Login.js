@@ -13,6 +13,7 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     AsyncStorage,
+    NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import { NavigationActions } from 'react-navigation';
@@ -35,7 +36,8 @@ export default class Login extends Component<{}> {
                 birthDay: '',
                 gender: '',
                 type: '',
-            }
+            },
+            isConnected: false
         }
         if(typeof global.self === "undefined")
         {
@@ -44,7 +46,36 @@ export default class Login extends Component<{}> {
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
+    }
+
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            alert('It seems you are offline, please connect to a network');
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
     }
 
     _loadInitialState = async() => {
@@ -55,34 +86,38 @@ export default class Login extends Component<{}> {
     }
 
     login = async() => {
-        try{
-            fetch('https://diabetes-backend.herokuapp.com/users/login',{
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: this.state.user.username,
-                    password: this.state.user.password,
+        if (this.state.isConnected){
+            try{
+                await fetch('https://diabetes-backend.herokuapp.com/users/login',{
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: this.state.user.username,
+                        password: this.state.user.password,
+                    })
                 })
-            })
 
-            .then((response) => response.json())
-            .then ((res) => {
-                if(res.success === true){
-                    this.setState({
-                        user: res.user,
-                    });
-                    AsyncStorage.setItem('user', JSON.stringify(this.state.user));
-                    this.resetNavigation('Tabs');
-                }else{
-                    alert(res.message);
-                }
-            })
-            .done();
-        }catch(err){
-            console.log(err);
+                .then((response) => response.json())
+                .then ((res) => {
+                    if(res.success === true){
+                        this.setState({
+                            user: res.user,
+                        });
+                        AsyncStorage.setItem('user', JSON.stringify(this.state.user));
+                        this.resetNavigation('Tabs');
+                    }else{
+                        alert(res.message);
+                    }
+                })
+                .done();
+            }catch(err){
+                console.log(err);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
     }
 

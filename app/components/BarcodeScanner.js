@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {
-    Alert,
+    Alert, NetInfo,
     View
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
@@ -38,11 +38,40 @@ export default class BarcodeScanner extends Component {
             ],
             intakeId: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.id : -1,
             viaIntake: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.viaIntake : false,
+            isConnected: false,
         };
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
+    }
+
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
     }
 
     componentWillReceiveProps(nextProps){
@@ -57,17 +86,21 @@ export default class BarcodeScanner extends Component {
     }
 
     _loadInitialState = async() => {
-        try {
-            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
-                .then((response) => response.json())
-                .then((res) => {
-                    this.state.foods = res.foods;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }catch(error){
-            console.error(error);
+        if(this.state.isConnected) {
+            try {
+                await fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+                    .then((response) => response.json())
+                    .then((res) => {
+                        this.state.foods = res.foods;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } catch (error) {
+                console.error(error);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
 
         this._sub = this.props.navigation.addListener('didFocus', () => {

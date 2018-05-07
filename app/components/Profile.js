@@ -12,7 +12,7 @@ import {
     AsyncStorage,
     Image,
     Alert,
-    NativeModules,
+    NativeModules, NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import Moment from 'moment';
@@ -40,11 +40,40 @@ export default class Profile extends Component<{}> {
                 type: '',
             },
             isLoading: true,
+            isConnected: true,
         }
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
+    }
+
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            })
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
     }
 
     _loadInitialState = async() => {
@@ -213,7 +242,13 @@ export default class Profile extends Component<{}> {
                             name="add-a-photo"
                             size={30}
                             color={'white'}
-                            onPress={() => {this.selectType()}}
+                            onPress={() => {
+                                if(this.state.isConnected){
+                                    this.selectType();
+                                }else{
+                                    alert('It seems you are offline, please connect to a network');
+                                }
+                            }}
                         />
                     </View>
 

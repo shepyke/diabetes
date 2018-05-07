@@ -11,6 +11,7 @@ import {
     Alert,
     TouchableOpacity,
     AsyncStorage,
+    NetInfo,
 } from 'react-native';
 import Styles from "../config/Styles";
 import DatePicker from 'react-native-datepicker';
@@ -46,6 +47,7 @@ export default class Diary extends Component<{}> {
             },
             dataSource: dataSource,
             isLoading: true,
+            isConnected: false,
         }
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRow = this.renderRow.bind(this);
@@ -54,6 +56,8 @@ export default class Diary extends Component<{}> {
     }
 
     componentDidMount(){
+        NetInfo.getConnectionInfo().then(this.handleConnectivityChange);
+        NetInfo.addEventListener('connectionChange', this.handleConnectivityChange);
         this._loadInitialState().done();
     }
 
@@ -76,42 +80,73 @@ export default class Diary extends Component<{}> {
         this.getMeasurements();
     }
 
-    getMeasurements = async() => {
-        try{
-            fetch('https://diabetes-backend.herokuapp.com/diary/getDiary',{
-                method: 'POST',
+    handleConnectivityChange = async (status) => {
+        const { type } = status;
+        let probablyHasInternet;
+        try {
+            const googleRequest = await fetch('https://www.google.com', {
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: this.state.userId,
-                    time: this.state.time,
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': 0
+                }
+            });
+            probablyHasInternet = googleRequest.status === 200;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+            this.getMeasurements();
+        } catch (e) {
+            probablyHasInternet = false;
+            this.setState({
+                isConnected: probablyHasInternet
+            });
+        }
+
+        console.log(`@@ isConnected: ${probablyHasInternet}`);
+
+    }
+
+    getMeasurements = async() => {
+        if(this.state.isConnected) {
+            try {
+                fetch('https://diabetes-backend.herokuapp.com/diary/getDiary', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: this.state.userId,
+                        time: this.state.time,
+                    })
                 })
-            })
-                .then((response) => response.json())
-                .then((res) => {
-                    if(res.success === true){
-                        this.state.diary = res.diary;
+                    .then((response) => response.json())
+                    .then((res) => {
+                        if (res.success === true) {
+                            this.state.diary = res.diary;
+                            this.setState({
+                                dataSource: this.state.dataSource.cloneWithRows(this.state.diary),
+                            });
+                        } else {
+                            alert(res.message);
+                            this.setState({
+                                dataSource: this.state.dataSource.cloneWithRows([]),
+                            });
+                            //console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
+                        }
                         this.setState({
-                            dataSource: this.state.dataSource.cloneWithRows(this.state.diary),
+                            isLoading: false
                         });
-                    }else{
-                        alert(res.message);
-                        this.setState({
-                            dataSource: this.state.dataSource.cloneWithRows([]),
-                        });
-                        //console.log("this.state.diary: " + JSON.stringify(this.state.diary,null,4));
-                    }
-                    this.setState({
-                        isLoading: false
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }catch(error){
-            console.error(error);
+            } catch (error) {
+                console.error(error);
+            }
+        }else{
+            alert('It seems you are offline, please connect to a network');
         }
     }
 
@@ -172,15 +207,19 @@ export default class Diary extends Component<{}> {
                 backgroundColor: 'red',
                 underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                 onPress: () => {
-                    Alert.alert(
-                        'Delete row',
-                        'Are you sure you want to delete?',
-                        [
-                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                            {text: 'Yes', onPress: () => this.deleteMeasurement(item['measurementId'], rowID)},
-                        ],
-                        { cancelable: false }
-                    )
+                    if(this.state.isConnected) {
+                        Alert.alert(
+                            'Delete row',
+                            'Are you sure you want to delete?',
+                            [
+                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                                {text: 'Yes', onPress: () => this.deleteMeasurement(item['measurementId'], rowID)},
+                            ],
+                            {cancelable: false}
+                        )
+                    }else{
+                        alert('It seems you are offline, please connect to a network');
+                    }
                 }
             }
         ];
