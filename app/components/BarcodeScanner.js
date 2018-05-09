@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import Styles from "../config/Styles";
+import AddFood from "./AddFood";
 
 export default class BarcodeScanner extends Component {
     constructor(props) {
@@ -36,6 +37,18 @@ export default class BarcodeScanner extends Component {
                     unit: '',
                 },
             ],
+            food: {
+                foodId: '',
+                barcode: '',
+                calorie: '',
+                carbohydrate: '',
+                fat: '',
+                foodName: '',
+                glycemicIndex: '',
+                photo: '',
+                protein:'',
+                unit: '',
+            },
             intakeId: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.id : -1,
             viaIntake: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.viaIntake : false,
         };
@@ -119,6 +132,10 @@ export default class BarcodeScanner extends Component {
                                showCamera: true,
                             });
                     }, style: 'cancel'},
+                    {text: 'Add as a new food', onPress:() => {
+                            this.refs.addNewFood.showAddFoodModal(barcode);
+                        }
+                    },
                 ],
                 { cancelable: false }
             )
@@ -140,11 +157,14 @@ export default class BarcodeScanner extends Component {
                         defaultTouchToFocus
                         mirrorImage={false}
                     />
+                    <AddFood ref={'addNewFood'}/>
                 </View>
             );
         }else{
             return (
-                <View style={Styles.wrapper}></View>
+                <View style={Styles.wrapper}>
+                    <AddFood ref={'addNewFood'}/>
+                </View>
             );
         }
     }

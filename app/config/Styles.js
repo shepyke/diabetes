@@ -140,6 +140,11 @@ const Styles = StyleSheet.create({
         height: 30,
         marginBottom: 10,
     },
+    dropdown3: {
+        color: '#718792',
+        height: 20,
+        marginBottom: 2,
+    },
     modal:{
         justifyContent: 'center',
         shadowRadius: 10,
