@@ -76,7 +76,7 @@ export default class Intake extends Component<{}> {
         let date = Moment().format('YYYY-MM-DD HH:mm');
 
         try {
-            //fetch('http://172.20.10.4:3000/intakes/foods')
+            //fetch('http://192.168.0.117:3000/intakes/foods')
             fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
@@ -154,7 +154,7 @@ export default class Intake extends Component<{}> {
 
     submit = async() => {
         try {
-            //fetch('http://172.20.10.4:3000/intakes/addIntake', {
+            //fetch('http://192.168.0.117:3000/intakes/addIntake', {
             fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
                 method: 'POST',
                 headers: {
@@ -170,12 +170,22 @@ export default class Intake extends Component<{}> {
                 .then((response) => response.json())
                 .then((res) => {
                     if (res.success === true) {
-                        alert('You have successfully added an intake:\n'
-                            + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
-                            + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
-                            + '\nTotal fat: ' + res.intake.totalFat + 'g'
-                            + '\nTotal protein: ' + res.intake.totalProtein + 'g'
-                        );
+                        if(res.hasUndefined === true) {
+                            alert('You have successfully added an intake:\n'
+                                + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
+                                + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
+                                + '\nTotal fat: ' + res.intake.totalFat + 'g'
+                                + '\nTotal protein: ' + res.intake.totalProtein + 'g'
+                                + '\n\nThe total values can be different, because there was at least one item where some properties were not set properly'
+                            );
+                        }else{
+                            alert('You have successfully added an intake:\n'
+                                + '\nTotal calorie: ' + res.intake.totalCalorie + ' kCal'
+                                + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
+                                + '\nTotal fat: ' + res.intake.totalFat + 'g'
+                                + '\nTotal protein: ' + res.intake.totalProtein + 'g'
+                            );
+                        }
                         this.setState({
                             intake: [],
                             disableSubmitButton: true,

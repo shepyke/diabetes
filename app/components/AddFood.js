@@ -61,8 +61,8 @@ export default class AddFood extends Component {
 
     submit = async() => {
         try {
-            fetch('http://192.168.25.223:3000/foods/addFood', {
-                //fetch('https://diabetes-backend.herokuapp.com/intakes/addIntake', {
+            //fetch('http://192.168.0.117:3000/addFood', {
+            fetch('https://diabetes-backend.herokuapp.com/addFood', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -79,11 +79,11 @@ export default class AddFood extends Component {
                         alert('You have successfully added a new food:\n'
                             + '\nFood name: ' + res.food.foodName
                             + '\nBarcode: ' + res.food.barcode
-                            + '\nGlycemic Index: ' + res.food.glycemicIndex + '%'
-                            + '\nCalorie: ' + res.food.calorie + 'kCal' + ' / 100' + res.food.unit
-                            + '\nFat: ' + res.food.fat + 'g' + ' / 100' + res.food.unit
-                            + '\nCarbohydrate: ' + res.food.carbohydrate + 'g' + ' / 100' + res.food.unit
-                            + '\nProtein: ' + res.food.protein + 'g' + ' / 100' + res.food.unit
+                            + '\nGlycemic Index: ' + ((res.food.glycemicIndex != '') ? res.food.glycemicIndex + '%' : 'unknown')
+                            + '\nCalorie: ' + ((res.food.calorie != '') ? res.food.calorie + 'kCal' + ' / 100' + res.food.unit : 'unknown')
+                            + '\nFat: ' + ((res.food.fat != '') ? res.food.fat + 'g' + ' / 100' + res.food.unit : 'unknown')
+                            + '\nCarbohydrate: ' + ((res.food.carbohydrate != '') ? res.food.carbohydrate + 'g' + ' / 100' + res.food.unit : 'unknown')
+                            + '\nProtein: ' + ((res.food.protein != '') ? res.food.protein + 'g' + ' / 100' + res.food.unit : 'unknown')
                         );
                     } else {
                         alert(res.message);
@@ -103,7 +103,6 @@ export default class AddFood extends Component {
                 style={[Styles.modal, {height: '80%'}]}
                 position='center'
                 backdrop={true}
-                onClosed={() => {}}
             >
                 <Text style={{
                     fontSize: 18,
@@ -246,7 +245,7 @@ export default class AddFood extends Component {
                         ){
                             Alert.alert(
                                 'Empty fields',
-                                'If you do not fill all the fields they will be handle as undefined',
+                                'If you do not fill all the fields they will be handle as unknown',
                                 [
                                     {text: 'Cancel', onPress: () => {
                                             return
@@ -254,16 +253,15 @@ export default class AddFood extends Component {
                                     {text: 'Go with it', onPress:() => {
                                             this.submit();
                                             this.refs.addNewFood.close();
-                                            return
                                         }
                                     },
                                 ],
                                 { cancelable: false }
                             )
+                        }else {
+                            this.submit();
+                            this.refs.addNewFood.close();
                         }
-
-                        this.submit();
-                        this.refs.addNewFood.close();
                     }}>
                     Save
                 </Button>
