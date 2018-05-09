@@ -73,8 +73,8 @@ export default class RegistrationForm extends Component<{}> {
                             birthDay: this.state.user.birthDay,
                             profileImage:
                                 (this.state.user.gender == 'Female')
-                                    ? 'https://diabetes-backend.herokuapp.com/uploads/anonym_woman.jpg'
-                                    : 'https://diabetes-backend.herokuapp.com/uploads/anonym_man.png',
+                                    ? 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_woman.png'
+                                    : 'https://storage.googleapis.com/diabetes-93dcc.appspot.com/anonym_man.png',
                             gender: this.state.user.gender,
                             type: this.state.user.type,
                             password: this.state.user.password,
