@@ -62,8 +62,8 @@ export default class AddFood extends Component {
 
     submit = async() => {
         try {
-            fetch('http://192.168.0.117:3000/addFood', {
-            //fetch('https://diabetes-backend.herokuapp.com/addFood', {
+            //fetch('http://192.168.0.117:3000/addFood', {
+            fetch('https://diabetes-backend.herokuapp.com/addFood', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
