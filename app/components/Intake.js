@@ -205,7 +205,7 @@ export default class Intake extends Component<{}> {
                                 + '\nTotal carbohydrate: ' + res.intake.totalCarbohydrate + 'g'
                                 + '\nTotal fat: ' + res.intake.totalFat + 'g'
                                 + '\nTotal protein: ' + res.intake.totalProtein + 'g'
-                                + '\n\nThe total values can be different, because there was at least one item where some properties were not set properly'
+                                + '\n\nThe total values can be different, because there was at least one item where one or more properties were not set properly'
                             );
                         }else{
                             alert('You have successfully added an intake:\n'

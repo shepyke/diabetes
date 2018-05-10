@@ -132,6 +132,7 @@ export default class EditMeasurement extends Component {
                     <Picker.Item label="breakfast" value="breakfast" />
                     <Picker.Item label="lunch" value="lunch" />
                     <Picker.Item label="dinner" value="dinner" />
+                    <Picker.Item label="other" value="other" />
                 </Picker>
 
                 <Picker
