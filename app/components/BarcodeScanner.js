@@ -55,7 +55,7 @@ export default class BarcodeScanner extends Component {
     }
 
     componentDidMount(){
-        this._loadInitialState().done();
+        this._loadInitialState();
     }
 
     componentWillReceiveProps(nextProps){
@@ -69,20 +69,8 @@ export default class BarcodeScanner extends Component {
         }
     }
 
-    _loadInitialState = async() => {
-        try {
-            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
-                .then((response) => response.json())
-                .then((res) => {
-                    this.state.foods = res.foods;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }catch(error){
-            console.error(error);
-        }
-
+    _loadInitialState() {
+        this.getFoods();
         this._sub = this.props.navigation.addListener('didFocus', () => {
             this.setState({
                 showCamera: true,
@@ -92,6 +80,24 @@ export default class BarcodeScanner extends Component {
 
     componentWillUnmount() {
         this._sub.remove();
+    }
+
+    getFoods = async() => {
+        try {
+            fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+                .then((response) => response.json())
+                .then((res) => {
+                    this.state.foods = res.foods;
+                })
+                .then(() => {
+                    this.setState({showCamera: true});
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }catch(error){
+            console.error(error);
+        }
     }
 
     findBarcode(foodsObject, barcode) {
@@ -118,7 +124,7 @@ export default class BarcodeScanner extends Component {
             this.setState({
                 viaIntake: false,
             });
-        }else{
+        }else {
             this.setState({
                 showCamera: false,
             });
@@ -163,7 +169,10 @@ export default class BarcodeScanner extends Component {
         }else{
             return (
                 <View style={Styles.wrapper}>
-                    <AddFood ref={'addNewFood'}/>
+                    <AddFood ref={'addNewFood'} afterClose={() => {
+                            this.getFoods().done();
+                        }
+                    }/>
                 </View>
             );
         }

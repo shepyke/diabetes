@@ -58,11 +58,13 @@ export default class Intake extends Component<{}> {
         this._loadInitialState().done();
         this._sub = this.props.navigation.addListener('didFocus', () => {
             let date = Moment().format('YYYY-MM-DD HH:mm');
-
-            this.setState({
-                isFocused: true,
-                time: date,
-            });
+            this.getFoods()
+                .then( () => {
+                    this.setState({
+                        isFocused: true,
+                        time: date,
+                    });
+                })
         });
     }
 
@@ -117,38 +119,65 @@ export default class Intake extends Component<{}> {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.navigation.state.params != undefined){
-            //user clicked on camera icon of an Element
-            if(nextProps.navigation.state.params.newElement == false) {
-                if (nextProps.navigation.state.params.intakeId != undefined) {
-                    const intake = this.state.intake;
-                    this.setState({
-                        intake: this.updateOneIntake(intake,
-                            nextProps.navigation.state.params.intakeId,
-                            "foodId",
-                            nextProps.navigation.state.params.foodId),
-                    });
+        this.getFoods()
+            .then( () => {
+                if(nextProps.navigation.state.params != undefined){
+                    //user clicked on camera icon of an Element
+                    if(nextProps.navigation.state.params.newElement == false) {
+                        if (nextProps.navigation.state.params.intakeId != undefined) {
+                            const intake = this.state.intake;
+                            this.setState({
+                                intake: this.updateOneIntake(intake,
+                                    nextProps.navigation.state.params.intakeId,
+                                    "foodId",
+                                    nextProps.navigation.state.params.foodId),
+                            });
 
+                        }
+                    }else{
+                        //user comes via BarcodeScanner but before that opened this page
+                        if (this.intakeIndex - this.deletedRowNumber < 10) {
+                            this.setState({
+                                intake: [
+                                    ...this.state.intake,
+                                    {
+                                        "id": this.intakeIndex,
+                                        "foodId": nextProps.navigation.state.params.foodId,
+                                        "amount": "",
+                                    },
+                                ],
+                                disableSubmitButton: false,
+                            });
+                            this.intakeIndex = this.intakeIndex + 1;
+                        }else{
+                            alert("You cannot add more than 10 dishes to one time meal");
+                        }
+                    }
                 }
-            }else{
-                //user comes via BarcodeScanner but before that opened this page
-                if (this.intakeIndex - this.deletedRowNumber < 10) {
+            })
+    }
+
+    getFoods = async() => {
+        this.setState({
+            isLoading: true,
+        });
+        try {
+            //fetch('http://192.168.0.117:3000/intakes/foods')
+            await fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
+                .then((response) => response.json())
+                .then((res) => {
                     this.setState({
-                        intake: [
-                            ...this.state.intake,
-                            {
-                                "id": this.intakeIndex,
-                                "foodId": nextProps.navigation.state.params.foodId,
-                                "amount": "",
-                            },
-                        ],
-                        disableSubmitButton: false,
+                        foods: res.foods,
                     });
-                    this.intakeIndex = this.intakeIndex + 1;
-                }else{
-                    alert("You cannot add more than 10 dishes to one time meal");
-                }
-            }
+                })
+                .then(() => {
+                    this.setState({ isLoading: false});
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }catch(error){
+            console.error(error);
         }
     }
 
@@ -335,11 +364,11 @@ export default class Intake extends Component<{}> {
                                     alert("Please note, the calculation based on 100"
                                         + this.state.foods[intakeItem.foodId-1].unit + " of "
                                         + this.state.foods[intakeItem.foodId-1].foodName + "\n"
-                                        + "\nGlycemic Index: " + this.state.foods[intakeItem.foodId-1].glycemicIndex + "%"
-                                        + "\nCalorie: " + this.state.foods[intakeItem.foodId-1].calorie + " kCal"
-                                        + "\nCarbohydrate: " + this.state.foods[intakeItem.foodId-1].carbohydrate + "g"
-                                        + "\nFat: " + this.state.foods[intakeItem.foodId-1].fat + "g"
-                                        + "\nProtein: " + this.state.foods[intakeItem.foodId-1].protein + "g"
+                                        + "\nGlycemic Index: " + ((this.state.foods[intakeItem.foodId-1].glycemicIndex != -1) ? this.state.foods[intakeItem.foodId-1].glycemicIndex + "%" : 'unknown')
+                                        + "\nCalorie: " + ((this.state.foods[intakeItem.foodId-1].calorie != -1) ? this.state.foods[intakeItem.foodId-1].calorie + " kCal" : 'unknown')
+                                        + "\nFat: " + ((this.state.foods[intakeItem.foodId-1].fat != -1) ? this.state.foods[intakeItem.foodId-1].fat + "g" : 'unknown')
+                                        + "\nCarbohydrate: " + ((this.state.foods[intakeItem.foodId-1].carbohydrate != -1) ? this.state.foods[intakeItem.foodId-1].carbohydrate + "g" : 'unknown')
+                                        + "\nProtein: " + ((this.state.foods[intakeItem.foodId-1].protein != -1) ? this.state.foods[intakeItem.foodId-1].protein+ "g" : 'unknown')
                                     )
                                 }
                             />
@@ -422,11 +451,11 @@ export default class Intake extends Component<{}> {
                                         alert("Please note, the calculation based on 100"
                                             + this.state.foods[intakeItem.foodId-1].unit + " of "
                                             + this.state.foods[intakeItem.foodId-1].foodName + "\n"
-                                            + "\nGlycemic Index: " + this.state.foods[intakeItem.foodId-1].glycemicIndex + "%"
-                                            + "\nCalorie: " + this.state.foods[intakeItem.foodId-1].calorie + " kCal"
-                                            + "\nCarbohydrate: " + this.state.foods[intakeItem.foodId-1].carbohydrate + "g"
-                                            + "\nFat: " + this.state.foods[intakeItem.foodId-1].fat + "g"
-                                            + "\nProtein: " + this.state.foods[intakeItem.foodId-1].protein + "g"
+                                            + "\nGlycemic Index: " + ((this.state.foods[intakeItem.foodId-1].glycemicIndex != -1) ? this.state.foods[intakeItem.foodId-1].glycemicIndex + "%" : 'unknown')
+                                            + "\nCalorie: " + ((this.state.foods[intakeItem.foodId-1].calorie != -1) ? this.state.foods[intakeItem.foodId-1].calorie + " kCal" : 'unknown')
+                                            + "\nFat: " + ((this.state.foods[intakeItem.foodId-1].fat != -1) ? this.state.foods[intakeItem.foodId-1].fat + "g" : 'unknown')
+                                            + "\nCarbohydrate: " + ((this.state.foods[intakeItem.foodId-1].carbohydrate != -1) ? this.state.foods[intakeItem.foodId-1].carbohydrate + "g" : 'unknown')
+                                            + "\nProtein: " + ((this.state.foods[intakeItem.foodId-1].protein != -1) ? this.state.foods[intakeItem.foodId-1].protein+ "g" : 'unknown')
                                         )
                                     }
                                 />

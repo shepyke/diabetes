@@ -20,6 +20,7 @@ export default class AddFood extends Component {
         super(props);
         this.state = {
             food: {
+                foodId: '',
                 barcode: '',
                 calorie: '',
                 carbohydrate: '',
@@ -61,8 +62,8 @@ export default class AddFood extends Component {
 
     submit = async() => {
         try {
-            //fetch('http://192.168.0.117:3000/addFood', {
-            fetch('https://diabetes-backend.herokuapp.com/addFood', {
+            fetch('http://192.168.0.117:3000/addFood', {
+            //fetch('https://diabetes-backend.herokuapp.com/addFood', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -76,6 +77,7 @@ export default class AddFood extends Component {
                 .then((response) => response.json())
                 .then((res) => {
                     if (res.success === true) {
+                        this.state.food = res.food;
                         alert('You have successfully added a new food:\n'
                             + '\nFood name: ' + res.food.foodName
                             + '\nBarcode: ' + res.food.barcode
@@ -103,6 +105,9 @@ export default class AddFood extends Component {
                 style={[Styles.modal, {height: '80%'}]}
                 position='center'
                 backdrop={true}
+                onClosed={() => {
+                    this.props.afterClose();
+                }}
             >
                 <Text style={{
                     fontSize: 18,
