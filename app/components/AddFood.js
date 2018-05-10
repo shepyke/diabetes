@@ -106,7 +106,7 @@ export default class AddFood extends Component {
                 position='center'
                 backdrop={true}
                 onClosed={() => {
-                    this.props.afterClose();
+                    this.props.camera.getFoods().done();
                 }}
             >
                 <Text style={{

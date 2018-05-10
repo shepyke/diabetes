@@ -52,6 +52,7 @@ export default class BarcodeScanner extends Component {
             intakeId: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.id : -1,
             viaIntake: (this.props.navigation.state.params != undefined) ? this.props.navigation.state.params.viaIntake : false,
         };
+        this.getFoods = this.getFoods.bind(this);
     }
 
     componentDidMount(){
@@ -72,9 +73,7 @@ export default class BarcodeScanner extends Component {
     _loadInitialState() {
         this.getFoods();
         this._sub = this.props.navigation.addListener('didFocus', () => {
-            this.setState({
-                showCamera: true,
-            });
+            this.getFoods().done();
         });
     }
 
@@ -87,7 +86,9 @@ export default class BarcodeScanner extends Component {
             fetch('https://diabetes-backend.herokuapp.com/intakes/foods')
                 .then((response) => response.json())
                 .then((res) => {
-                    this.state.foods = res.foods;
+                    this.setState({
+                        foods: res.foods
+                    })
                 })
                 .then(() => {
                     this.setState({showCamera: true});
@@ -169,10 +170,7 @@ export default class BarcodeScanner extends Component {
         }else{
             return (
                 <View style={Styles.wrapper}>
-                    <AddFood ref={'addNewFood'} afterClose={() => {
-                            this.getFoods().done();
-                        }
-                    }/>
+                    <AddFood ref={'addNewFood'} camera={this}/>
                 </View>
             );
         }
