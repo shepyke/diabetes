@@ -87,6 +87,7 @@ export default class AddFood extends Component {
                             + '\nCarbohydrate: ' + ((res.food.carbohydrate != '') ? res.food.carbohydrate + 'g' + ' / 100' + res.food.unit : 'unknown')
                             + '\nProtein: ' + ((res.food.protein != '') ? res.food.protein + 'g' + ' / 100' + res.food.unit : 'unknown')
                         );
+                        this.refs.addNewFood.close();
                     } else {
                         alert(res.message);
                     }
@@ -257,7 +258,6 @@ export default class AddFood extends Component {
                                         }, style: 'cancel'},
                                     {text: 'Go with it', onPress:() => {
                                             this.submit();
-                                            this.refs.addNewFood.close();
                                         }
                                     },
                                 ],
@@ -265,7 +265,6 @@ export default class AddFood extends Component {
                             )
                         }else {
                             this.submit();
-                            this.refs.addNewFood.close();
                         }
                     }}>
                     Save
