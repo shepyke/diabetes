@@ -1,7 +1,6 @@
 import React from 'react';
 import 'react-native';
 import Login from '../app/components/Login';
-import { sha256 } from 'react-native-sha256';
 
 import renderer from 'react-test-renderer';
 

@@ -48,33 +48,38 @@ export default class Diagram extends Component<{}> {
     }
 
     _loadInitialState = async() => {
-        //this._sub = this.props.navigation.addListener('didFocus', this.setFocus());
-        let val = await AsyncStorage.getItem('user');
-        let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm');
-        let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm');
-
-        this.setState(
-            {
-                userId: value['userId'],
-                fromDate: date7,
-                toDate: date,
-            }
-        );
-
-        this.fetchDataToDraw();
-
-        this._sub = this.props.navigation.addListener('didFocus', () => {
+        try{
+            //this._sub = this.props.navigation.addListener('didFocus', this.setFocus());
+            let val = await AsyncStorage.getItem('user');
+            let value = JSON.parse(val);
             let date = Moment().format('YYYY-MM-DD HH:mm');
             let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm');
 
-            this.setState({
-                isFocused: true,
-                fromDate: date7,
-                toDate: date,
-            });
+            this.setState(
+                {
+                    userId: value['userId'],
+                    fromDate: date7,
+                    toDate: date,
+                }
+            );
+
             this.fetchDataToDraw();
-        });
+
+            this._sub = this.props.navigation.addListener('didFocus', () => {
+                let date = Moment().format('YYYY-MM-DD HH:mm');
+                let date7 = Moment(date).subtract(7, 'days').format('YYYY-MM-DD HH:mm');
+
+                this.setState({
+                    isFocused: true,
+                    fromDate: date7,
+                    toDate: date,
+                });
+                this.fetchDataToDraw();
+            });
+        }catch(e){
+            //console.log(e);
+        }
+
     }
 
     componentWillUnmount() {

@@ -37,3 +37,10 @@ test('the given barcode is part of the database', () => {
     );
 })
 //End of testId: barcode-2
+
+//Start of testId: barcode-3
+it('GetFoods is not empty', () => {
+    const tree = renderer.create(<BarcodeScanner />).getInstance();
+    expect(tree.getFoods).not.toBeNull();
+})
+//End of testId: barcode-3

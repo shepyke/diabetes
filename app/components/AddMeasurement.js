@@ -37,22 +37,26 @@ export default class AddMeasurement extends Component {
     }
 
     _loadInitialState = async() => {
-        let val = await AsyncStorage.getItem('user');
-        let value = JSON.parse(val);
-        let date = Moment().format('YYYY-MM-DD HH:mm');
+       try{
+           let val = await AsyncStorage.getItem('user');
+           let value = JSON.parse(val);
+           let date = Moment().format('YYYY-MM-DD HH:mm');
 
-        this.setState(
-            {
-                diary:
-                    {
-                        ...this.state.diary,
-                        type: 'breakfast',
-                        when: 'before',
-                        time: date,
-                        userId: value['userId'],
-                    },
-            }
-        );
+           this.setState(
+               {
+                   diary:
+                       {
+                           ...this.state.diary,
+                           type: 'breakfast',
+                           when: 'before',
+                           time: date,
+                           userId: value['userId'],
+                       },
+               }
+           );
+       }catch(e){
+           //console.log(e);
+       }
     }
 
     showAddModal = () => {

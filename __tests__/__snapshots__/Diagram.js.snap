@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the class correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#1c313a",
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "borderBottomColor": "#718792",
+        "borderBottomWidth": 1,
+        "color": "#fff",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 10,
+        "paddingBottom": 10,
+        "textAlign": "center",
+      }
+    }
+  >
+    Loading...
+  </Text>
+</View>
+`;
